@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <vector>
 using namespace std;
 
 class arma
@@ -10,8 +11,6 @@ class arma
         virtual void mostrar_tipo_arma() = 0;
 
         virtual void mostrar_daño() = 0;
-
-        virtual int mostrar_cantidad_de_usos() = 0;
 
         virtual void restar_usos() = 0;
 
@@ -44,8 +43,6 @@ class items_magicos: public arma
 
         virtual void mostrar_daño();
 
-        virtual int mostrar_cantidad_de_usos();
-
         virtual void restar_usos();
 
         void mostrar_golpes_disponibles();
@@ -77,8 +74,6 @@ class armas_combate
 
         virtual void mostrar_daño();
 
-        virtual int mostrar_cantidad_de_usos();
-
         virtual void restar_usos();
 
         void mostrar_golpes_disponibles();
@@ -87,3 +82,9 @@ class armas_combate
 
         void mostrar_golpes_extra();
 };
+
+bool pertenece_en_magicos(string tipo_arma);
+
+bool pertence_en_rareza(string rareza);
+
+bool pertenece_en_combate(string tipo_arma);

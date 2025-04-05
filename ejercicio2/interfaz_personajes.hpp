@@ -8,7 +8,7 @@ class personaje
 {
     public:
 
-        virtual void atacar(personaje otro) = 0;
+        virtual void atacar(personaje& otro) = 0;
 
         virtual void mostrar_tipo_personaje() = 0;
         
@@ -17,7 +17,6 @@ class personaje
         virtual void mostrar_habilidad_especial() = 0;
 
         virtual void mostrar_hp() = 0;
-
 };
 
 class mago : public personaje
@@ -26,9 +25,9 @@ class mago : public personaje
 
         string tipo_mago;
 
-        string hechizo_especial;
+        string habilidad_especial;
 
-        double daño_hechizo_especial;
+        double daño_habilidad_especial;
 
         int cant_usos_hechizo_especial;
 
@@ -38,9 +37,9 @@ class mago : public personaje
 
     public:
 
-        mago(string mago, string hechizo_especial, int daño_hechizo_especial, int cant_usos_hechizo_especial, double hp, double daño_hechizo);
+        mago(string mago, double hp, string tipo_arma, double daño_arma, int cant_usos, string habilidad_especial, double daño_especial, int cant_usos_especial, string rareza, int golpes_extra);
 
-        virtual void atacar(personaje otro);
+        virtual void atacar(personaje& otro);
 
         virtual void mostrar_tipo_personaje();
         
@@ -75,13 +74,13 @@ class guerrero
 
         guerrero(string guerrero, string golpe_especial, double daño_golpe_especial, int cant_golpes_especial, double hp, double daño_golpe);
 
-        virtual void atacar(personaje otro) = 0;
+        virtual void atacar(personaje& otro);
 
-        virtual void mostrar_tipo_personaje() = 0;
+        virtual void mostrar_tipo_personaje();
         
-        virtual void usar_habilidad_especial() = 0;
+        virtual void usar_habilidad_especial();
 
-        virtual void mostrar_habilidad_especial() = 0;
+        virtual void mostrar_habilidad_especial();
 
         virtual void mostrar_hp();
 
@@ -89,5 +88,3 @@ class guerrero
 
         void mostrar_cant_golpes_especial();
 };
-
-
