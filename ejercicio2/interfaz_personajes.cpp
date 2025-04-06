@@ -50,7 +50,7 @@ mago::mago(string mago, double Hp, string arma, double daño_arma, int cant_usos
             }
             else
             {
-                tipo_arma = make_shared<armas_combate>(arma, daño_arma, cant_usos, habilidad_especial, daño_especial, cant_usos_especial);
+                tipo_arma = make_shared<armas_combate>(arma, daño_arma*(0.8), cant_usos, habilidad_especial, daño_especial, cant_usos_especial);
             }
         }
         else
@@ -133,7 +133,7 @@ guerrero::guerrero(string guerrero, double hp, string golpe, double daño_golpe,
             }
             else
             {
-                tipo_arma = make_shared<items_magicos>(golpe, daño_golpe, cant_golpes, golpe_especial, daño_golpe_especial, cant_golpes_especial);
+                tipo_arma = make_shared<items_magicos>(golpe, daño_golpe*(0.8), cant_golpes, golpe_especial, daño_golpe_especial, cant_golpes_especial);
             }
         }
         else
