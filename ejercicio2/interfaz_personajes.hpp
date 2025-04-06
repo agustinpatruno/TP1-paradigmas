@@ -11,17 +11,34 @@ class personaje
     public:
 
         virtual void atacar(personaje& otro, bool normal) = 0;
+        /*
+            ataca a otro personaje, restando el daño causado dependiendo del ataque elejido
+        */
 
         virtual void mostrar_tipo_personaje() = 0;
+        /*
+            muestra por consola el tipo de personaje
+        */
 
         virtual void mostrar_hp() = 0;
+        /*
+            muestra por consola el hp del personaje
+        */
 
         virtual void mostrar_cant_golpes_totales() = 0;
+        /*
+            muestra por consola la cantidad de golpes totales del personaje
+        */
 
         virtual void mostrar_datos() = 0;
+        /*
+            muestra los datos adicionales del personaje
+        */
 
         virtual void modificar_hp(double daño) = 0;
-
+        /*
+            modifica el hp del personaje, restandole el pasado por parametro
+        */
 };
 
 ///////////// clase mago ////////////////
