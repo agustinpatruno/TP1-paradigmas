@@ -4,20 +4,26 @@
 #include "interfaz_armas.hpp"
 using namespace std;
 
+///////////// interfaz de pesonaje ////////////////
+
 class personaje
 {
     public:
 
-        virtual void atacar(personaje& otro) = 0;
+        virtual void atacar(personaje& otro, bool normal) = 0;
 
         virtual void mostrar_tipo_personaje() = 0;
-        
-        virtual void usar_habilidad_especial() = 0;
-
-        virtual void mostrar_habilidad_especial() = 0;
 
         virtual void mostrar_hp() = 0;
+
+        virtual void mostrar_cant_golpes_especial() = 0;
+
+        virtual void mostrar_cant_golpes_especial() = 0;
+
+        virtual void mostrar_datos() = 0;
 };
+
+///////////// clase mago ////////////////
 
 class mago : public personaje
 {
@@ -25,11 +31,9 @@ class mago : public personaje
 
         string tipo_mago;
 
-        string habilidad_especial;
+        int poder_magia; // 1 <= poder_magia <= 10
 
-        double daño_habilidad_especial;
-
-        int cant_usos_hechizo_especial;
+        float duracion_encantamientos; //cantidad de segundos que dura un hechizo
 
         double hp;
 
@@ -37,22 +41,20 @@ class mago : public personaje
 
     public:
 
-        mago(string mago, double hp, string tipo_arma, double daño_arma, int cant_usos, string habilidad_especial, double daño_especial, int cant_usos_especial, string rareza, int golpes_extra);
+        mago(string mago, double hp, int magia, float duracion_encant, string tip_arma, double daño, int golpes, string habilidad_especial, double daño_especial, int golpes_especial);
 
-        virtual void atacar(personaje& otro);
+        virtual void atacar(personaje& otro, bool normal);
 
         virtual void mostrar_tipo_personaje();
-        
-        virtual void usar_habilidad_especial();
-
-        virtual void mostrar_habilidad_especial();
 
         virtual void mostrar_hp();
 
-        void mostrar_daño_hechizo_especial();
+        virtual void mostrar_cant_golpes_especial();
 
-        void mostrar_cant_golpes_especial();
+        virtual void mostrar_datos();
 };
+
+////////////////// clase guerrero /////////////////////
 
 class guerrero
 {
@@ -60,11 +62,9 @@ class guerrero
 
         string tipo_guerrero;
 
-        string golpe_especial;
+        float altura; // altua del guerrero Mts
 
-        double daño_golpe_especial;
-
-        int cant_usos_golpe_especial;
+        float peso; // peso del guerrero en Kg
 
         double hp;
 
@@ -74,17 +74,13 @@ class guerrero
 
         guerrero(string guerrero, string golpe_especial, double daño_golpe_especial, int cant_golpes_especial, double hp, double daño_golpe);
 
-        virtual void atacar(personaje& otro);
+        virtual void atacar(personaje& otro, bool nomral);
 
         virtual void mostrar_tipo_personaje();
-        
-        virtual void usar_habilidad_especial();
-
-        virtual void mostrar_habilidad_especial();
 
         virtual void mostrar_hp();
 
-        void mostrar_daño_golpe_especial();
-
         void mostrar_cant_golpes_especial();
+
+        virtual void mostrar_datos();
 };

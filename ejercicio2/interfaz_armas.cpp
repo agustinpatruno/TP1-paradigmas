@@ -58,17 +58,28 @@ bool pertenece_habilidad_espe_combate(string habilidad_combate)
 
 /////////////////////////////////////////////implementacion de metodos de la clase items magicos//////////////////////////////////////
 
-void items_magicos::restar_usos()
+void items_magicos::restar_usos(bool normal)
 {
     try
     {
-        if (cant_golpes_disponibles > 0)
+        if (normal)
         {
-            cant_golpes_disponibles-=1;
+            if (cant_golpes_disponibles > 0)
+            {
+                cant_golpes_disponibles-=1;
+            }
+            else
+            {
+                throw logic_error("error, te has quedado sin golpes disponibles, verifique si quedan golpes especiales");
+            }
+        }
+        if (cant_golpes_especial > 0)
+        {
+            cant_golpes_especial-=1;
         }
         else
         {
-            throw logic_error("error, te has quedado sin golpes disponibles, verificar si quedan colgpes especiales");
+            throw logic_error("error, te has quedado sin golpes espceciales");
         }
     }
     catch(const std::exception& e)
@@ -120,7 +131,7 @@ void items_magicos::mostrar_tipo_arma()
 
 void items_magicos::mostrar_daño()
 {
-    cout << " poder de daño del itema magico: " << Daño << endl;
+    cout << " poder de daño del item magico: " << Daño << endl;
 }
 
 void items_magicos::mostrar_golpes_disponibles()

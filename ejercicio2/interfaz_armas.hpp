@@ -4,6 +4,7 @@
 #include <vector>
 using namespace std;
 
+////////////////clase interfaz arma /////////////////////////////////
 
 class arma
 {
@@ -23,6 +24,8 @@ class arma
 
         virtual void restar_usos(bool normal) = 0;
 };
+
+/////////////////////clase items magicos ///////////////////////////////////
 
 class items_magicos: public arma
 {
@@ -58,6 +61,8 @@ class items_magicos: public arma
 
         virtual double devolver_daño(bool normal);
 };
+
+////////////////////////////clase armas de combate //////////////////////////////
 
 class armas_combate
 {
