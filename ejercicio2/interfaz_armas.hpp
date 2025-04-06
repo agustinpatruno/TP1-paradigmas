@@ -4,6 +4,7 @@
 #include <vector>
 using namespace std;
 
+
 class arma
 {
     public:
@@ -12,13 +13,15 @@ class arma
 
         virtual void mostrar_daño() = 0;
 
-        virtual void restar_usos() = 0;
-
         virtual void mostrar_golpes_disponibles() = 0;
 
-        virtual void mostrar_rareza() = 0;
+        virtual void mostrar_habilidad() = 0;
 
-        virtual void mostrar_golpes_extra() = 0;
+        virtual void mostrar_golpes_dispo_especial() = 0;
+
+        virtual double devolver_daño() = 0;
+
+        virtual void restar_usos(bool normal) = 0;
 };
 
 class items_magicos: public arma
@@ -27,29 +30,33 @@ class items_magicos: public arma
         
         string tipo_arma;
 
-        string nivel_rareza;
+        double Daño;
 
-        double daño;
+        int cant_golpes_disponibles;
 
-        int cantidad_golpes_disponibles;
+        string habilidad_especial;
 
-        int golpes_extra;
+        double daño_extra_especial;
+        
+        int cant_golpes_especial;
+
+        virtual void restar_usos(bool normal);
 
     public:
 
-        items_magicos(string tip_arma, string rareza, double daño_arma, int cant_golpes, int cant_golpes_extra);
+        items_magicos(string tip_arma, double daño, int cant_golpes_dispo, string habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
 
         virtual void mostrar_tipo_arma();
 
         virtual void mostrar_daño();
 
-        virtual void restar_usos();
+        virtual void mostrar_golpes_disponibles();
 
-        void mostrar_golpes_disponibles();
+        virtual void mostrar_habilidad_especial();
 
-        void mostrar_rareza();
+        virtual void mostrar_golpes_dispo_especial();
 
-        void mostrar_golpes_extra();
+        virtual double devolver_daño(bool normal);
 };
 
 class armas_combate
@@ -58,33 +65,37 @@ class armas_combate
 
         string tipo_arma;
 
-        string nivel_rareza;
+        double Daño;
 
-        double daño;
+        int cant_golpes_disponibles;
 
-        int cantidad_golpes_disponibles;
+        string habilidad_especial;
 
-        int golpes_extra;
+        double daño_extra_especial;
+        
+        int cant_golpes_especial;
+
+        virtual void restar_usos(bool normal);
 
     public:
 
-        armas_combate(string tip_arma, string rareza, double daño_arma, int cant_golpes, int cant_golpes_extra);
+        armas_combate(string tip_arma, double daño, int cant_golpes_dispo, string habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
 
-        virtual void mostrar_tipo_arma();
+        virtual void mostrar_tipo_arma() = 0;
 
-        virtual void mostrar_daño();
+        virtual void mostrar_daño() = 0;
 
-        virtual void restar_usos();
+        virtual void mostrar_golpes_disponibles() = 0;
 
-        void mostrar_golpes_disponibles();
+        virtual void mostrar_habilidad() = 0;
 
-        void mostrar_rareza();
+        virtual void mostrar_golpes_dispo_especial() = 0;
 
-        void mostrar_golpes_extra();
+        virtual double devolver_daño(bool normal);
 };
 
 bool pertenece_en_magicos(string tipo_arma);
 
-bool pertence_en_rareza(string rareza);
-
 bool pertenece_en_combate(string tipo_arma);
+
+bool pertence_habilidad_espe_magico(string habilidad_especial);
