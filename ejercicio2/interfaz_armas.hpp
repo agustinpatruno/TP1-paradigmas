@@ -20,7 +20,7 @@ class arma
 
         virtual void mostrar_golpes_dispo_especial() = 0;
 
-        virtual double devolver_daño() = 0;
+        virtual double devolver_daño(bool normal) = 0;
 
         virtual void restar_usos(bool normal) = 0;
 };
@@ -64,7 +64,7 @@ class items_magicos: public arma
 
 ////////////////////////////clase armas de combate //////////////////////////////
 
-class armas_combate
+class armas_combate : public arma
 {
     private:
 
@@ -103,4 +103,6 @@ bool pertenece_en_magicos(string tipo_arma);
 
 bool pertenece_en_combate(string tipo_arma);
 
-bool pertence_habilidad_espe_magico(string habilidad_especial);
+bool pertenece_habilidad_espe_magico(string habilidad_especial);
+
+bool pertenece_habilidad_espe_combate(string habilidad_combate);
