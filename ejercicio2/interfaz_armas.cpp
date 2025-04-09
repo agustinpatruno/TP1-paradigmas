@@ -1,59 +1,75 @@
 #include "interfaz_armas.hpp"
 
-bool pertenece_en_magicos(string tipo_arma)
+bool pertenece_en_magicos(armas_magicas_y_combate arma)
 {
-    vector<string> tipos_armas = {"bastón", "libro de hechizos", "poción" , "amuleto"};
-
-    for (int i = 0; i < tipos_armas.size(); i++)
-    {
-        if (tipo_arma == tipos_armas[i])
-        {
-            return true;
-        }
-    }
-    return false;
+    return arma >= baston && arma <= amuleto;
 }
 
-bool pertenece_en_combate(string tipo_arma)
+bool pertenece_en_combate(armas_magicas_y_combate arma)
 {
-    vector<string> tipos_armas = { "hacha simple","hacha doble","espada","lanza","garrote"};
-
-    for (int i = 0; i < tipos_armas.size(); i++)
-    {
-        if (tipos_armas[i] == tipo_arma)
-        {
-            return true;
-        }
-    }
-    return false;
+    return arma >= hacha_simple && garrote <= arma;
 }
 
-bool pertenece_habilidad_espe_magico(string habilidad_especial)
+bool pertenece_habilidad_espe_magico(habilidades_especiales_magicas_y_combate habilidad)
 {
-    vector<string> habilidades = {"Explosión arcana","Golpe elemental","Corte espectral","Encantamiento explosivo","Ráfaga mágica"};
-
-    for (int i = 0; i < habilidades.size(); i++)
-    {
-        if (habilidad_especial == habilidades[i])
-        {
-            return true;
-        }
-    }
-    return false;
+    return  Explosion_arcana <= habilidad &&  habilidad <= Rafaga_magica;
 }
 
-bool pertenece_habilidad_espe_combate(string habilidad_combate)
+bool pertenece_habilidad_espe_combate(habilidades_especiales_magicas_y_combate habilidad)
 {
-    vector<string> habilidades = {"Impacto devastador","Corte giratorio","Golpe perforante","Ataque ensordecedor","Ruptura elemental"};
+    return  Impacto_devastador <= habilidad &&  habilidad <= Ruptura_elemental;
+}
 
-    for (int i = 0; i < habilidades.size(); i++)
+string enum_a_string_armas(armas_magicas_y_combate arma) {
+    switch (arma) 
     {
-        if (habilidad_combate == habilidades[i])
-        {
-            return true;
-        }
+        case baston: return "baston";
+
+        case libro_de_hechizos: return "libro_de_hechizos";
+
+        case pocion: return "pocion";
+
+        case amuleto: return "amuleto";
+
+        case hacha_simple: return "hacha_simple";
+
+        case hacha_doble: return "hacha_doble";
+
+        case espada: return "espada";
+
+        case lanza: return "lanza";
+
+        case garrote: return "garrote";
+
+        default: return "Valor desconocido";
     }
-    return false;
+}
+
+string enum_a_string_habilidades(habilidades_especiales_magicas_y_combate habilidad) {
+    switch (habilidad) 
+    {
+        case Explosion_arcana: return "Explosion_arcana";
+
+        case Golpe_elemental: return "Golpe_elemental";
+
+        case Corte_espectral: return "Corte_espectral";
+
+        case Encantamiento_explosivo: return "Encantamiento_explosivo";
+
+        case Rafaga_magica: return "Rafaga_magica";
+
+        case Impacto_devastador: return "Impacto_devastador";
+
+        case Corte_giratorio: return "Corte_giratorio";
+
+        case Golpe_perforante: return "Golpe_perforante";
+
+        case Ataque_ensordecedor: return "Ataque_ensordecedor";
+
+        case Ruptura_elemental: return "Ruptura_elemental";
+
+        default: return "Valor desconocido";
+    }
 }
 
 /////////////////////////////////////////////implementacion de metodos de la clase items magicos//////////////////////////////////////
@@ -88,7 +104,7 @@ void items_magicos::restar_usos(bool normal)
     }
 }
 
-items_magicos::items_magicos(string tip_arma, double daño, int cant_golpes_dispo, string habilidad_espe, double daño_extra_espe, int cant_golpes_espe)
+items_magicos::items_magicos(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe)
 {
     try
     {
@@ -126,12 +142,17 @@ items_magicos::items_magicos(string tip_arma, double daño, int cant_golpes_disp
 
 void items_magicos::mostrar_tipo_arma()
 {
-    cout << "tipo de item magico " << tipo_arma << endl;
+    cout << "tipo de item magico " << enum_a_string_armas(tipo_arma) << endl;
 }
 
 void items_magicos::mostrar_daño()
 {
     cout << " poder de daño del item magico: " << Daño << endl;
+}
+
+void items_magicos::mostrar_daño_especial()
+{
+    cout << " poder de daño del item magico: " << Daño + daño_extra_especial << endl;
 }
 
 void items_magicos::mostrar_golpes_disponibles()
@@ -141,7 +162,7 @@ void items_magicos::mostrar_golpes_disponibles()
 
 void items_magicos::mostrar_habilidad_especial()
 {
-    cout << "habilidad especial: " << habilidad_especial << endl;
+    cout << "habilidad especial: " << enum_a_string_habilidades(habilidad_especial) << endl;
 }
 
 void items_magicos::mostrar_golpes_dispo_especial()
@@ -191,7 +212,7 @@ void armas_combate::restar_usos(bool normal)
     }
 }
 
-armas_combate::armas_combate(string tip_arma, double daño, int cant_golpes_dispo, string habilidad_espe, double daño_extra_espe, int cant_golpes_espe)
+armas_combate::armas_combate(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe)
 {
     try
     {
@@ -229,12 +250,17 @@ armas_combate::armas_combate(string tip_arma, double daño, int cant_golpes_disp
 
 void armas_combate::mostrar_tipo_arma()
 {
-    cout << "tipo de arma de combate: " << tipo_arma << endl;
+    cout << "tipo de arma de combate: " << enum_a_string_armas(tipo_arma) << endl;
 }
 
 void armas_combate::mostrar_daño()
 {
     cout << " poder de daño del arma de combate: " << Daño << endl;
+}
+
+void armas_combate::mostrar_daño_especial()
+{
+    cout << " poder de daño del arma de combate: " << Daño + daño_extra_especial << endl;
 }
 
 void armas_combate::mostrar_golpes_disponibles()
@@ -244,7 +270,7 @@ void armas_combate::mostrar_golpes_disponibles()
 
 void armas_combate::mostrar_habilidad()
 {
-    cout << " habilidad especial: " << habilidad_especial << endl;
+    cout << " habilidad especial: " << enum_a_string_habilidades(habilidad_especial) << endl;
 }
 
 void armas_combate::mostrar_golpes_dispo_especial()

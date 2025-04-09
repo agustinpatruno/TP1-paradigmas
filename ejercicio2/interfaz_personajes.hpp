@@ -1,19 +1,26 @@
-#include <iostream>
-#include <string>
-#include <memory>
 #include "interfaz_armas.hpp"
 using namespace std;
+
+// enum de los personajes //
+
+enum tipos_personajes {hechicero=1, conjurador, brujo, nigromante, barbaro, paladin, caballero, mercenario, gladiador};
+
+
+bool pertenece_a_magos(tipos_personajes mago);
+/*
+    retorna true en caso de que el tipo de mago pertenezca al conjunto de magos. caso contrario retorna false
+*/
+
+bool pertenence_a_guerreros(tipos_personajes guerrero);
+/*
+    retorna true en caso de que el tipo de guerrero pertenezca al conjunto de guerreros. caso contrario retorna false
+*/
 
 ///////////// interfaz de pesonaje ////////////////
 
 class personaje
 {
     public:
-
-        virtual void atacar(personaje& otro, bool normal) = 0;
-        /*
-            ataca a otro personaje, restando el daño causado dependiendo del ataque elejido
-        */
 
         virtual void mostrar_tipo_personaje() = 0;
         /*
@@ -25,20 +32,30 @@ class personaje
             muestra por consola el hp del personaje
         */
 
-        virtual void mostrar_cant_golpes_totales() = 0;
+        virtual double retornar_hp() = 0;
         /*
-            muestra por consola la cantidad de golpes totales del personaje
-        */
-
-        virtual void mostrar_datos() = 0;
-        /*
-            muestra los datos adicionales del personaje
+            retorna el hp del personaje
         */
 
         virtual void modificar_hp(double daño) = 0;
         /*
-            modifica el hp del personaje, restandole el pasado por parametro
+            modifica el hp del personaje, restandole el daño
         */
+
+        virtual void mostrar_dato1() = 0;
+        /*
+            muestra un dato del personaje
+        */
+
+       virtual void mostrar_dato2() = 0;
+        /*
+            muestra otro dato del personaje
+        */
+       
+       virtual void mostrar_habilidad() = 0;
+       /*
+            muestra la habilidad especial del personaje
+       */
 };
 
 ///////////// clase mago ////////////////
@@ -47,7 +64,9 @@ class mago : public personaje
 {
     private:
 
-        string tipo_mago;
+        tipos_personajes tipo_mago;
+
+        habilidades_especiales_magicas_y_combate habilidad_especial;
 
         int poder_magia; // 1 <= poder_magia <= 10
 
@@ -55,29 +74,13 @@ class mago : public personaje
 
         double hp;
 
-        shared_ptr<arma> tipo_arma;
-
     public:
 
-        mago(string mago, double Hp, string arma, double daño_arma, int cant_usos, string habilidad_especial, double daño_especial, int cant_usos_especial, int magia, float dur_encantamiento);
+        mago(tipos_personajes mago, double Hp, int magia, float dur_encantamiento, habilidades_especiales_magicas_y_combate hab_especial);
         /*
             constructor de la clase mago, donde se inicializa el tipo de mago, el Hp, el poder de magia y la duracion de sus encantamientos. 
-            por otro lado, se crea un objeto de la interfaz arma, donde depende que tipo de arma sea y que habilidad especial, se le 
-            bajara en porcentaje la capacidad de daño de la misma. 
-            explicacion:
-                - si se usa un tipo de arma de item magico -> se usa el 100% de su poder de daño.
-                - si se usa un tipo de arma de armas de combate -> se usa el 80& de su poder de daño.
-            
-                - si se usa una habilidad especial dentro de los magicos -> se usa el 100% de su poder de daño
-                - si se usa una habilidad especial dentro de los combates -> se usa el 60& de su poder de daño
-            
+          
             en el caso que alguno de los parametros no cumpla con el rango, se arrojara un throw y se lo capturara con un catch
-        */
-
-        virtual void atacar(personaje& otro, bool normal);
-        /*
-            le resta hp al otro personaje que recibe el ataque, donde dependiendo si normal es true o false, usa el ataque normal
-            o el ataque especial. en caso de no tener mas usos disponibles, arroja un throw y la copatura con catch. 
         */
 
         virtual void mostrar_tipo_personaje();
@@ -90,21 +93,30 @@ class mago : public personaje
             imprime por consola el hp del mago
         */
 
-        virtual void mostrar_cant_golpes_totales();
+        virtual double retornar_hp();
         /*
-            imprime por consola la cantidad de golpes totales, (normales y especiales).
-        */
-
-        virtual void mostrar_datos();
-        /*
-            imprime por consola los datos del poder de magia y la duracion de los encantamientos
+            retorna el hp del mago
         */
 
         virtual void modificar_hp(double daño);
         /*
-            modifica el hp del objeto, restandole el daño que se le pasa por parametro. 
-            en caso de ser mayor al hp, se arroja un throw y se lo captura con catch. Si no, se lo resta normalmente. 
+            modifica el hp del mago, restandole el daño
         */
+
+        virtual void mostrar_dato1();
+        /*
+            imprime por consola el poder de magia del mago
+        */
+
+       virtual void mostrar_dato2();
+       /*
+          imprime por consola la duracion de los encantamientos del mago
+       */
+
+       virtual void mostrar_habilidad();
+       /*
+            imprime por consola la habilidad especial del mago
+       */
 };
 
 ////////////////// clase guerrero /////////////////////
@@ -113,19 +125,19 @@ class guerrero
 {
     private:
 
-        string tipo_guerrero;
+        tipos_personajes tipo_guerrero; // tipo de guerrero
+
+        habilidades_especiales_magicas_y_combate habilidad_especial; // habilidad especial
 
         float altura; // altua del guerrero Mts
 
         float peso; // peso del guerrero en Kg
 
-        double hp;
-
-        shared_ptr<arma> tipo_arma;
+        double hp; // puntos de vida
 
     public:
 
-        guerrero(string guerrero, double hp, string golpe, double daño_golpe,int cant_golpes, string golpe_especial, double daño_golpe_especial, int cant_golpes_especial, float alt, float weight);
+        guerrero(tipos_personajes guerrero, double hp, float alt, float weight, habilidades_especiales_magicas_y_combate hab_especial);
         /*
             constructor de la clase guerrero donde se inicializa el tipo de guerrero, el Hp, el peso y altura del guerrero. 
             por otro lado, se crea un objeto de la interfaz arma, donde depende que tipo de arma sea y que habilidad especial, se le 
@@ -142,12 +154,6 @@ class guerrero
             con un catch.
         */
 
-        virtual void atacar(personaje& otro, bool nomral);
-        /*
-            le resta hp al otro personaje que recibe el ataque, donde dependiendo si normal es true o false, usa el ataque normal
-            o el ataque especial. en caso de no tener mas usos disponibles, arroja un throw y la copatura con catch. 
-        */
-
         virtual void mostrar_tipo_personaje();
         /*
             imprime por consola el tipo de guerrero. 
@@ -158,19 +164,28 @@ class guerrero
             imprime por consola el hp del guerrero. 
         */
 
-        void mostrar_cant_golpes_totales();
+        virtual double retornar_hp();
         /*
-            muestra por consola la cantidad de golpes totales que tiene, (golpes normales y especiales).
-        */
-
-        virtual void mostrar_datos();
-        /*
-            imprime por consola la altura y el peso del guerrero. 
+            retorna el hp del guerrero
         */
 
         virtual void modificar_hp(double daño);
         /*
-            modifica el hp del objeto, restandole el daño que se le pasa por parametro. 
-            en caso de ser mayor al hp, se arroja un throw y se lo captura con catch. Si no, se lo resta normalmente. 
+            modifica el hp del guerrero, restandole el daño
+        */
+
+        virtual void mostrar_dato1();
+        /*
+            imprime por consola la altura del guerrero. 
+        */
+        
+        virtual void mostrar_dato2();
+        /*
+            imprime por consola el peso del guerrero.
+        */
+
+        virtual void mostrar_habilidad();
+        /*
+            imprime por consola la habilidad del guerrero.
         */
 };

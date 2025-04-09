@@ -4,7 +4,40 @@
 #include <vector>
 using namespace std;
 
-////////////////clase interfaz arma /////////////////////////////////
+
+// enuma de las armas (primeros 4 elementos = items magicos, los ultimos 5 = armas de combate//
+
+enum armas_magicas_y_combate {baston = 1, libro_de_hechizos, pocion, amuleto, hacha_simple, hacha_doble, espada, lanza, garrote};
+
+// enum de las habilidades especiales //
+
+enum habilidades_especiales_magicas_y_combate {Explosion_arcana = 1, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental };
+
+
+bool pertenece_en_magicos(armas_magicas_y_combate arma);
+/*
+    retorna true en caso de que el tipo de arma perteznca al conjunto de items magicos. caso contrario retorna flase. 
+*/
+
+bool pertenece_en_combate(armas_magicas_y_combate arma);
+/*
+    retorna true en caso de que el tipo de arma pertenezca al conjunto de armas de combate. caso contrario 
+    retorna flase. 
+*/
+
+bool pertenece_habilidad_espe_magico(habilidades_especiales_magicas_y_combate habilidad);
+/*
+    retorna true en caso de que la habilidad especial pertenezca al conjunto de habilidades especiales de los magos. 
+    caso contrario retorna flase. 
+*/
+
+bool pertenece_habilidad_espe_combate(habilidades_especiales_magicas_y_combate habilidad);
+/*
+    retorna true en caso de que la habilidad especial pertenezca al conjunto de habilidades especiales de los guerreros. 
+    caso contrario retorna flase. 
+*/
+
+///////////////////////////////////clase interfaz arma ////////////////////////////////////////////
 
 class arma
 {
@@ -13,6 +46,8 @@ class arma
         virtual void mostrar_tipo_arma() = 0;
 
         virtual void mostrar_daño() = 0;
+
+        virtual void mostrar_daño_especial() = 0;
 
         virtual void mostrar_golpes_disponibles() = 0;
 
@@ -31,13 +66,13 @@ class items_magicos: public arma
 {
     private:
         
-        string tipo_arma;
+        armas_magicas_y_combate tipo_arma;
 
         double Daño;
 
         int cant_golpes_disponibles;
 
-        string habilidad_especial;
+        habilidades_especiales_magicas_y_combate habilidad_especial;
 
         double daño_extra_especial;
         
@@ -47,7 +82,7 @@ class items_magicos: public arma
 
     public:
 
-        items_magicos(string tip_arma, double daño, int cant_golpes_dispo, string habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
+        items_magicos(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
         /*
         construcor de la clase items_magicos donde inicializa el tipo de arma, el daño, la cantidad de golpes, la habilidad especial del
         arma, el daño extra que genera la habilidad especial y la cantidad de golpes de la habilidad especial. 
@@ -67,6 +102,11 @@ class items_magicos: public arma
         virtual void mostrar_daño();
         /*
             imprime por consola el poder de daño que puede hacer el arma
+        */
+
+        virtual void mostrar_daño_especial();
+        /*
+            imprime por consola el poder de daño adicional del item magico con la habilidad especial
         */
 
         virtual void mostrar_golpes_disponibles();
@@ -98,13 +138,13 @@ class armas_combate : public arma
 {
     private:
 
-        string tipo_arma;
+        armas_magicas_y_combate tipo_arma;
 
         double Daño;
 
         int cant_golpes_disponibles;
 
-        string habilidad_especial;
+        habilidades_especiales_magicas_y_combate habilidad_especial;
 
         double daño_extra_especial;
         
@@ -114,7 +154,7 @@ class armas_combate : public arma
 
     public:
 
-        armas_combate(string tip_arma, double daño, int cant_golpes_dispo, string habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
+        armas_combate(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
         /*
         construcor de la clase armas de combate donde inicializa el tipo de arma, el daño, la cantidad de golpes, la habilidad especial del
         arma, el daño extra que genera la habilidad especial y la cantidad de golpes de la habilidad especial. 
@@ -136,6 +176,11 @@ class armas_combate : public arma
         virtual void mostrar_daño() = 0;
         /*
             imprime por consola el poder de daño que puede hacer el arma de item magico
+        */
+
+        virtual void mostrar_daño_especial();
+        /*
+            imprime por consola el poder de daño adicional del arma de combate con la habilidad especial
         */
 
         virtual void mostrar_golpes_disponibles() = 0;
@@ -161,22 +206,22 @@ class armas_combate : public arma
         */
 };
 
-bool pertenece_en_magicos(string tipo_arma);
+bool pertenece_en_magicos(armas_magicas_y_combate tipo_arma);
 /*
     retorna true si el tipo de arma es de los item magicos. retorna false en caso contrario
 */
 
-bool pertenece_en_combate(string tipo_arma);
+bool pertenece_en_combate(armas_magicas_y_combate tipo_arma);
 /*
     retorna true si el tipo de arma es de las armas de combate. retorna false en caso contrario
 */
 
-bool pertenece_habilidad_espe_magico(string habilidad_especial);
+bool pertenece_habilidad_espe_magico(habilidades_especiales_magicas_y_combate habilidad_especial);
 /*
     retorna true si la habilidad especial es de las de los itemas magicos. retorna false en caso contrario
 */
 
-bool pertenece_habilidad_espe_combate(string habilidad_combate);
+bool pertenece_habilidad_espe_combate(habilidades_especiales_magicas_y_combate habilidad_combate);
 /*
     retorna true si la habilidad especial es de las armas de combate. retorna false en caso contrario
 */
