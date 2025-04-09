@@ -54,6 +54,11 @@ double mago::retornar_hp()
     return hp;
 }
 
+tipos_personajes mago::retornar_tipo_personaje()
+{
+    return tipo_mago;
+}
+
 void mago::modificar_hp(double daño)
 {
     hp -= daño;
@@ -116,6 +121,11 @@ void guerrero::mostrar_hp()
 double guerrero::retornar_hp()
 {
     return hp;
+}
+
+tipos_personajes guerrero::retornar_tipo_personaje()
+{
+    return tipo_guerrero;
 }
 
 void guerrero::modificar_hp(double daño)

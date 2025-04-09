@@ -5,7 +5,6 @@ using namespace std;
 
 enum tipos_personajes {hechicero=1, conjurador, brujo, nigromante, barbaro, paladin, caballero, mercenario, gladiador};
 
-
 bool pertenece_a_magos(tipos_personajes mago);
 /*
     retorna true en caso de que el tipo de mago pertenezca al conjunto de magos. caso contrario retorna false
@@ -36,6 +35,8 @@ class personaje
         /*
             retorna el hp del personaje
         */
+
+        virtual tipos_personajes retornar_tipo_personaje() = 0;
 
         virtual void modificar_hp(double daño) = 0;
         /*
@@ -98,6 +99,11 @@ class mago : public personaje
             retorna el hp del mago
         */
 
+        virtual tipos_personajes retornar_tipo_personaje();
+        /*
+            retorna el tipo de personaje
+        */
+
         virtual void modificar_hp(double daño);
         /*
             modifica el hp del mago, restandole el daño
@@ -119,7 +125,9 @@ class mago : public personaje
        */
 };
 
+
 ////////////////// clase guerrero /////////////////////
+
 
 class guerrero
 {
@@ -167,6 +175,11 @@ class guerrero
         virtual double retornar_hp();
         /*
             retorna el hp del guerrero
+        */
+
+        virtual tipos_personajes retornar_tipo_personaje();
+        /*
+            retorna el tipo de personaje
         */
 
         virtual void modificar_hp(double daño);

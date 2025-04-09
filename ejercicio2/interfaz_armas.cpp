@@ -21,6 +21,7 @@ bool pertenece_habilidad_espe_combate(habilidades_especiales_magicas_y_combate h
 }
 
 string enum_a_string_armas(armas_magicas_y_combate arma) {
+
     switch (arma) 
     {
         case baston: return "baston";
@@ -104,29 +105,29 @@ void items_magicos::restar_usos(bool normal)
     }
 }
 
-items_magicos::items_magicos(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe)
+items_magicos::items_magicos(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe)
 {
     try
     {
-        if (pertenece_en_magicos(tip_arma) && daño > 0 && cant_golpes_dispo > 0 && (pertenece_habilidad_espe_magico(habilidad_espe) || pertenece_habilidad_espe_combate(habilidad_espe)) && daño_extra_espe > 0 && cant_golpes_espe > 0)
+        if (pertenece_en_magicos(tip_arma) && (pertenece_habilidad_espe_magico(habilidad_espe) || pertenece_habilidad_espe_combate(habilidad_espe)))
         {
-           tipo_arma = tip_arma;
+            tipo_arma = tip_arma;
 
-           cant_golpes_disponibles = cant_golpes_dispo;
+            cant_golpes_disponibles = usos_armas_magicas_combates[static_cast<int>(tip_arma)];
 
-           habilidad_especial = habilidad_espe;
+            habilidad_especial = habilidad_espe;
 
-           cant_golpes_especial = cant_golpes_espe;
+            cant_golpes_especial = usos_hab_magicas_combates[static_cast<int>(habilidad_espe)];
 
-            daño = daño;
+            Daño = daño_magicos_combates[static_cast<int>(tip_arma)];
 
             if (pertenece_habilidad_espe_magico(habilidad_espe))
             {
-                daño_extra_especial = daño_extra_espe;
+                daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)];
             }
             else
             {
-                daño_extra_especial = daño_extra_espe*(0.6);
+                daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)]*(0.6);
             }
         }
         else
@@ -212,29 +213,29 @@ void armas_combate::restar_usos(bool normal)
     }
 }
 
-armas_combate::armas_combate(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe)
+armas_combate::armas_combate(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe)
 {
     try
     {
-        if (pertenece_en_combate(tip_arma) && daño > 0 && cant_golpes_dispo > 0 && (pertenece_habilidad_espe_magico(habilidad_espe) || pertenece_habilidad_espe_combate(habilidad_espe)) && daño_extra_espe > 0 && cant_golpes_espe > 0)
+        if (pertenece_en_combate(tip_arma) && (pertenece_habilidad_espe_magico(habilidad_espe) || pertenece_habilidad_espe_combate(habilidad_espe)))
         {
-           tipo_arma = tip_arma;
+            tipo_arma = tip_arma;
 
-           cant_golpes_disponibles = cant_golpes_dispo;
+            cant_golpes_disponibles = usos_armas_magicas_combates[static_cast<int>(tip_arma)];
 
-           habilidad_especial = habilidad_espe;
+            habilidad_especial = habilidad_espe;
 
-           cant_golpes_especial = cant_golpes_espe;
+            cant_golpes_especial = usos_hab_magicas_combates[static_cast<int>(habilidad_espe)];
 
-            daño = daño;
+            Daño = daño_magicos_combates[static_cast<int>(tip_arma)];
 
             if (pertenece_habilidad_espe_combate(habilidad_espe))
             {
-                daño_extra_especial = daño_extra_espe;
+                daño_extra_especial = daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)];
             }
             else
             {
-                daño_extra_especial = daño_extra_espe*(0.6);
+                daño_extra_especial = daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)]*(0.6);
             }
         }
         else

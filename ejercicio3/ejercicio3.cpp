@@ -1,7 +1,12 @@
 #include "ejercicio3.hpp"
 
-int generarNumeroAleatorio(int minimo, int maximo) 
+int generarAleatorio(int minimo, int maximo) 
 {
+    if (minimo > maximo)
+    {
+        return 0;
+    }
+    
     return minimo + (rand() % (maximo - minimo + 1));
 }
 
@@ -95,36 +100,9 @@ void personaje_armado::mostrar_daños_totales()
     }
 }
 
-void personaje_armado::crear_arma(string tip_arma, double daño, int cant_usos_dispo, string habilidad_espe, double daño_extra_espe, int cant_usos_espe)
+void personaje_armado::crear_arma(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe)
 {
-    try
-    {
-        if (armas.size() < cant_armas_maximas)
-        {
-            shared_ptr<arma> nueva_arma;
-
-            if (pertenece_en_magicos(tip_arma))
-            {
-                nueva_arma = make_shared<items_magicos>(tip_arma, daño, cant_usos_dispo, habilidad_espe, daño_extra_espe, cant_usos_espe);
-            }
-            else if (pertenece_en_combate(tip_arma))
-            {
-                nueva_arma = make_shared<armas_combate>(tip_arma, daño, cant_usos_dispo, habilidad_espe, daño_extra_espe, cant_usos_espe);
-            }
-            else
-            {
-                throw logic_error("ingrese un tipo de arma que este dentro del conjunto de item amgicos o dentro del conjunto de armas de combate");
-            }
-        }
-        else
-        {
-            throw logic_error("error, no puedes ingresar mas armas al personaje. no hay mas espacio");
-        }
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
+   
 }
 
 void personaje_armado::mostrar_datos_adicionales()
@@ -140,17 +118,13 @@ PersonajeFactory::PersonajeFactory()
     cout << " se creo un objeto de la clase factory" << endl;
 }
 
-shared_ptr<arma> PersonajeFactory::crear_arma(string tip_arma, double daño, int cant_usos_dispo, string habilidad_espe, double daño_extra_espe, int cant_usos_espe)
+shared_ptr<arma> PersonajeFactory::crear_arma(armas_magicas_y_combate tip_arma, double daño, int cant_usos_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_usos_espe)
 {
     shared_ptr<arma> nueva_arma;
 
-    if (pertenece_en_magicos(tip_arma))
+    if (pertenece_en_magicos(tip_arma) || pertenece_en_combate(tip_arma))
     {
         nueva_arma = make_shared<items_magicos>(tip_arma, daño, cant_usos_dispo, habilidad_espe, daño_extra_espe, cant_usos_espe);
-    }
-    else if (pertenece_en_combate(tip_arma))
-    {
-        nueva_arma = make_shared<armas_combate>(tip_arma, daño, cant_usos_dispo, habilidad_espe, daño_extra_espe, cant_usos_espe);
     }
     else
     {
@@ -159,7 +133,7 @@ shared_ptr<arma> PersonajeFactory::crear_arma(string tip_arma, double daño, int
     return nueva_arma;
 }
 
-shared_ptr<personaje> PersonajeFactory::crear_personaje(string personaje, double hp, auto dato1, auto dato2, string hab_especial)
+shared_ptr<personaje> PersonajeFactory::crear_personaje(tipos_personajes personaje, double hp, auto dato1, auto dato2, habilidades_especiales_magicas_y_combate hab_especial)
 {
     shared_ptr<personaje> nuevo_personaje;
 
@@ -176,19 +150,16 @@ shared_ptr<personaje> PersonajeFactory::crear_personaje(string personaje, double
         return nullptr;
     }
     return nuevo_personaje;
-
 }
 
-shared_ptr<personaje_armado> PersonajeFactory::crear_personaje_armado(string personaje, double hp, auto dato1, auto dato2, string hab_especial,string tip_arma, double daño, int cant_usos_dispo, string habilidad_espe, double daño_extra_espe, int cant_usos_espe)
+shared_ptr<personaje_armado> PersonajeFactory::crear_personaje_armado(tipos_personajes personaje, double hp, auto dato1, auto dato2, habilidades_especiales_magicas_y_combate hab_especial,armas_magicas_y_combate tip_arma, double daño, int cant_usos_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_usos_espe)
 {
     shared_ptr<personaje_armado> nuevo_personaje_armado;
 
     nuevo_personaje_armado -> avatar = crear_personaje(string personaje, double hp, auto dato1, auto dato2, string hab_especial);
 
-    nuevo_personaje_armado ->
-
+    nuevo_personaje_armado -> crear_arma(tip_arma, daño, cant_usos_dispo, habilidad_espe, daño_extra_espe, cant_usos_espe)
 }
-
 
 int main()
 {

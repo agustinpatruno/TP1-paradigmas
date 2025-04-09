@@ -4,6 +4,23 @@
 #include <vector>
 using namespace std;
 
+// valores del daño de las armas.(primera mitad = daños items magicos, segunda mitad = daños armas de combate) //
+vector<double> daño_magicos_combates = {12.5, 13, 14, 10, 9, 16, 13.2, 15, 7.9};
+
+// cant de usos de cada arma (primera mitad = cant usos items magicos, segunda mitad = cant usos armas de combate)//
+vector<int> usos_armas_magicas_combates = {12,11,15,10, 13,16,12,9};
+
+/* 
+valores de los daños extra de las habilidades especiales 
+(primera mitad = daños habilidades especiales magicos, segunda mitad = daños habilidades especiales combate)
+*/
+vector<double> daño_hab_magicos_combates = {5.4, 3.7, 8.2, 6.6, 5, 3.7, 5.3, 7, 4.2, 9};
+
+/*
+cant de usos de las habilidades especiales 
+(primera mitad = cant usos habilidades especiales magicos, segunda mitad = cant usos habilidades especiales combate)
+*/
+vector<int> usos_hab_magicas_combates = {3,2,4,1,5,3,2,4};
 
 // enuma de las armas (primeros 4 elementos = items magicos, los ultimos 5 = armas de combate//
 
@@ -35,6 +52,11 @@ bool pertenece_habilidad_espe_combate(habilidades_especiales_magicas_y_combate h
 /*
     retorna true en caso de que la habilidad especial pertenezca al conjunto de habilidades especiales de los guerreros. 
     caso contrario retorna flase. 
+*/
+
+string enum_a_string_armas(armas_magicas_y_combate arma);
+/*
+    retorna un string acorde al valor del enum armas_mamgicas_y_combate. caso de que no exista, retorna "valor desconocido"
 */
 
 ///////////////////////////////////clase interfaz arma ////////////////////////////////////////////
@@ -82,11 +104,10 @@ class items_magicos: public arma
 
     public:
 
-        items_magicos(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
+        items_magicos(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe);
         /*
-        construcor de la clase items_magicos donde inicializa el tipo de arma, el daño, la cantidad de golpes, la habilidad especial del
-        arma, el daño extra que genera la habilidad especial y la cantidad de golpes de la habilidad especial. 
-        el daño extra de la habilidad especial va a depender del que habilidad sea
+        construcor de la clase items_magicos y la habilidad especial del arma.
+        el daño extra de la habilidad especial va a depender del tipo de arma
         explciacion:
             - si la habilidad especial es del grupo de habilidades de los items magicos -> se usa el 100& de su poder de daño
             - si la habilidad especial es del grupo de habilidades de las armas de combate -> se usa el 60& de su poder de daño
@@ -154,19 +175,15 @@ class armas_combate : public arma
 
     public:
 
-        armas_combate(armas_magicas_y_combate tip_arma, double daño, int cant_golpes_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_golpes_espe);
+        armas_combate(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe);
         /*
-        construcor de la clase armas de combate donde inicializa el tipo de arma, el daño, la cantidad de golpes, la habilidad especial del
-        arma, el daño extra que genera la habilidad especial y la cantidad de golpes de la habilidad especial. 
-        el daño extra de la habilidad especial va a depender del que habilidad sea
+        construcor de la clase armas de combate donde inicializa el tipo de arma y la habilidad especial del
+        arma.el daño extra de la habilidad especial va a depender del tipo de arma.
         explciacion:
             - si la habilidad especial es del grupo de habilidades de las armas de combate -> se usa el 100& de su poder de daño
             - si la habilidad especial es del grupo de habilidades de los items magicos -> se usa el 60& de su poder de daño
-           
-        
         en caso de que algun parametro no este dentro del rango, se arroja un throw y se lo captura con un catch. 
         */
-
 
         virtual void mostrar_tipo_arma() = 0;
         /*
