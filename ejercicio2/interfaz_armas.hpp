@@ -83,9 +83,9 @@ class items_magicos: public arma
 {
     private:
 
-        int nivel_magico;
+        float nivel_magico;
 
-        int resistencia_magia_oscura;
+        float resistencia_magia_oscura;
 
         virtual void restar_usos(bool normal);
 
@@ -140,7 +140,7 @@ class libro_de_hechizos : public items_magicos
 {
     private:
 
-        int prestigio_libro; // representa la antiguedad del libro;
+        float prestigio_libro; // representa la antiguedad del libro;
 
     public:
 
@@ -167,7 +167,7 @@ class amuleto : public items_magicos
 {
     private:
         
-        int suerte;
+        float suerte;
 
     public:
        
@@ -182,7 +182,7 @@ class armas_combate : public arma
 {
     private:
 
-        int durabilidad_polvo;
+        float durabilidad_polvo;
 
         float precision_disparo;
 
