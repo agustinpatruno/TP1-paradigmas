@@ -26,6 +26,11 @@ class personaje
             muestra por consola el tipo de personaje
         */
 
+        virtual tipos_personajes retornar_tipo_personaje() = 0;
+        /*
+        
+        */
+
         virtual void mostrar_hp() = 0;
         /*
             muestra por consola el hp del personaje
@@ -36,7 +41,7 @@ class personaje
             retorna el hp del personaje
         */
 
-        virtual tipos_personajes retornar_tipo_personaje() = 0;
+      
 
         virtual void modificar_hp(double daño) = 0;
         /*
@@ -125,9 +130,43 @@ class mago : public personaje
        */
 };
 
+///////////////////// clases derivadas de la clase mago /////////////////////////
+
+class  hechicero : public mago
+{
+    private:
+        /* data */
+    public:
+        hechicero(/* args */);
+    
+};
+
+class  conjugador : public mago
+{
+    private:
+        /* data */
+    public:
+        conjugador(/* args */);
+};
+
+class brujo : public mago
+{
+    private:
+        /* data */
+    public:
+        brujo(/* args */);
+    
+};
+
+class nigronte : public mago
+{
+    private:
+        /* data */
+    public:
+        nigronte(/* args */);
+};
 
 ////////////////// clase guerrero /////////////////////
-
 
 class guerrero
 {
@@ -202,3 +241,50 @@ class guerrero
             imprime por consola la habilidad del guerrero.
         */
 };
+
+////////////clases derivadas de la clase guerrero ////////////////////
+
+class barbaro : public guerrero
+{
+    private:
+        /* data */
+    public:
+        barbaro(/* args */);
+};
+
+class paladin : public guerrero
+{
+    private:
+        /* data */
+    public:
+        paladin(/* args */);
+};
+
+class  caballero : public guerrero
+{
+    private:
+        /* data */
+    public:
+        caballero(/* args */);
+    
+};
+
+class mercenario : public guerrero
+{
+    private:
+        /* data */
+    public:
+        mercenario(/* args */);
+};
+
+class gladiador : public guerrero
+{
+    private:
+        /* data */
+    public:
+        gladiador(/* args */);
+    
+};
+
+
+

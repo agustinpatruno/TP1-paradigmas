@@ -63,42 +63,29 @@ string enum_a_string_armas(armas_magicas_y_combate arma);
 
 class arma
 {
+    protected:
+
+        double Daño;
+
+        int cant_usos;
+
     public:
 
-        virtual void mostrar_tipo_arma() = 0;
-
-        virtual void mostrar_daño() = 0;
-
-        virtual void mostrar_daño_especial() = 0;
-
-        virtual void mostrar_golpes_disponibles() = 0;
-
-        virtual void mostrar_habilidad() = 0;
-
-        virtual void mostrar_golpes_dispo_especial() = 0;
-
-        virtual double devolver_daño(bool normal) = 0;
-
-        virtual void restar_usos(bool normal) = 0;
+        virtual void Get_infoarma_general() const = 0; // muestro el tipo de arma, la cantidad de usos disponibles y el daño
+        virtual ~arma();
 };
 
+
 /////////////////////clase items magicos ///////////////////////////////////
+
 
 class items_magicos: public arma
 {
     private:
-        
-        armas_magicas_y_combate tipo_arma;
 
-        double Daño;
+        int nivel_magico;
 
-        int cant_golpes_disponibles;
-
-        habilidades_especiales_magicas_y_combate habilidad_especial;
-
-        double daño_extra_especial;
-        
-        int cant_golpes_especial;
+        int resistencia_magia_oscura;
 
         virtual void restar_usos(bool normal);
 
@@ -115,61 +102,89 @@ class items_magicos: public arma
         en caso de que algun parametro no este dentro del rango, se arroja un throw y se lo captura con un catch. 
         */
 
-        virtual void mostrar_tipo_arma();
+        void Get_infoarma_general() const override;
         /*
-            imprime por consola el tipo de arma de item magico
+            imprime por consola el tipo de arma de item magico, la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
         */
 
-        virtual void mostrar_daño();
+        void Get_info_magia();
         /*
-            imprime por consola el poder de daño que puede hacer el arma
+            imprime por consola el nivel de magia del item magico y la resistencia a magia oscura
         */
 
-        virtual void mostrar_daño_especial();
+        virtual void Get_item_magico() const = 0;
         /*
-            imprime por consola el poder de daño adicional del item magico con la habilidad especial
-        */
-
-        virtual void mostrar_golpes_disponibles();
-        /*
-            imprime por consola la cantidad de golpes disponibles del arma
-        */
-
-        virtual void mostrar_habilidad_especial();
-        /*
-            imprime por conola la habilidad especial del arma
-        */
-
-        virtual void mostrar_golpes_dispo_especial();
-        /*
-            imprime por consola la cantidad de golpes especiales disponibles del arma
-        */
-
-        virtual double devolver_daño(bool normal);
-        /*
-            retorna el daño del arma depedniendo del tipo de ataque que se quiera
-            si normal = true, se devuelve el daño del arma normal
-            si normal = false, se devuelve el daño del arma con la habilidad especial incluida
+            imprime por consola el tipo de item magico
         */
 };
 
-////////////////////////////clase armas de combate //////////////////////////////
+//////////////// clases derivadas de items magicos //////////////////
+
+class baston : public items_magicos
+{
+    private:
+
+        float largo_baston;
+
+    public:
+
+        void Get_item_magico() const override;
+
+        void Get_largo_baston();
+        /*
+            imprime por consola el largo del baston
+        */
+};
+
+class libro_de_hechizos : public items_magicos
+{
+    private:
+
+        int prestigio_libro; // representa la antiguedad del libro;
+
+    public:
+
+        void Get_item_magico() const override;
+
+        void Get_prestigio();
+};
+
+class pocion : public items_magicos
+{
+    private:
+
+        float durabilidad_pocion;
+
+    public:
+        
+        void Get_item_magico() const override;
+
+        void Get_durabilidad();
+
+};
+
+class amuleto : public items_magicos
+{
+    private:
+        
+        int suerte;
+
+    public:
+       
+        void Get_item_magico() const override;
+
+        void Get_suerte();
+};
+
+///////////////////////////////////////////////clase armas de combate /////////////////////////////////////////////////////////
 
 class armas_combate : public arma
 {
     private:
 
-        armas_magicas_y_combate tipo_arma;
+        int durabilidad_polvo;
 
-        double Daño;
-
-        int cant_golpes_disponibles;
-
-        habilidades_especiales_magicas_y_combate habilidad_especial;
-
-        double daño_extra_especial;
-        
-        int cant_golpes_especial;
+        float precision_disparo;
 
         virtual void restar_usos(bool normal);
 
@@ -185,43 +200,108 @@ class armas_combate : public arma
         en caso de que algun parametro no este dentro del rango, se arroja un throw y se lo captura con un catch. 
         */
 
-        virtual void mostrar_tipo_arma() = 0;
+        void Get_infoarma_general() const override;
+        /*
+            imprime por consola el tipo de arma de arma_combate, la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
+        */
+
+        void Get_info_cambate();
+        /*
+            imprime por consola la durabilidad al polvo del arma y la precision del disparo
+        */
+
+        virtual void Get_arma_combate() const = 0;
         /*
             imprime por consola el tipo de arma de combate
         */
+};
 
-        virtual void mostrar_daño() = 0;
-        /*
-            imprime por consola el poder de daño que puede hacer el arma de item magico
-        */
+/////////////////clases derivadas de armas de combate /////////////
 
-        virtual void mostrar_daño_especial();
-        /*
-            imprime por consola el poder de daño adicional del arma de combate con la habilidad especial
-        */
+class hacha_simple : public armas_combate
+{
+    private:
+        
+        float filo;
 
-        virtual void mostrar_golpes_disponibles() = 0;
-        /*
-            imprime por consola la cantidad de golpes disponibles del arma
-        */
+    public:
+        hacha_simple(/* args */);
 
-        virtual void mostrar_habilidad() = 0;
-        /*
-            imprime por conola la habilidad especial del arma
-        */
+        void Get_arma_combate() const override;
 
-        virtual void mostrar_golpes_dispo_especial() = 0;
+        void Get_filo();
         /*
-            imprime por consola la cantidad de golpes especiales disponibles del arma
-        */
-
-        virtual double devolver_daño(bool normal);
-        /*
-            retorna el daño del arma depedniendo del tipo de ataque que se quiera
-            si normal = true, se devuelve el daño del arma normal
-            si normal = false, se devuelve el daño del arma con la habilidad especial incluida
+            imprime por consola el filo del hacha simple
         */
 };
+
+class hacha_doble : public armas_combate
+{
+    private:
+    
+        float filo;
+
+    public:
+        hacha_doble(/* args */);
+
+        void Get_arma_combate() const override;
+
+        void Get_filo();
+        /*
+            imprime por consola el filo del hacha doble
+        */
+};
+
+class espada :public armas_combate
+{
+    private:
+        
+        float nivel_corte;
+
+    public:
+        espada(/* args */);
+
+        void Get_arma_combate() const override;
+
+        void Get_nivel_corte();
+};
+
+class lanza : public armas_combate
+{
+    private:
+       
+        float distancia_alcanza;
+
+    public:
+        lanza(/* args */);
+
+        void Get_arma_combate() const override;
+
+        void Get_distancia_alcanza();
+        /*
+            imprime por consola la distancia que se puede alcanzar con la lanza
+        */
+        
+};
+
+class garrote : armas_combate
+{
+    private:
+        
+        float peso__garrote;
+
+    public:
+        garrote(/* args */);
+
+        void Get_arma_combate() const override;
+
+        void Get_peso();
+        /* 
+            imprime por consola el peso del garrote
+        */
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 bool pertenece_en_magicos(armas_magicas_y_combate tipo_arma);
 /*
