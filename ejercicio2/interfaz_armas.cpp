@@ -1,77 +1,41 @@
 #include "interfaz_armas.hpp"
 
-bool pertenece_en_magicos(armas_magicas_y_combate arma)
+string obtenerNombreArmaMagica(armas_magicas tipo)
 {
-    return arma >= baston && arma <= amuleto;
-}
-
-bool pertenece_en_combate(armas_magicas_y_combate arma)
-{
-    return arma >= hacha_simple && garrote <= arma;
-}
-
-bool pertenece_habilidad_espe_magico(habilidades_especiales_magicas_y_combate habilidad)
-{
-    return  Explosion_arcana <= habilidad &&  habilidad <= Rafaga_magica;
-}
-
-bool pertenece_habilidad_espe_combate(habilidades_especiales_magicas_y_combate habilidad)
-{
-    return  Impacto_devastador <= habilidad &&  habilidad <= Ruptura_elemental;
-}
-
-string enum_a_string_armas(armas_magicas_y_combate arma) {
-
-    switch (arma) 
+    switch (tipo)
     {
-        case baston: return "baston";
-
-        case libro_de_hechizos: return "libro_de_hechizos";
-
-        case pocion: return "pocion";
-
-        case amuleto: return "amuleto";
-
-        case hacha_simple: return "hacha_simple";
-
-        case hacha_doble: return "hacha_doble";
-
-        case espada: return "espada";
-
-        case lanza: return "lanza";
-
-        case garrote: return "garrote";
-
-        default: return "Valor desconocido";
+        case baston:
+            return "Bastón";
+        case libro_de_hechizos:
+            return "Libro de Hechizos";
+        case pocion:
+            return "Poción";
+        case amuleto:
+            return "Amuleto";
+        default:
+            return "Tipo de arma mágica desconocido";
     }
 }
 
-string enum_a_string_habilidades(habilidades_especiales_magicas_y_combate habilidad) {
-    switch (habilidad) 
+string obtenerNombreArmaCombate(armas_de_combate tipo)
+{
+    switch (tipo)
     {
-        case Explosion_arcana: return "Explosion_arcana";
-
-        case Golpe_elemental: return "Golpe_elemental";
-
-        case Corte_espectral: return "Corte_espectral";
-
-        case Encantamiento_explosivo: return "Encantamiento_explosivo";
-
-        case Rafaga_magica: return "Rafaga_magica";
-
-        case Impacto_devastador: return "Impacto_devastador";
-
-        case Corte_giratorio: return "Corte_giratorio";
-
-        case Golpe_perforante: return "Golpe_perforante";
-
-        case Ataque_ensordecedor: return "Ataque_ensordecedor";
-
-        case Ruptura_elemental: return "Ruptura_elemental";
-
-        default: return "Valor desconocido";
+        case hacha_simple:
+            return "Hacha Simple";
+        case hacha_doble:
+            return "Hacha Doble";
+        case espada:
+            return "Espada";
+        case lanza:
+            return "Lanza";
+        case garrote:
+            return "Garrote";
+        default:
+            return "Tipo de arma de combate desconocido";
     }
 }
+
 
 /////////////////////////////////////////////implementacion de metodos de la clase items magicos//////////////////////////////////////
 
@@ -105,30 +69,170 @@ void items_magicos::restar_usos(bool normal)
     }
 }
 
-items_magicos::items_magicos(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe)
+bool corroborar_intervalo(int min, float valor, int max)
+{
+    return min <= valor <= max;
+}
+
+//////////////////////////////////implementacion metodos de la clase abstracta items magicos //////////////////////////////////////////
+
+
+items_magicos::items_magicos(armas_magicas tip_arma, float level_magico, float resistencia)
 {
     try
     {
-        if (pertenece_en_magicos(tip_arma) && (pertenece_habilidad_espe_magico(habilidad_espe) || pertenece_habilidad_espe_combate(habilidad_espe)))
+        if (corroborar_intervalo(1,nivel_magico,10) &&  corroborar_intervalo(1, resistencia, 10))
+        {
+
+            tipo_arma = tip_arma;
+
+            Daño = daño_magicos[static_cast<int>(tip_arma)];
+
+            cant_usos = usos_armas_magicas[static_cast<int>(tip_arma)];
+
+            this->nivel_magico = level_magico;
+
+            this->resistencia_magia_oscura = resistencia;
+        }
+        else
+        {
+            throw logic_error("error, verifique que los parametros ingresados esten dentro del rango");
+        }
+        
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void items_magicos::Get_infoarma_general() const
+{
+    cout << "daño del arma magica: " << Daño;
+    cout << "cantidad de usos del arma magica: " << cant_usos;
+}
+
+void items_magicos::Get_info_magia()
+{
+    cout << "nivel de magia: " << nivel_magico;
+    cout << "resistencia a la magia oscura: " << resistencia_magia_oscura << endl;
+}
+
+void items_magicos::Get_item_magico()
+{
+    cout << "tipo de item magico: " << obtenerNombreArmaMagica(tipo_arma) << endl;
+}
+
+
+////// implementacion de metodos de la clase derivada baston ////////
+
+baston::baston(armas_magicas tip_arma, float level_magico, float resistencia, float long_baston)
+: items_magicos(tip_arma, level_magico, resistencia), largo_baston(long_baston)
+{
+    try
+    {
+        if (corroborar_intervalo(0, long_baston, 6))
+        {
+            throw std::invalid_argument("error, ingrese un largo de baston[0,10] dentro del intervalo");
+        }   
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void baston::Get_largo_baston()
+{
+    cout << "largo del baston: " << largo_baston << endl;
+}
+
+///////// implementacion de metodos de la clase derivada libro_de_hechizos /////////
+
+libro_de_hechizos::libro_de_hechizos(armas_magicas tip_arma, float level_magico, float resistencia, float prestigio)
+: items_magicos(tip_arma, level_magico, resistencia), prestigio_libro(prestigio)
+{
+    try
+    {
+        if (corroborar_intervalo(0, prestigio_libro, 10))
+        {
+            throw std::invalid_argument(" error, ingrese un valor de prestigio[0,10] dentro del intervalo");
+        }   
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void libro_de_hechizos::Get_prestigio()
+{
+    cout << "prestigio del libro de hechizos: " << prestigio_libro << endl;
+}
+
+//////// implementacion de metodos de la clase derivada pocion //////
+
+pocion::pocion(armas_magicas tip_arma, float level_magico, float resistencia, float duracion_pocion)
+: items_magicos(tip_arma, level_magico, resistencia), durabilidad_pocion(duracion_pocion)
+{
+    try
+    {
+        if (corroborar_intervalo(0, duracion_pocion, 25))
+        {
+            throw std::invalid_argument(" error, ingrese una duracion de la pocion[0,25] dentro del intervalo");
+        }   
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void pocion::Get_durabilidad()
+{
+    cout << "durabilidad de la pocion: " << durabilidad_pocion << endl;
+}
+
+/////// implementacion de metodos de la clase derivada amuleto //////
+
+amuleto::amuleto(armas_magicas tip_arma, float level_magico, float resistencia, float capacidad_suerte)
+: items_magicos(tip_arma, level_magico, resistencia), suerte(capacidad_suerte)
+{
+    try
+    {
+        if (corroborar_intervalo(0, suerte, 10))
+        {
+            throw std::invalid_argument(" error, ingrese una poder de suerte[0,10] dentro del intervalo");
+        }   
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void amuleto::Get_suerte()
+{
+    cout << "suerte del amuleto: " << suerte;
+}
+
+//////////////////////// implementacion de los metodos de la clase abstracta armas_combate ///////////////////////////////
+
+armas_combate::armas_combate(armas_de_combate tip_arma, float durabilidad, float precision)
+{
+    try
+    {
+        if (corroborar_intervalo(1, durabilidad_polvo, 25) && corroborar_intervalo(1, precision, 10))
         {
             tipo_arma = tip_arma;
 
-            cant_golpes_disponibles = usos_armas_magicas_combates[static_cast<int>(tip_arma)];
+            durabilidad_polvo = durabilidad;
 
-            habilidad_especial = habilidad_espe;
+            precision_disparo = precision;
 
-            cant_golpes_especial = usos_hab_magicas_combates[static_cast<int>(habilidad_espe)];
+            Daño = daño_combate[static_cast<int>(tipo_arma)];
 
-            Daño = daño_magicos_combates[static_cast<int>(tip_arma)];
-
-            if (pertenece_habilidad_espe_magico(habilidad_espe))
-            {
-                daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)];
-            }
-            else
-            {
-                daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)]*(0.6);
-            }
+            cant_usos = usos_armas_combate[static_cast<int>(tip_arma)];
         }
         else
         {
@@ -141,70 +245,32 @@ items_magicos::items_magicos(armas_magicas_y_combate tip_arma, habilidades_espec
     }
 }
 
-void items_magicos::mostrar_tipo_arma()
+void armas_combate::Get_infoarma_general() const
 {
-    cout << "tipo de item magico " << enum_a_string_armas(tipo_arma) << endl;
+    cout << " daño del arma de combate " << Daño << endl;
+    cout << " cantidad de usos del arma magica: " << cant_usos << endl;
 }
 
-void items_magicos::mostrar_daño()
+void armas_combate::Get_info_combate()
 {
-    cout << " poder de daño del item magico: " << Daño << endl;
+    cout << "durabilidad al polvo del arma "<< durabilidad_polvo << endl;
 }
 
-void items_magicos::mostrar_daño_especial()
+void armas_combate::Get_arma_combate()
 {
-    cout << " poder de daño del item magico: " << Daño + daño_extra_especial << endl;
+    cout << "tipo de arma de combate: " << obtenerNombreArmaCombate(tipo_arma) << endl;
 }
 
-void items_magicos::mostrar_golpes_disponibles()
-{
-    cout << "cantidadd de golpes_disponibles: " << cant_golpes_disponibles << endl;
-}
+///////////// implementacion de metodos de la clase derivada hacha simple /////////
 
-void items_magicos::mostrar_habilidad_especial()
-{
-    cout << "habilidad especial: " << enum_a_string_habilidades(habilidad_especial) << endl;
-}
-
-void items_magicos::mostrar_golpes_dispo_especial()
-{
-    cout << "golpes disponibles de la habilidad especial: " << cant_golpes_especial << endl;
-}
-
-double items_magicos::devolver_daño(bool normal)
-{
-    restar_usos(normal);
-    if (normal)
-    {
-        return Daño;
-    }
-    return Daño + daño_extra_especial;
-}
-
-//////////////////////////////////////////implementacion metodos de la clase de combate //////////////////////////////////////////
-
-void armas_combate::restar_usos(bool normal)
+hacha_simple::hacha_simple(armas_de_combate tip_arma, float durabilidad, float precision, float filo)
+: armas_combate(tip_arma, durabilidad, precision), Filo(filo)
 {
     try
     {
-        if (normal)
+        if (!corroborar_intervalo(0, filo, 10))
         {
-            if (cant_golpes_disponibles > 0)
-            {
-                cant_golpes_disponibles-=1;
-            }
-            else
-            {
-                throw logic_error("error, te has quedado sin golpes disponibles, verifique si quedan golpes especiales");
-            }
-        }
-        if (cant_golpes_especial > 0)
-        {
-            cant_golpes_especial-=1;
-        }
-        else
-        {
-            throw logic_error("error, te has quedado sin golpes espceciales");
+            throw logic_error("error, ingrese un filo[0,25] mayor a cero");
         }
     }
     catch(const std::exception& e)
@@ -213,34 +279,21 @@ void armas_combate::restar_usos(bool normal)
     }
 }
 
-armas_combate::armas_combate(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe)
+void hacha_simple::Get_filo()
+{
+    cout << "filo del hacha simple: " << Filo << endl;
+}
+
+///////////// implementacion de metodos de la clase derivada hacha doble /////////
+
+hacha_doble::hacha_doble(armas_de_combate tip_arma, float durabilidad, float precision, float filo, float longitud)
+: armas_combate(tip_arma, durabilidad, precision), Filo(filo), longitud_alcanze(longitud)
 {
     try
     {
-        if (pertenece_en_combate(tip_arma) && (pertenece_habilidad_espe_magico(habilidad_espe) || pertenece_habilidad_espe_combate(habilidad_espe)))
+        if (!corroborar_intervalo(0, filo, 10) || !corroborar_intervalo(0, longitud, 25))
         {
-            tipo_arma = tip_arma;
-
-            cant_golpes_disponibles = usos_armas_magicas_combates[static_cast<int>(tip_arma)];
-
-            habilidad_especial = habilidad_espe;
-
-            cant_golpes_especial = usos_hab_magicas_combates[static_cast<int>(habilidad_espe)];
-
-            Daño = daño_magicos_combates[static_cast<int>(tip_arma)];
-
-            if (pertenece_habilidad_espe_combate(habilidad_espe))
-            {
-                daño_extra_especial = daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)];
-            }
-            else
-            {
-                daño_extra_especial = daño_extra_especial = daño_hab_magicos_combates[static_cast<int>(habilidad_espe)]*(0.6);
-            }
-        }
-        else
-        {
-            throw logic_error("error, verifique que los parametros ingresados sean correctos");
+            throw logic_error("error, ingrese un filo[0,10] y una longitud[0,25] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -249,42 +302,81 @@ armas_combate::armas_combate(armas_magicas_y_combate tip_arma, habilidades_espec
     }
 }
 
-void armas_combate::mostrar_tipo_arma()
+void hacha_doble::Get_filo()
 {
-    cout << "tipo de arma de combate: " << enum_a_string_armas(tipo_arma) << endl;
+    cout << "filo del hacha doble:" << Filo << endl;
 }
 
-void armas_combate::mostrar_daño()
+void hacha_doble::Get_longitud_alcanze()
 {
-    cout << " poder de daño del arma de combate: " << Daño << endl;
+    cout << "longitud de alcanza del hacha doble:" << longitud_alcanze << endl;
 }
 
-void armas_combate::mostrar_daño_especial()
-{
-    cout << " poder de daño del arma de combate: " << Daño + daño_extra_especial << endl;
-}
+///////////// implementacion de metodos de la clase derivada espada /////////
 
-void armas_combate::mostrar_golpes_disponibles()
+espada::espada(armas_de_combate tip_arma, float durabilidad, float precision, float corte)
+: armas_combate(tip_arma, durabilidad, precision), nivel_corte(corte)
 {
-    cout << " cantidad de golpes disponibles: " << endl;
-}
-
-void armas_combate::mostrar_habilidad()
-{
-    cout << " habilidad especial: " << enum_a_string_habilidades(habilidad_especial) << endl;
-}
-
-void armas_combate::mostrar_golpes_dispo_especial()
-{
-    cout << "cantidad de golpes disponibles de la habilidad especial: " << cant_golpes_especial << endl;
-}
-
-double armas_combate::devolver_daño(bool normal)
-{
-    restar_usos(normal);
-    if (normal)
+    try
     {
-        return Daño;
+        if (!corroborar_intervalo(0, corte, 10) )
+        {
+            throw logic_error("error, ingrese un nivel de corte[0,10] dentro del rango");
+        }
     }
-    return Daño + daño_extra_especial;
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void espada::Get_nivel_corte()
+{
+    cout << "nivel de corte de la espada: " << nivel_corte << endl;
+}
+
+///////////// implementacion de metodos de la clase lanza /////////
+
+lanza::lanza(armas_de_combate tip_arma, float durabilidad, float precision, float alcanze)
+: armas_combate(tip_arma, durabilidad, precision), distancia_alcanze(alcanze)
+{
+    try
+    {
+        if (!corroborar_intervalo(0, alcanze, 20) )
+        {
+            throw logic_error("error, ingrese una distancia de alcanze[0,20] dentro del rango");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void lanza::Get_distancia_alcanza()
+{
+    cout << "distancia de alcanze de la espada: " << distancia_alcanze << endl;
+}
+
+///////////// implementacion de metodos de la clase garrote ////////////
+
+garrote::garrote(armas_de_combate tip_arma, float durabilidad, float precision, float peso)
+: armas_combate(tip_arma, durabilidad, precision), peso__garrote(peso)
+{
+    try
+    {
+        if (!corroborar_intervalo(0, peso, 50) )
+        {
+            throw logic_error("error, ingrese un peso del garrote[0,50] dentro del rango");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void garrote::Get_peso()
+{
+    cout << "peso del garrote: " << peso__garrote << endl;
 }

@@ -5,6 +5,21 @@ using namespace std;
 
 enum tipos_personajes {hechicero=1, conjurador, brujo, nigromante, barbaro, paladin, caballero, mercenario, gladiador};
 
+/* 
+valores de los daños extra de las habilidades especiales 
+(primera mitad = daños habilidades especiales magicos, segunda mitad = daños habilidades especiales combate)
+*/
+vector<double> daño_hab_magicos_combates = {5.4, 3.7, 8.2, 6.6, 5, 3.7, 5.3, 7, 4.2, 9};
+
+/*
+cant de usos de las habilidades especiales 
+(primera mitad = cant usos habilidades especiales magicos, segunda mitad = cant usos habilidades especiales combate)
+*/
+vector<int> usos_hab_magicas_combates = {3,2,4,1,5,3,2,4};
+
+
+
+
 bool pertenece_a_magos(tipos_personajes mago);
 /*
     retorna true en caso de que el tipo de mago pertenezca al conjunto de magos. caso contrario retorna false
