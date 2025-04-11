@@ -1,34 +1,33 @@
 #include "interfaz_armas.hpp"
 using namespace std;
 
-// enum de los personajes //
+// enum de los magos //
 
-enum tipos_personajes {hechicero=1, conjurador, brujo, nigromante, barbaro, paladin, caballero, mercenario, gladiador};
+enum tipos_magos {hechicero=1, conjurador, brujo, nigromante};
 
-/* 
-valores de los daños extra de las habilidades especiales 
-(primera mitad = daños habilidades especiales magicos, segunda mitad = daños habilidades especiales combate)
-*/
-vector<double> daño_hab_magicos_combates = {5.4, 3.7, 8.2, 6.6, 5, 3.7, 5.3, 7, 4.2, 9};
+// enum de los guerreros // 
 
-/*
-cant de usos de las habilidades especiales 
-(primera mitad = cant usos habilidades especiales magicos, segunda mitad = cant usos habilidades especiales combate)
-*/
-vector<int> usos_hab_magicas_combates = {3,2,4,1,5,3,2,4};
+enum tipos_guerreros {barbaro, paladin, caballero, mercenario, gladiador};
 
+// enum de las habilidades especiales magicas //
 
+enum hab_especiales_magicas {Explosion_arcana = 1, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental };
 
+// enum de las habilidades especiales de combate //
 
-bool pertenece_a_magos(tipos_personajes mago);
-/*
-    retorna true en caso de que el tipo de mago pertenezca al conjunto de magos. caso contrario retorna false
-*/
+enum hab_especiales_combate {Impacto_devastador = 1, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental };
 
-bool pertenence_a_guerreros(tipos_personajes guerrero);
-/*
-    retorna true en caso de que el tipo de guerrero pertenezca al conjunto de guerreros. caso contrario retorna false
-*/
+/* valores de los daños extra de las habilidades especiales magicas */
+vector<double> daño_hab_magicos = {5.4, 3.7, 8.2, 6.6, 5};
+
+/*  valores de los daños extra de las habilidades especiales magicas */
+vector<double> daño_hab_combate = { 3.7, 5.3, 7, 4.2, 9};
+
+/* cant de usos de las habilidades especiales magicas */
+vector<int> usos_hab_magicas = {3,2,4,1};
+
+/* cant de usos de las habilidades especiales de combate */
+vector<int> usos_hab_combate = {5,3,2,4};
 
 ///////////// interfaz de pesonaje ////////////////
 
@@ -36,47 +35,25 @@ class personaje
 {
     public:
 
-        virtual void mostrar_tipo_personaje() = 0;
+        virtual void mostrar_info_personaje() const = 0;
         /*
             muestra por consola el tipo de personaje
         */
 
-        virtual tipos_personajes retornar_tipo_personaje() = 0;
-        /*
-        
-        */
-
-        virtual void mostrar_hp() = 0;
+        virtual void mostrar_hp() const= 0;
         /*
             muestra por consola el hp del personaje
         */
 
-        virtual double retornar_hp() = 0;
+        virtual double retornar_hp() const = 0;
         /*
             retorna el hp del personaje
         */
-
-      
 
         virtual void modificar_hp(double daño) = 0;
         /*
             modifica el hp del personaje, restandole el daño
         */
-
-        virtual void mostrar_dato1() = 0;
-        /*
-            muestra un dato del personaje
-        */
-
-       virtual void mostrar_dato2() = 0;
-        /*
-            muestra otro dato del personaje
-        */
-       
-       virtual void mostrar_habilidad() = 0;
-       /*
-            muestra la habilidad especial del personaje
-       */
 };
 
 ///////////// clase mago ////////////////
@@ -85,64 +62,29 @@ class mago : public personaje
 {
     private:
 
-        tipos_personajes tipo_mago;
+        vector<unique_ptr<arma>> armas;
 
-        habilidades_especiales_magicas_y_combate habilidad_especial;
+        tipos_magos tipo_mago;
+
+        hab_especiales_magicas habilidad_especial;
 
         int poder_magia; // 1 <= poder_magia <= 10
-
-        float duracion_encantamientos; //cantidad de segundos que dura un hechizo
 
         double hp;
 
     public:
 
-        mago(tipos_personajes mago, double Hp, int magia, float dur_encantamiento, habilidades_especiales_magicas_y_combate hab_especial);
-        /*
-            constructor de la clase mago, donde se inicializa el tipo de mago, el Hp, el poder de magia y la duracion de sus encantamientos. 
-          
-            en el caso que alguno de los parametros no cumpla con el rango, se arrojara un throw y se lo capturara con un catch
-        */
+        mago(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, double vida, arma tipo_arma, float dato1, float dato2, float dato3);
+ 
+        void mostrar_info_personaje() const override;
 
-        virtual void mostrar_tipo_personaje();
-        /*
-            imprime por consola el tipo de mago
-        */
+        void mostrar_hp() const override;
 
-        virtual void mostrar_hp();
-        /*
-            imprime por consola el hp del mago
-        */
+        double retornar_hp() const override;
 
-        virtual double retornar_hp();
-        /*
-            retorna el hp del mago
-        */
+        void agregar_arma();
 
-        virtual tipos_personajes retornar_tipo_personaje();
-        /*
-            retorna el tipo de personaje
-        */
-
-        virtual void modificar_hp(double daño);
-        /*
-            modifica el hp del mago, restandole el daño
-        */
-
-        virtual void mostrar_dato1();
-        /*
-            imprime por consola el poder de magia del mago
-        */
-
-       virtual void mostrar_dato2();
-       /*
-          imprime por consola la duracion de los encantamientos del mago
-       */
-
-       virtual void mostrar_habilidad();
-       /*
-            imprime por consola la habilidad especial del mago
-       */
+        void modificar_hp();
 };
 
 ///////////////////// clases derivadas de la clase mago /////////////////////////
@@ -150,9 +92,12 @@ class mago : public personaje
 class  hechicero : public mago
 {
     private:
-        /* data */
+        
+        float habilidad_fuente;
+
     public:
-        hechicero(/* args */);
+
+        hechicero(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, double vida, arma tipo_arma, float dato1, float dato2, float dato3, );
     
 };
 

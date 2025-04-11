@@ -1,15 +1,5 @@
 #include "interfaz_personajes.hpp"
 
-bool pertenece_a_magos(tipos_personajes mago)
-{
-    return hechicero <= mago && hechicero <= nigromante;
-}
-
-bool pertenence_a_guerreros(tipos_personajes guerrero)
-{
-    return barbaro <= guerrero && guerrero <= gladiador;
-}
-
 //////////////////////////////////////////////////implementacion metodos de la clase mago////////////////////////////////////////////////
 
 mago::mago(tipos_personajes mago, double Hp, int magia, float dur_encantamiento, habilidades_especiales_magicas_y_combate hab_especial)

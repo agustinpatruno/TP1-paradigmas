@@ -29,13 +29,6 @@ enum armas_magicas {baston = 1, libro_de_hechizos, pocion, amuleto};
 
 enum armas_de_combate {hacha_simple = 1, hacha_doble, espada, lanza, garrote};
 
-// enum de las habilidades especiales magicas //
-
-enum habilidades_especiales_magicas {Explosion_arcana = 1, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental };
-
-// enum de las habilidades especiales de combate //
-
-enum habilidades_especiales_combate {Impacto_devastador = 1, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental };
 
 bool corroborar_intervalo(int min, float valor, int max);
 
@@ -56,7 +49,6 @@ class arma
 };
 
 /////////////////////clase items magicos ///////////////////////////////////
-
 
 class items_magicos: public arma
 {
@@ -263,23 +255,3 @@ class garrote : armas_combate
 };
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-bool pertenece_en_magicos(armas_magicas tipo_arma);
-/*
-    retorna true si el tipo de arma es de los item magicos. retorna false en caso contrario
-*/
-
-bool pertenece_en_combate(armascombate tipo_arma);
-/*
-    retorna true si el tipo de arma es de las armas de combate. retorna false en caso contrario
-*/
-
-bool pertenece_habilidad_espe_magico(habilidades_especiales_magicas_y_combate habilidad_especial);
-/*
-    retorna true si la habilidad especial es de las de los itemas magicos. retorna false en caso contrario
-*/
-
-bool pertenece_habilidad_espe_combate(habilidades_especiales_magicas_y_combate habilidad_combate);
-/*
-    retorna true si la habilidad especial es de las armas de combate. retorna false en caso contrario
-*/

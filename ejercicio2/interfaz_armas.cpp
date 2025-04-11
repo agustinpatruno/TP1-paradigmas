@@ -45,22 +45,14 @@ void items_magicos::restar_usos(bool normal)
     {
         if (normal)
         {
-            if (cant_golpes_disponibles > 0)
+            if (cant_usos > 0)
             {
-                cant_golpes_disponibles-=1;
+                cant_usos-=1;
             }
             else
             {
                 throw logic_error("error, te has quedado sin golpes disponibles, verifique si quedan golpes especiales");
             }
-        }
-        if (cant_golpes_especial > 0)
-        {
-            cant_golpes_especial-=1;
-        }
-        else
-        {
-            throw logic_error("error, te has quedado sin golpes espceciales");
         }
     }
     catch(const std::exception& e)
@@ -75,7 +67,6 @@ bool corroborar_intervalo(int min, float valor, int max)
 }
 
 //////////////////////////////////implementacion metodos de la clase abstracta items magicos //////////////////////////////////////////
-
 
 items_magicos::items_magicos(armas_magicas tip_arma, float level_magico, float resistencia)
 {
@@ -131,7 +122,7 @@ baston::baston(armas_magicas tip_arma, float level_magico, float resistencia, fl
 {
     try
     {
-        if (corroborar_intervalo(0, long_baston, 6))
+        if (!corroborar_intervalo(0, long_baston, 6))
         {
             throw std::invalid_argument("error, ingrese un largo de baston[0,10] dentro del intervalo");
         }   
@@ -154,7 +145,7 @@ libro_de_hechizos::libro_de_hechizos(armas_magicas tip_arma, float level_magico,
 {
     try
     {
-        if (corroborar_intervalo(0, prestigio_libro, 10))
+        if (!corroborar_intervalo(0, prestigio_libro, 10))
         {
             throw std::invalid_argument(" error, ingrese un valor de prestigio[0,10] dentro del intervalo");
         }   
@@ -177,7 +168,7 @@ pocion::pocion(armas_magicas tip_arma, float level_magico, float resistencia, fl
 {
     try
     {
-        if (corroborar_intervalo(0, duracion_pocion, 25))
+        if (!corroborar_intervalo(0, duracion_pocion, 25))
         {
             throw std::invalid_argument(" error, ingrese una duracion de la pocion[0,25] dentro del intervalo");
         }   
@@ -200,7 +191,7 @@ amuleto::amuleto(armas_magicas tip_arma, float level_magico, float resistencia, 
 {
     try
     {
-        if (corroborar_intervalo(0, suerte, 10))
+        if (!corroborar_intervalo(0, suerte, 10))
         {
             throw std::invalid_argument(" error, ingrese una poder de suerte[0,10] dentro del intervalo");
         }   
@@ -222,7 +213,7 @@ armas_combate::armas_combate(armas_de_combate tip_arma, float durabilidad, float
 {
     try
     {
-        if (corroborar_intervalo(1, durabilidad_polvo, 25) && corroborar_intervalo(1, precision, 10))
+        if (!corroborar_intervalo(1, durabilidad_polvo, 25) && corroborar_intervalo(1, precision, 10))
         {
             tipo_arma = tip_arma;
 
