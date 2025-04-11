@@ -54,9 +54,11 @@ class personaje
         /*
             modifica el hp del personaje, restandole el daño
         */
+
+        virtual void agregar_arma( arma tipo_arma, float dato1, float dato2, float dato3) = 0;
 };
 
-///////////// clase mago ////////////////
+///////////////////////////////////////// clase abstracta mago //////////////////////////////////////////////////////
 
 class mago : public personaje
 {
@@ -74,7 +76,7 @@ class mago : public personaje
 
     public:
 
-        mago(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, double vida, arma tipo_arma, float dato1, float dato2, float dato3);
+        mago(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, double vida);
  
         void mostrar_info_personaje() const override;
 
@@ -82,9 +84,9 @@ class mago : public personaje
 
         double retornar_hp() const override;
 
-        void agregar_arma();
-
         void modificar_hp();
+
+        void agregar_arma(arma tipo_arma, float dato1, float dato2, float dato3);
 };
 
 ///////////////////// clases derivadas de la clase mago /////////////////////////
@@ -97,108 +99,104 @@ class  hechicero : public mago
 
     public:
 
-        hechicero(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, double vida, arma tipo_arma, float dato1, float dato2, float dato3, );
+        hechicero(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, float hab_fuente);
     
+        void Get_habilidad_fuente();
+        /*
+            imprime por consola la habilidad con la fuente que tiene el hechicero
+        */
 };
 
-class  conjugador : public mago
+class  conjurador : public mago
 {
     private:
-        /* data */
+        
+    float conocimiento_ancestral;
+
     public:
-        conjugador(/* args */);
+
+        conjurador(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, arma tipo_arma, float dato1, float dato2, float dato3, float conocimiento);
+
+        void Get_conocimiento();
+        /*
+            imprime por consola el nivel de conocimiento ancestral del conjurador
+        */
 };
 
 class brujo : public mago
 {
     private:
-        /* data */
+        
+        float manipulacion_naturaleza;
+
     public:
-        brujo(/* args */);
+        brujo(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, arma tipo_arma, float dato1, float dato2, float dato3, float manipulacion);
     
+        void Get_manipulacion_naturaleza();
+        /*
+            imprime por consola el nivel de manipulacion de naturaleza que tiene el brujo
+        */
 };
 
-class nigronte : public mago
+class nigromante : public mago
 {
     private:
-        /* data */
+        
+        float manipulacion_almas;
+
     public:
-        nigronte(/* args */);
+
+        nigromante(tipos_magos tip_mago, hab_especiales_magicas hab_especial, int magia, arma tipo_arma, float dato1, float dato2, float dato3, float mani_armas);
+
+        void Get_manipulacion_almas();
+        /*
+            imprime por conosola el nivel de manipulacion de almas del nigronte
+        */
 };
 
-////////////////// clase guerrero /////////////////////
+//////////////////////////////////////////// clase abstracta guerrero //////////////////////////////////////////////////
 
-class guerrero
+class guerrero : public personaje
 {
     private:
 
-        tipos_personajes tipo_guerrero; // tipo de guerrero
+        vector<unique_ptr<arma>> armas;
 
-        habilidades_especiales_magicas_y_combate habilidad_especial; // habilidad especial
+        tipos_guerreros tipo_guerrero; // tipo de guerrero
 
-        float altura; // altua del guerrero Mts
+        hab_especiales_combate habilidad_especial; // habilidad especial
 
-        float peso; // peso del guerrero en Kg
+        float capacidad_fuerza; // fuerza del guerrero
 
         double hp; // puntos de vida
 
     public:
 
-        guerrero(tipos_personajes guerrero, double hp, float alt, float weight, habilidades_especiales_magicas_y_combate hab_especial);
+        guerrero(tipos_guerreros guerrero, float fuerza, hab_especiales_combate hab_especial);
+
+        void mostrar_info_personaje() const override;
         /*
-            constructor de la clase guerrero donde se inicializa el tipo de guerrero, el Hp, el peso y altura del guerrero. 
-            por otro lado, se crea un objeto de la interfaz arma, donde depende que tipo de arma sea y que habilidad especial, se le 
-            bajara en porcentaje la capacidad de daño de la misma.
-            explicacion: 
-                - si se usa un tipo de arma de combate -> se usa el 100% de su poder de daño.
-                - si se usa un tipo de arma de item guerrero -> se usa el 80& de su poder de daño.
-            
-                - si se usa una habilidad especial dentro de los combates -> se usa el 100% de su poder de daño
-                - si se usa una habilidad especial dentro de los magicos -> se usa el 60& de su poder de daño
-            
-               
-            en el caso que alguno de los parametros no cumpla con el rango de posibilidades, se arrojara un throw y se lo capturara 
-            con un catch.
+            muestra por consola el tipo de personaje
         */
 
-        virtual void mostrar_tipo_personaje();
+        void mostrar_hp() const override;
         /*
-            imprime por consola el tipo de guerrero. 
-        */
-      
-        virtual void mostrar_hp();
-        /*
-            imprime por consola el hp del guerrero. 
+            muestra por consola el hp del personaje
         */
 
-        virtual double retornar_hp();
+        double retornar_hp() const override;
         /*
-            retorna el hp del guerrero
+            retorna el hp del personaje
         */
 
-        virtual tipos_personajes retornar_tipo_personaje();
+        void modificar_hp(double daño);
         /*
-            retorna el tipo de personaje
+            modifica el hp del personaje, restandole el daño
         */
 
-        virtual void modificar_hp(double daño);
+        void agregar_arma(arma tipo_arma, float dato1, float dato2, float dato3);
         /*
-            modifica el hp del guerrero, restandole el daño
-        */
-
-        virtual void mostrar_dato1();
-        /*
-            imprime por consola la altura del guerrero. 
-        */
-        
-        virtual void mostrar_dato2();
-        /*
-            imprime por consola el peso del guerrero.
-        */
-
-        virtual void mostrar_habilidad();
-        /*
-            imprime por consola la habilidad del guerrero.
+            crear un arma y la agrega al vector de armas
         */
 };
 
@@ -245,6 +243,3 @@ class gladiador : public guerrero
         gladiador(/* args */);
     
 };
-
-
-
