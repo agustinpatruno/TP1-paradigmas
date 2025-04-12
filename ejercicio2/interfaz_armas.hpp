@@ -4,33 +4,33 @@
 #include <vector>
 using namespace std;
 
-string obtenerNombreArmaMagica(armas_magicas tipo);
-
-string obtenerNombreArmaCombate(armas_de_combate tipo);
-
-// valores del daño de las armas magicas //
-vector<double> daño_magicos = {12.5, 13, 14, 10};
-
-// valores del daño de las armas de combate //
-vector<double> daño_combate = { 9, 16, 13.2, 15, 7.9};
-
-// cant de usos de cada arma magica //
-vector<int> usos_armas_magicas = {12,11,15,10};
-
-// cant de usos de cada arma de combate //
-vector<int> usos_armas_combate = {13,16,12,9};
+string obtenerNombreArma(armas_totales tipo);
 
 
-// enuma de las armas magicas//
+bool pertenece_armas_magicas(armas_totales tipo_arma);
+/*
+    retorna true si el tipo de arma pertenece a las armas magicas, retorna false en caso contrario.
+*/
 
-enum armas_magicas {baston = 1, libro_de_hechizos, pocion, amuleto};
+bool pertenece_armas_combate(armas_totales tipo_arma);
+/*
+    retorna true si el tipo de arma pertenece a las armas de combate, retorna false en caso contrario.
+*/
 
-// enum de las armas de combates //
+// valores del daño de las armas magicas y de combate//
+vector<double> daño_magicos_combate = {12.5, 13, 14, 10, 9, 16, 13.2, 15, 7.9};
 
-enum armas_de_combate {hacha_simple = 1, hacha_doble, espada, lanza, garrote};
+// cant de usos de cada arma magica y de combate //
+vector<int> usos_armas_magicas_combate = {12,11,15,10,13,16,12,9};
+
+// enum de las armas totales //
+enum armas_totales {arma_baston = 1, arma_libro_de_hechizos, arma_pocion, arma_amuleto, arma_hacha_simple, arma_hacha_doble, arma_espada, arma_lanza, arma_garrote};
 
 
 bool corroborar_intervalo(int min, float valor, int max);
+/*
+    retorna true si el valor esta dentro del intervalo, retorna false en caso contrario
+*/
 
 ///////////////////////////////////clase interfaz arma ////////////////////////////////////////////
 
@@ -54,7 +54,7 @@ class items_magicos: public arma
 {
     protected:
 
-        armas_magicas tipo_arma;
+        armas_totales tipo_arma;
 
         float nivel_magico; // 1 <= nivel_magico <= 10
 
@@ -64,7 +64,7 @@ class items_magicos: public arma
 
     public:
 
-        items_magicos(armas_magicas tip_arma, float level_magico, float resistencia);
+        items_magicos(armas_totales tip_arma, float level_magico, float resistencia, double daño);
 
         void Get_infoarma_general() const override;
         /*
@@ -92,7 +92,7 @@ class baston : public items_magicos
 
     public:
 
-        baston(armas_magicas tip_arma, float level_magico, float resistencia, float largo_baston);
+        baston(armas_totales tip_arma, float level_magico, float resistencia, float largo_baston, double daño);
 
         void Get_largo_baston();
         /*
@@ -108,7 +108,7 @@ class libro_de_hechizos : public items_magicos
 
     public:
 
-        libro_de_hechizos(armas_magicas tip_arma, float level_magico, float resistencia, float prestigio);
+        libro_de_hechizos(armas_totales tip_arma, float level_magico, float resistencia, float prestigio, double daño);
 
         void Get_prestigio();
 };
@@ -121,7 +121,7 @@ class pocion : public items_magicos
 
     public:
 
-        pocion(armas_magicas tip_arma, float level_magico, float resistencia, float durabilidad_pocion);
+        pocion(armas_totales tip_arma, float level_magico, float resistencia, float durabilidad_pocion, double daño);
 
         void Get_durabilidad();
 };
@@ -134,7 +134,7 @@ class amuleto : public items_magicos
 
     public:
 
-        amuleto(armas_magicas tip_arma, float level_magico, float resistencia, float capacidad_suerte);
+        amuleto(armas_totales tip_arma, float level_magico, float resistencia, float capacidad_suerte, double daño);
 
         void Get_suerte();
 };
@@ -145,7 +145,7 @@ class armas_combate : public arma
 {
     private:
 
-        armas_de_combate tipo_arma;
+        armas_totales tipo_arma;
 
         float durabilidad_polvo;
 
@@ -155,7 +155,7 @@ class armas_combate : public arma
 
     public:
 
-        armas_combate(armas_de_combate tip_arma, float durabilidad, float precision);
+        armas_combate(armas_totales tip_arma, float durabilidad, float precision, double daño);
        
 
         void Get_infoarma_general() const override;
@@ -183,7 +183,7 @@ class hacha_simple : public armas_combate
         float Filo;
 
     public:
-        hacha_simple(armas_de_combate tip_arma, float durabilidad, float precision, float filo);
+        hacha_simple(armas_totales tip_arma, float durabilidad, float precision, float filo, double daño);
 
         void Get_filo();
         /*
@@ -201,7 +201,7 @@ class hacha_doble : public armas_combate
 
     public:
 
-        hacha_doble(armas_de_combate tip_arma, float durabilidad, float precision, float filo, float longitud);
+        hacha_doble(armas_totales tip_arma, float durabilidad, float precision, float filo, float longitud, double daño);
 
         void Get_filo();
         /*
@@ -218,7 +218,7 @@ class espada :public armas_combate
         float nivel_corte;
 
     public:
-        espada(armas_de_combate tip_arma, float durabilidad, float precision, float corte);
+        espada(armas_totales tip_arma, float durabilidad, float precision, float corte, double daño);
 
         void Get_nivel_corte();
 };
@@ -230,7 +230,7 @@ class lanza : public armas_combate
         float distancia_alcanze;
 
     public:
-        lanza(armas_de_combate tip_arma, float durabilidad, float precision, float alcanze);
+        lanza(armas_totales tip_arma, float durabilidad, float precision, float alcanze, double daño);
 
         void Get_distancia_alcanza();
         /*
@@ -246,7 +246,7 @@ class garrote : armas_combate
         float peso__garrote;
 
     public:
-        garrote(armas_de_combate tip_arma, float durabilidad, float precision, float peso);
+        garrote(armas_totales tip_arma, float durabilidad, float precision, float peso, double daño);
 
         void Get_peso();
         /* 

@@ -1,41 +1,53 @@
 #include "interfaz_armas.hpp"
 
-string obtenerNombreArmaMagica(armas_magicas tipo)
-{
-    switch (tipo)
-    {
-        case baston:
-            return "Bastón";
-        case libro_de_hechizos:
-            return "Libro de Hechizos";
-        case pocion:
-            return "Poción";
-        case amuleto:
-            return "Amuleto";
-        default:
-            return "Tipo de arma mágica desconocido";
-    }
-}
+////// funciones auxiliares ///////
 
-string obtenerNombreArmaCombate(armas_de_combate tipo)
+string obtenerNombreArma(armas_totales tipo)
 {
     switch (tipo)
     {
-        case hacha_simple:
+        case arma_baston:
+            return "Bastón";
+        case arma_libro_de_hechizos:
+            return "Libro de Hechizos";
+        case arma_pocion:
+            return "Poción";
+        case arma_amuleto:
+            return "Amuleto";
+        case arma_hacha_simple:
             return "Hacha Simple";
-        case hacha_doble:
+        case arma_hacha_doble:
             return "Hacha Doble";
-        case espada:
+        case arma_espada:
             return "Espada";
-        case lanza:
+        case arma_lanza:
             return "Lanza";
-        case garrote:
+        case arma_garrote:
             return "Garrote";
         default:
             return "Tipo de arma de combate desconocido";
     }
 }
 
+bool pertenece_armas_magicas(armas_totales tipo_arma)
+{
+    return arma_baston <= tipo_arma <= arma_amuleto;
+}
+
+bool pertenece_armas_combate(armas_totales tipo_arma)
+{
+    return arma_hacha_simple <= tipo_arma <= arma_garrote;
+}
+
+bool corroborar_intervalo(int min, float valor, int max)
+{
+    if (max < min)
+    {
+        return false;
+    }
+    
+    return min <= valor <= max;
+}
 
 /////////////////////////////////////////////implementacion de metodos de la clase items magicos//////////////////////////////////////
 
@@ -61,25 +73,17 @@ void items_magicos::restar_usos(bool normal)
     }
 }
 
-bool corroborar_intervalo(int min, float valor, int max)
-{
-    return min <= valor <= max;
-}
-
-//////////////////////////////////implementacion metodos de la clase abstracta items magicos //////////////////////////////////////////
-
-items_magicos::items_magicos(armas_magicas tip_arma, float level_magico, float resistencia)
+items_magicos::items_magicos(armas_totales tip_arma, float level_magico, float resistencia, double daño)
 {
     try
     {
-        if (corroborar_intervalo(1,nivel_magico,10) &&  corroborar_intervalo(1, resistencia, 10))
+        if (corroborar_intervalo(1,nivel_magico,10) &&  corroborar_intervalo(1, resistencia, 10) && pertenece_armas_magicas(tip_arma) && daño > 0)
         {
-
             tipo_arma = tip_arma;
 
-            Daño = daño_magicos[static_cast<int>(tip_arma)];
+            Daño = daño;
 
-            cant_usos = usos_armas_magicas[static_cast<int>(tip_arma)];
+            cant_usos = usos_armas_magicas_combate[static_cast<int>(tip_arma)];
 
             this->nivel_magico = level_magico;
 
@@ -87,9 +91,8 @@ items_magicos::items_magicos(armas_magicas tip_arma, float level_magico, float r
         }
         else
         {
-            throw logic_error("error, verifique que los parametros ingresados esten dentro del rango");
+            throw logic_error("error, verifique que los parametros ingresados esten dentro de los rangos");
         }
-        
     }
     catch(const std::exception& e)
     {
@@ -111,14 +114,15 @@ void items_magicos::Get_info_magia()
 
 void items_magicos::Get_item_magico()
 {
-    cout << "tipo de item magico: " << obtenerNombreArmaMagica(tipo_arma) << endl;
+    cout << "tipo de item magico: " << obtenerNombreArma(tipo_arma) << endl;
 }
 
 
-////// implementacion de metodos de la clase derivada baston ////////
+// implementacion de metodos de la clase derivada baston //
 
-baston::baston(armas_magicas tip_arma, float level_magico, float resistencia, float long_baston)
-: items_magicos(tip_arma, level_magico, resistencia), largo_baston(long_baston)
+
+baston::baston(armas_totales tip_arma, float level_magico, float resistencia, float long_baston, double daño)
+: items_magicos(tip_arma, level_magico, resistencia, daño), largo_baston(long_baston)
 {
     try
     {
@@ -138,10 +142,10 @@ void baston::Get_largo_baston()
     cout << "largo del baston: " << largo_baston << endl;
 }
 
-///////// implementacion de metodos de la clase derivada libro_de_hechizos /////////
+// implementacion de metodos de la clase derivada libro_de_hechizos //
 
-libro_de_hechizos::libro_de_hechizos(armas_magicas tip_arma, float level_magico, float resistencia, float prestigio)
-: items_magicos(tip_arma, level_magico, resistencia), prestigio_libro(prestigio)
+libro_de_hechizos::libro_de_hechizos(armas_totales tip_arma, float level_magico, float resistencia, float prestigio, double daño)
+: items_magicos(tip_arma, level_magico, resistencia, daño), prestigio_libro(prestigio)
 {
     try
     {
@@ -161,10 +165,10 @@ void libro_de_hechizos::Get_prestigio()
     cout << "prestigio del libro de hechizos: " << prestigio_libro << endl;
 }
 
-//////// implementacion de metodos de la clase derivada pocion //////
+// implementacion de metodos de la clase derivada pocion //
 
-pocion::pocion(armas_magicas tip_arma, float level_magico, float resistencia, float duracion_pocion)
-: items_magicos(tip_arma, level_magico, resistencia), durabilidad_pocion(duracion_pocion)
+pocion::pocion(armas_totales tip_arma, float level_magico, float resistencia, float duracion_pocion, double daño)
+: items_magicos(tip_arma, level_magico, resistencia, daño), durabilidad_pocion(duracion_pocion)
 {
     try
     {
@@ -184,10 +188,10 @@ void pocion::Get_durabilidad()
     cout << "durabilidad de la pocion: " << durabilidad_pocion << endl;
 }
 
-/////// implementacion de metodos de la clase derivada amuleto //////
+// implementacion de metodos de la clase derivada amuleto //
 
-amuleto::amuleto(armas_magicas tip_arma, float level_magico, float resistencia, float capacidad_suerte)
-: items_magicos(tip_arma, level_magico, resistencia), suerte(capacidad_suerte)
+amuleto::amuleto(armas_totales tip_arma, float level_magico, float resistencia, float capacidad_suerte, double daño)
+: items_magicos(tip_arma, level_magico, resistencia, daño), suerte(capacidad_suerte)
 {
     try
     {
@@ -207,13 +211,13 @@ void amuleto::Get_suerte()
     cout << "suerte del amuleto: " << suerte;
 }
 
-//////////////////////// implementacion de los metodos de la clase abstracta armas_combate ///////////////////////////////
+////////////////////////////// implementacion de los metodos de la clase abstracta armas_combate ////////////////////////////////////////
 
-armas_combate::armas_combate(armas_de_combate tip_arma, float durabilidad, float precision)
+armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float precision, double daño)
 {
     try
     {
-        if (!corroborar_intervalo(1, durabilidad_polvo, 25) && corroborar_intervalo(1, precision, 10))
+        if (!corroborar_intervalo(1, durabilidad_polvo, 25) && corroborar_intervalo(1, precision, 10) && pertenece_armas_combate(tip_arma) && daño >0)
         {
             tipo_arma = tip_arma;
 
@@ -221,9 +225,9 @@ armas_combate::armas_combate(armas_de_combate tip_arma, float durabilidad, float
 
             precision_disparo = precision;
 
-            Daño = daño_combate[static_cast<int>(tipo_arma)];
+            Daño = daño;
 
-            cant_usos = usos_armas_combate[static_cast<int>(tip_arma)];
+            cant_usos = usos_armas_magicas_combate[static_cast<int>(tip_arma)];
         }
         else
         {
@@ -249,13 +253,13 @@ void armas_combate::Get_info_combate()
 
 void armas_combate::Get_arma_combate()
 {
-    cout << "tipo de arma de combate: " << obtenerNombreArmaCombate(tipo_arma) << endl;
+    cout << "tipo de arma de combate: " << obtenerNombreArma(tipo_arma) << endl;
 }
 
-///////////// implementacion de metodos de la clase derivada hacha simple /////////
+// implementacion de metodos de la clase derivada hacha simple //
 
-hacha_simple::hacha_simple(armas_de_combate tip_arma, float durabilidad, float precision, float filo)
-: armas_combate(tip_arma, durabilidad, precision), Filo(filo)
+hacha_simple::hacha_simple(armas_totales tip_arma, float durabilidad, float precision, float filo, double daño)
+: armas_combate(tip_arma, durabilidad, precision, daño), Filo(filo)
 {
     try
     {
@@ -275,10 +279,10 @@ void hacha_simple::Get_filo()
     cout << "filo del hacha simple: " << Filo << endl;
 }
 
-///////////// implementacion de metodos de la clase derivada hacha doble /////////
+// implementacion de metodos de la clase derivada hacha doble //
 
-hacha_doble::hacha_doble(armas_de_combate tip_arma, float durabilidad, float precision, float filo, float longitud)
-: armas_combate(tip_arma, durabilidad, precision), Filo(filo), longitud_alcanze(longitud)
+hacha_doble::hacha_doble(armas_totales tip_arma, float durabilidad, float precision, float filo, float longitud, double daño)
+: armas_combate(tip_arma, durabilidad, precision, daño), Filo(filo), longitud_alcanze(longitud)
 {
     try
     {
@@ -303,10 +307,10 @@ void hacha_doble::Get_longitud_alcanze()
     cout << "longitud de alcanza del hacha doble:" << longitud_alcanze << endl;
 }
 
-///////////// implementacion de metodos de la clase derivada espada /////////
+// implementacion de metodos de la clase derivada espada //
 
-espada::espada(armas_de_combate tip_arma, float durabilidad, float precision, float corte)
-: armas_combate(tip_arma, durabilidad, precision), nivel_corte(corte)
+espada::espada(armas_totales tip_arma, float durabilidad, float precision, float corte, double daño)
+: armas_combate(tip_arma, durabilidad, precision, daño), nivel_corte(corte)
 {
     try
     {
@@ -326,10 +330,10 @@ void espada::Get_nivel_corte()
     cout << "nivel de corte de la espada: " << nivel_corte << endl;
 }
 
-///////////// implementacion de metodos de la clase lanza /////////
+// implementacion de metodos de la clase lanza //
 
-lanza::lanza(armas_de_combate tip_arma, float durabilidad, float precision, float alcanze)
-: armas_combate(tip_arma, durabilidad, precision), distancia_alcanze(alcanze)
+lanza::lanza(armas_totales tip_arma, float durabilidad, float precision, float alcanze, double daño)
+: armas_combate(tip_arma, durabilidad, precision, daño), distancia_alcanze(alcanze)
 {
     try
     {
@@ -349,10 +353,10 @@ void lanza::Get_distancia_alcanza()
     cout << "distancia de alcanze de la espada: " << distancia_alcanze << endl;
 }
 
-///////////// implementacion de metodos de la clase garrote ////////////
+// implementacion de metodos de la clase garrote //
 
-garrote::garrote(armas_de_combate tip_arma, float durabilidad, float precision, float peso)
-: armas_combate(tip_arma, durabilidad, precision), peso__garrote(peso)
+garrote::garrote(armas_totales tip_arma, float durabilidad, float precision, float peso, double daño)
+: armas_combate(tip_arma, durabilidad, precision, daño), peso__garrote(peso)
 {
     try
     {
