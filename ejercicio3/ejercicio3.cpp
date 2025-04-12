@@ -12,156 +12,149 @@ int generarAleatorio(int minimo, int maximo)
 
 ////////////////////////////////////////implementacion de los metodos de personaje armado//////////////////////////////////////////////
 
-personaje_armado::personaje_armado(tipos_personajes personaje, double hp, auto dato1, auto dato2, habilidades_especiales_magicas_y_combate hab_especial, int cant_armas)
+void crear_personajes()
 {
-    try
+    int cant_magos = generarAleatorio(3,7);
+    cout << "numero aleatorio de la cantidad de magos" << endl;
+
+    int cant_guerreros = generarAleatorio(3,7);
+    cout << "numero aleatorio de la cantidad de guerreros" << endl;
+
+    vector<shared_ptr<mago>> magos;
+
+    vector<shared_ptr<guerrero>> guerreros;
+
+    for (int i = 0; i < cant_magos; i++)
     {
-        if (pertenece_a_magos(personaje))
+        int numero_mago = generarAleatorio(1,4); // valor aleatoria que representa el numero de mago en el enum de tipos_magos
+
+        int numero_habilidad = generarAleatorio(1,10); // valor aleatorio que representa la habilidad del mago
+
+        int cant_armas = generarAleatorio(0,2); // valor aleatorio que representa la cantidad de armas
+
+        int dato1 = generarAleatorio(1,10); // valor aleatorio que representa la magia
+
+        int dato_personal = generarAleatorio(1,10); // valor aleatorio que representa el dato particular de cada clase derivada
+    
+        tipos_magos tipo_mago = static_cast<tipos_magos>(numero_mago); // casteo del tipo de mago
+
+        hab_totales habilidad = static_cast<hab_totales>(numero_habilidad); // casteo de la habilidad especial 
+
+        shared_ptr<mago> nuevo_mago;
+
+        switch (tipo_mago)
         {
-            avatar = make_shared<mago>(string personaje, double hp, auto dato1, auto dato2, string hab_especial);
+            case a_hechicero:
+                nuevo_mago = make_shared<hechicero>(habilidad, dato1, cant_armas, dato_personal);
+                break;
+            case a_conjurador:
+                nuevo_mago = make_shared<conjurador>(habilidad, dato1, cant_armas, dato_personal);
+                break;
+            case a_brujo:
+                nuevo_mago = make_shared<brujo>(habilidad, dato1, cant_armas, dato_personal);
+                break;
+            case a_nigromante:
+                nuevo_mago = make_shared<nigromante>(habilidad, dato1, cant_armas, dato_personal);
+                break;
         }
-        else if (pertenence_a_guerreros(personaje))
+
+        if (cant_armas != 0)
         {
-            avatar = make_shared<guerrero>(string personaje, double hp, auto dato1, auto dato2, string hab_especial);
-        }
-        else
+            int random_arma = generarAleatorio(1,9);
+            // datos adicionales del arma
+            int da1 = generarAleatorio(1,10);
+            int da2 = generarAleatorio(1,10);
+            int da3 = generarAleatorio(1,10);
+
+            nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma), da1, da2, da3);   
+            
+            if ( cant_armas == 2)
+            {
+                int random_arma2 = generarAleatorio(1,9);
+                // datos adicionales del arma
+                int d1 = generarAleatorio(1,10);
+                int d2 = generarAleatorio(1,10);
+                int d3 = generarAleatorio(1,10);
+
+                nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma2), d1, d2, d3);   
+            }
+        }  
+    }
+
+    for (int i = 0; i < cant_guerreros; i++)
+    {
+        int numero_guerrero = generarAleatorio(1,5); // valor aleatoria que representa el numero de guerrero en el enum de tipos_magos
+
+        int numero_habilidad = generarAleatorio(1,10); // valor aleatorio que representa la habilidad del guerrero
+
+        int cant_armas = generarAleatorio(0,2); // valor aleatorio que representa la cantidad de armas
+
+        int dato1 = generarAleatorio(1,10); // valor aleatorio que representa la magia
+
+        int dato_personal = generarAleatorio(1,10); // valor aleatorio que representa el dato particular de cada clase derivada
+    
+        tipos_guerreros tipo_guerrero = static_cast<tipos_guerreros>(numero_guerrero); // casteo del tipo de guerrero
+
+        hab_totales habilidad = static_cast<hab_totales>(numero_habilidad); // casteo de la habilidad especial 
+
+        shared_ptr<guerrero> nuevo_guerrero;
+
+        switch (tipo_guerrero)
         {
-            throw logic_error("error, ingrese un peesonaje que sea de tipo amgo o de tipo guerrero");
+            case a_barbaro:
+                nuevo_guerrero = make_shared<barbaro>(habilidad, dato1, cant_armas, dato_personal);
+                break;
+            case a_paladin:
+                nuevo_guerrero = make_shared<paladin>(habilidad, dato1, cant_armas, dato_personal);
+                break;
+            case a_caballero:
+                nuevo_guerrero = make_shared<caballero>(habilidad, dato1, cant_armas, dato_personal);
+                break;
+            case a_mercenario:
+                nuevo_guerrero = make_shared<mercenario>(habilidad, dato1, cant_armas, dato_personal);
+                break;
+            case a_gladiador:
+                nuevo_guerrero = make_shared<gladiador>(habilidad, dato1, cant_armas, dato_personal);
+                break;
         }
-        cant_armas_maximas = cant_armas;
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-}
 
-void personaje_armado::atacar(personaje_armado& otro, bool normal, int indice_arma)
-{
-    try
-    {
-        if ( 0 <= indice_arma <= 2 && armas[indice_arma] != nullptr)
+        if (cant_armas != 0)
         {
-            otro.modificar_hp(armas[indice_arma]->devolver_daño(normal));
-        }
-        else
-        {
-            throw logic_error("error, verifique que el indice este dentro de las opciones y que el arma exista");
-        }
+            int random_arma = generarAleatorio(1,9);
+            // datos adicionales del arma
+            int da1 = generarAleatorio(1,10);
+            int da2 = generarAleatorio(1,10);
+            int da3 = generarAleatorio(1,10);
+
+            nuevo_guerrero ->agregar_arma(static_cast<armas_totales>(random_arma), da1, da2, da3);   
+            
+            if ( cant_armas == 2)
+            {
+                int random_arma2 = generarAleatorio(1,9);
+                // datos adicionales del arma
+                int d1 = generarAleatorio(1,10);
+                int d2 = generarAleatorio(1,10);
+                int d3 = generarAleatorio(1,10);
+
+                nuevo_guerrero ->agregar_arma(static_cast<armas_totales>(random_arma2), d1, d2, d3);   
+            }
+        }  
     }
-    catch(const std::exception& e)
+    
+    for (int i = 0; i < guerreros.size(); i++)
     {
-        std::cerr << e.what() << '\n';
+        guerreros[i] -> mostrar_info_personaje();
     }
-}
-
-void personaje_armado::modificar_hp(double daño)
-{
-    try
+    
+    for (int i = 0; i < magos.size(); i++)
     {
-        if (daño > 0 && avatar->retornar_hp() >  daño)
-        {
-            avatar->modificar_hp(daño);
-        }
+        magos[i] -> mostrar_info_personaje();
     }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-}
-
-void personaje_armado::mostrar_tipo_personaje()
-{
-    avatar ->mostrar_tipo_personaje();
-}
-
-void personaje_armado::mostrar_hp()
-{
-    avatar ->mostrar_hp();
-}
-
-void personaje_armado::mostrar_cant_golpes_totales()
-{
-    for (int i = 0; i < armas.size(); i++)
-    {
-        cout << "arma " << i << endl;
-        armas[i] -> mostrar_golpes_disponibles();
-        armas[i] -> mostrar_golpes_dispo_especial();
-    }
-}
-
-void personaje_armado::mostrar_daños_totales()
-{
-    for (int i = 0; i < armas.size(); i++)
-    {
-        cout << "arma " << i << endl;
-        armas[i] -> mostrar_daño();
-        armas[i] -> mostrar_daño_especial();
-    }
-}
-
-void personaje_armado::crear_arma(armas_magicas_y_combate tip_arma, habilidades_especiales_magicas_y_combate habilidad_espe)
-{
-   
-}
-
-void personaje_armado::mostrar_datos_adicionales()
-{
-    avatar -> mostrar_dato1();
-    avatar -> mostrar_dato2();
-}
-
-////////////////////////////////////implementacion de los metodos de la clase personajefactory ///////////////////////////////////
-
-PersonajeFactory::PersonajeFactory()
-{
-    cout << " se creo un objeto de la clase factory" << endl;
-}
-
-shared_ptr<arma> PersonajeFactory::crear_arma(armas_magicas_y_combate tip_arma, double daño, int cant_usos_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_usos_espe)
-{
-    shared_ptr<arma> nueva_arma;
-
-    if (pertenece_en_magicos(tip_arma) || pertenece_en_combate(tip_arma))
-    {
-        nueva_arma = make_shared<items_magicos>(tip_arma, daño, cant_usos_dispo, habilidad_espe, daño_extra_espe, cant_usos_espe);
-    }
-    else
-    {
-        return nullptr;
-    }
-    return nueva_arma;
-}
-
-shared_ptr<personaje> PersonajeFactory::crear_personaje(tipos_personajes personaje, double hp, auto dato1, auto dato2, habilidades_especiales_magicas_y_combate hab_especial)
-{
-    shared_ptr<personaje> nuevo_personaje;
-
-    if (pertenece_a_magos(personaje))
-    {
-        nuevo_personaje = make_shared<mago>(string personaje, double hp, auto dato1, auto dato2, string hab_especial);
-    }
-    else if (pertenence_a_guerreros(personaje))
-    {
-        nuevo_personaje = make_shared<guerrero>(string personaje, double hp, auto dato1, auto dato2, string hab_especial);
-    }
-    else
-    {
-        return nullptr;
-    }
-    return nuevo_personaje;
-}
-
-shared_ptr<personaje_armado> PersonajeFactory::crear_personaje_armado(tipos_personajes personaje, double hp, auto dato1, auto dato2, habilidades_especiales_magicas_y_combate hab_especial,armas_magicas_y_combate tip_arma, double daño, int cant_usos_dispo, habilidades_especiales_magicas_y_combate habilidad_espe, double daño_extra_espe, int cant_usos_espe)
-{
-    shared_ptr<personaje_armado> nuevo_personaje_armado;
-
-    nuevo_personaje_armado -> avatar = crear_personaje(string personaje, double hp, auto dato1, auto dato2, string hab_especial);
-
-    nuevo_personaje_armado -> crear_arma(tip_arma, daño, cant_usos_dispo, habilidad_espe, daño_extra_espe, cant_usos_espe)
 }
 
 int main()
 {
     srand(time(0));
+    
+    crear_personajes();
 }

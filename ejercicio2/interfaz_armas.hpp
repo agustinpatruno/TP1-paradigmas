@@ -5,7 +5,10 @@
 using namespace std;
 
 string obtenerNombreArma(armas_totales tipo);
-
+/*
+    retorna el string del tipo de arma que se le pasa por parametro. caso de no ser ninguno, retorna tipo de arma
+    desconocido
+*/
 
 bool pertenece_armas_magicas(armas_totales tipo_arma);
 /*
@@ -17,19 +20,18 @@ bool pertenece_armas_combate(armas_totales tipo_arma);
     retorna true si el tipo de arma pertenece a las armas de combate, retorna false en caso contrario.
 */
 
-// valores del daño de las armas magicas y de combate//
+// valores del daño de las armas magicas y de combate. ([1:5] = daño magico, [6:10] daño de combate)//
 vector<double> daño_magicos_combate = {12.5, 13, 14, 10, 9, 16, 13.2, 15, 7.9};
 
-// cant de usos de cada arma magica y de combate //
+// cant de usos de cada arma magica y de combate. ([1:5] = uso de armas magicas, [6,10] usos de armas de combate )//
 vector<int> usos_armas_magicas_combate = {12,11,15,10,13,16,12,9};
 
-// enum de las armas totales //
+// enum de las armas totales. ([1:5] = armas magicas, [6:10] = armas de combate)//
 enum armas_totales {arma_baston = 1, arma_libro_de_hechizos, arma_pocion, arma_amuleto, arma_hacha_simple, arma_hacha_doble, arma_espada, arma_lanza, arma_garrote};
-
 
 bool corroborar_intervalo(int min, float valor, int max);
 /*
-    retorna true si el valor esta dentro del intervalo, retorna false en caso contrario
+    retorna true si el valor esta dentro del intervalo, retorna false en caso contrario y en caso de que max < min. 
 */
 
 ///////////////////////////////////clase interfaz arma ////////////////////////////////////////////
@@ -45,7 +47,7 @@ class arma
     public:
 
         virtual void Get_infoarma_general() const = 0; // muestro el tipo de arma, la cantidad de usos disponibles y el daño
-        virtual ~arma();
+        virtual ~arma() = default;
 };
 
 /////////////////////clase items magicos ///////////////////////////////////
@@ -236,10 +238,9 @@ class lanza : public armas_combate
         /*
             imprime por consola la distancia que se puede alcanzar con la lanza
         */
-        
 };
 
-class garrote : armas_combate
+class garrote : public armas_combate
 {
     private:
         
@@ -253,5 +254,3 @@ class garrote : armas_combate
             imprime por consola el peso del garrote
         */
 };
-
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

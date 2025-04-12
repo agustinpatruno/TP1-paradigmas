@@ -25,7 +25,7 @@ string obtenerNombreArma(armas_totales tipo)
         case arma_garrote:
             return "Garrote";
         default:
-            return "Tipo de arma de combate desconocido";
+            return "Tipo de arma de desconocido";
     }
 }
 
@@ -117,9 +117,7 @@ void items_magicos::Get_item_magico()
     cout << "tipo de item magico: " << obtenerNombreArma(tipo_arma) << endl;
 }
 
-
 // implementacion de metodos de la clase derivada baston //
-
 
 baston::baston(armas_totales tip_arma, float level_magico, float resistencia, float long_baston, double daño)
 : items_magicos(tip_arma, level_magico, resistencia, daño), largo_baston(long_baston)

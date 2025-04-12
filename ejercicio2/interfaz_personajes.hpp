@@ -63,6 +63,8 @@ class personaje
         virtual void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3) = 0;
 
         virtual int contar_armas() = 0;
+
+        virtual ~personaje() = default;
 };
 
 ///////////////////////////////////////// clase abstracta mago //////////////////////////////////////////////////////
@@ -128,11 +130,11 @@ class  conjurador : public mago
 {
     private:
         
-    float conocimiento_ancestral;
+        float conocimiento_ancestral;
 
     public:
 
-        conjurador(tipos_magos tip_mago, hab_totales hab_especial, int magia, int max_armas, float conocimiento);
+        conjurador(hab_totales hab_especial, int magia, int max_armas, float conocimiento);
 
         void Get_conocimiento();
         /*
@@ -147,7 +149,8 @@ class brujo : public mago
         float manipulacion_naturaleza;
 
     public:
-        brujo(tipos_magos tip_mago, hab_totales hab_especial, int magia, int max_armas, float manipulacion);
+    
+        brujo(hab_totales hab_especial, int magia, int max_armas, float manipulacion);
     
         void Get_manipulacion_naturaleza();
         /*
@@ -163,7 +166,7 @@ class nigromante : public mago
 
     public:
 
-        nigromante(tipos_magos tip_mago, hab_totales hab_especial, int magia, int max_armas, float mani_almas);
+        nigromante(hab_totales hab_especial, int magia, int max_armas, float mani_almas);
 
         void Get_manipulacion_almas();
         /*
@@ -241,7 +244,7 @@ class barbaro : public guerrero
 
     public:
 
-        barbaro(tipos_guerreros tip_guerrero, hab_totales habilidad, float fuerza, int max_armas, float salvaje);
+        barbaro(hab_totales habilidad, float fuerza, int max_armas, float salvaje);
 
         void Get_espiritu_salvaje();
         /*
@@ -257,7 +260,7 @@ class paladin : public guerrero
 
     public:
 
-        paladin(tipos_guerreros tip_guerrero, hab_totales habilidad, float fuerza, float aura);
+        paladin(hab_totales habilidad, float fuerza, int max_armas, float aura);
 
         void Get_aura_protectora();
         /*
@@ -273,7 +276,7 @@ class  caballero : public guerrero
 
     public:
 
-        caballero(tipos_guerreros tip_guerrero, hab_totales habilidad, float fuerza, float hab_marcial);
+        caballero(hab_totales habilidad, float fuerza, int max_armas, float hab_marcial);
 
         void Get_habilidad_marcial();
         /*
@@ -290,7 +293,7 @@ class mercenario : public guerrero
 
     public:
 
-        mercenario(tipos_guerreros tip_guerrero, hab_totales habilidad, float fuerza, float aura, float astucia);
+        mercenario(hab_totales habilidad, float fuerza, float aura, int max_armas, float astucia);
 
         void Get_astucia();
         /*
@@ -306,7 +309,7 @@ class gladiador : public guerrero
 
     public:
 
-        gladiador(tipos_guerreros tip_guerrero, hab_totales habilidad, float fuerza, float aura, float adaptacion);
+        gladiador(hab_totales habilidad, float fuerza, float aura, int max_armas, float adaptacion);
 
         void Get_adaptacion();
         /*

@@ -183,7 +183,7 @@ void mago::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float
 
             if (pertenece_armas_magicas(tipo_arma)) // en caso de que pertenezca a un item magico, se usa el 100% del daño 
             {
-                if (arma1)
+                if (!arma1)
                 {
                     arma1 = crear_arma(tipo_arma, dato1, dato2, dato3, daño);
                 }
@@ -194,7 +194,7 @@ void mago::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float
             }
             else if (pertenece_armas_combate(tipo_arma)) // en caso de que pertenezca a un arma de combate, se usa el 80% del daño 
             {
-                if (arma1)
+                if (!arma1)
                 {
                     arma1 = crear_arma(tipo_arma, dato1, dato2, dato3, daño*(0.8));
                 }
@@ -236,8 +236,7 @@ int mago::contar_armas()
 
 // implementacion de la clase derivada hechicero //
 
-hechicero::hechicero(hab_totales hab_especial, int magia, int max_armas, float hab_fuente)
-:mago(a_hechicero, hab_especial, magia, 100, max_armas), habilidad_fuente(hab_fuente)
+hechicero::hechicero(hab_totales hab_especial, int magia, int max_armas, float hab_fuente) : mago(a_hechicero, hab_especial, magia, 100, max_armas), habilidad_fuente(hab_fuente)
 {
     try
     {
@@ -259,8 +258,7 @@ void hechicero::Get_habilidad_fuente()
 
 // implementacion de la clase derivada conjurador //
 
-conjurador::conjurador(tipos_magos tip_mago, hab_totales hab_especial, int magia, int max_armas, float conocimiento)
-: mago(a_hechicero, hab_especial, magia, 100, max_armas), conocimiento_ancestral(conocimiento)
+conjurador::conjurador(hab_totales hab_especial, int magia, int max_armas, float conocimiento) : mago(a_conjurador, hab_especial, magia, 100, max_armas), conocimiento_ancestral(conocimiento)
 {
     try
     {
@@ -282,8 +280,7 @@ void conjurador::Get_conocimiento()
 
 // implementacion de la clase derivada brujo //
 
-brujo::brujo(tipos_magos tip_mago, hab_totales hab_especial, int magia, int max_armas, float manipulacion)
-: mago(a_hechicero, hab_especial, magia, 100, max_armas), manipulacion_naturaleza(manipulacion)
+brujo::brujo(hab_totales hab_especial, int magia, int max_armas, float manipulacion) : mago(a_brujo, hab_especial, magia, 100, max_armas), manipulacion_naturaleza(manipulacion)
 {
     try
     {
@@ -305,8 +302,7 @@ void brujo::Get_manipulacion_naturaleza()
 
 // implementacion de la clase derivada nigromante //
 
-nigromante::nigromante(tipos_magos tip_mago, hab_totales hab_especial, int magia, int max_armas, float mani_almas)
-: mago(a_hechicero, hab_especial, magia, 100, max_armas), manipulacion_almas(mani_almas)
+nigromante::nigromante(hab_totales hab_especial, int magia, int max_armas, float mani_almas) : mago(a_nigromante, hab_especial, magia, 100, max_armas), manipulacion_almas(mani_almas)
 {
     try
     {
@@ -332,7 +328,7 @@ guerrero::guerrero(tipos_guerreros guerrero, float fuerza, hab_totales hab_espec
 {
     try
     {
-        if (corroborar_intervalo(0,fuerza,1000) && corroborar_intervalo(0, vida, 100) && corroborar_intervalo(0, max_armas, 2))
+        if (corroborar_intervalo(0,fuerza,1000) && corroborar_intervalo(0, vida, 100) && corroborar_intervalo(0, armas, 2))
         {
             tipo_guerrero = guerrero;
 
@@ -474,13 +470,11 @@ int guerrero::contar_armas()
 
 // implementacion de la clase derivada barbaro //
 
-
-barbaro::barbaro(tipos_guerreros tip_guerrero, hab_totales habilidad, float fuerza, int max_armas, float salvaje)
-: guerrero(tip_guerrero,fuerza, habilidad, 100, max_armas), espiritu_salvaje(salvaje)
+barbaro::barbaro(hab_totales habilidad, float fuerza, int max_armas, float salvaje) : guerrero( a_barbaro, fuerza, habilidad, 100, max_armas), espiritu_salvaje(salvaje)
 {
     try
     {
-        if (corroborar_intervalo(0, salvaje, 10))
+        if (!corroborar_intervalo(0, salvaje, 10))
         {
             throw logic_error("error, ingrese un nivel de espiritu salvaje[0,10] dentro del rango");
         }
@@ -496,3 +490,90 @@ void barbaro::Get_espiritu_salvaje()
     cout << "nivel de espiritu salvaje: " << espiritu_salvaje << endl;
 }
 
+// implementacion de la clase derivada paladin //
+
+paladin::paladin(hab_totales habilidad, float fuerza, int max_armas, float aura) : guerrero(a_paladin,fuerza, habilidad, 100, max_armas), aura_protectora(aura)
+{
+    try
+    {
+        if (!corroborar_intervalo(0, aura, 10))
+        {
+            throw("error, ingrese un nivel de aura protectora[0,10] dentro del rango");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void paladin::Get_aura_protectora()
+{
+    cout << "nivel de aura protectora: " << aura_protectora << endl;
+}
+
+// implementacion de la clase derivada caballero //
+
+caballero::caballero(hab_totales habilidad, float fuerza, int max_armas, float hab_marcial) : guerrero(a_caballero,fuerza, habilidad, 100, max_armas), habilidad_marcial(hab_marcial)
+{
+    try
+    {
+        if (!corroborar_intervalo(0, hab_marcial, 10))
+        {
+            throw("error, ingrese un nivel de habilidad marcial[0,10] dentro del rango");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void caballero::Get_habilidad_marcial()
+{
+    cout << "nivel de habilidad marcial: " << habilidad_marcial << endl;
+}
+
+// implementacion de la clase derivada mercenario //
+
+mercenario::mercenario(hab_totales habilidad, float fuerza, float aura, int max_armas, float astucia) : guerrero(a_mercenario,fuerza, habilidad, 100, max_armas), nivel_astucia(astucia)
+{
+    try
+    {
+        if (!corroborar_intervalo(0, astucia, 10))
+        {
+            throw("error, ingrese un nivel de astucia[0,10] dentro del rango");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void mercenario::Get_astucia()
+{
+    cout << "nivel de astucia: " << nivel_astucia << endl;
+}
+
+// implementacion de la clase derivada gladiador //
+
+gladiador::gladiador(hab_totales habilidad, float fuerza, float aura, int max_armas, float adaptacion) : guerrero(a_gladiador,fuerza, habilidad, 100, max_armas), adaptabilidad(adaptacion)
+{
+    try
+    {
+        if (!corroborar_intervalo(0, adaptabilidad, 10))
+        {
+            throw("error, ingrese un nivel de adaptabilidad[0,10] dentro del rango");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
+void gladiador::Get_adaptacion()
+{
+    cout << "nivel de adaptabilidad: " << adaptabilidad << endl;
+}
