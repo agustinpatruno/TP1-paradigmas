@@ -1,4 +1,5 @@
-#include "interfaz_armas.cpp"
+#pragma once
+#include "interfaz_armas.hpp"
 
 /////////////////////clase abstracta items magicos ///////////////////////////////////
 
@@ -6,7 +7,7 @@ class items_magicos: public arma
 {
     protected:
 
-        armas_totales tipo_arma;
+        armas_totales tipo_arma; // tipo de arma magica
 
         float nivel_magico; // 1 <= nivel_magico <= 10
 

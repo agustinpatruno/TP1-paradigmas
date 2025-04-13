@@ -1,14 +1,33 @@
 #include "interfaz_personajes.hpp"
 
+/* valores de los daños extra de las habilidades especiales magicas y las de combate([1:5] = daño magicas, [6:10] = daño de combate) */
+
+vector<double> daño_hab_magicos_combate = {5.4, 3.7, 8.2, 6.6, 5, 3.7, 5.3, 7, 4.2, 9};
+
+/* cant de usos de las habilidades especiales magicas y de combate ([1:5] = usos magicas, [6:10] = usos de combate)*/
+
+vector<int> usos_hab_magicas_combate = {3,2,4,1,5,5,3,2,4,3};
+
 // funcion para el enum de tipo_magos
 
 string getTipoMago(tipos_magos tipo) {
-    switch (tipo) {
-        case a_hechicero: return "hechicero";
-        case a_conjurador: return "conjurador";
-        case a_brujo: return "brujo";
-        case a_nigromante: return "nigromante";
-        default: return "tipo desconocido";
+    switch (tipo) 
+    {
+        case a_hechicero: 
+            return "hechicero";
+            break;
+        case a_conjurador: 
+            return "conjurador";
+            break;
+        case a_brujo: 
+            return "brujo";
+            break;
+        case a_nigromante: 
+            return "nigromante";
+            break;
+        default: 
+            return "tipo desconocido";
+            break;
     }
 }
 
@@ -78,15 +97,8 @@ unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, f
         case arma_garrote:
             return make_unique<garrote>(tipo_arma, dato1, dato2, dato3, daño);
             break;
-        break;
-    
-    default:
-        return nullptr;
-        break;
+        default:
+            return nullptr;
+            break;
     }
-}
-
-int main()
-{
-    cout << " se ejecuto correctamente interfaz personajes" << endl;
 }

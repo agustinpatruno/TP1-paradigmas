@@ -6,7 +6,7 @@ mago::mago(tipos_magos tip_mago, hab_totales hab_especial, int magia, double vid
 {
     try
     {
-        if (corroborar_intervalo(0,magia,10) && corroborar_intervalo(0,vida, 100) && corroborar_intervalo(0, max_armas, 10))
+        if (corroborar_intervalo(0,magia,10) && corroborar_intervalo(0,vida, 100) && corroborar_intervalo(0, max_armas, 2))
         {
             tipo_mago = tip_mago;
 
@@ -154,7 +154,7 @@ hechicero::hechicero(hab_totales hab_especial, int magia, int max_armas, float h
     {
         if (!corroborar_intervalo(0, hab_fuente, 10))
         {
-            throw logic_error("error, ingrese una habilidad[0,10] de fuente dentro del rango");
+            throw logic_error("error, ingrese una habilidad de fuente[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -233,3 +233,4 @@ void nigromante::Get_manipulacion_almas()
 {
     cout << "nivel de manipulacion de almas: " << manipulacion_almas << endl;
 }
+

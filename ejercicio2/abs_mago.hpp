@@ -1,3 +1,4 @@
+#pragma once
 #include "interfaz_personajes.hpp"
 
 ///////////////////////////////////////// clase abstracta mago //////////////////////////////////////////////////////
@@ -14,7 +15,7 @@ class mago : public personaje
 
         int poder_magia; // 1 <= poder_magia <= 10
 
-        double hp;
+        double hp; // vida
 
         hab_totales habilidad_especial; // habilidad especial
 
@@ -22,7 +23,7 @@ class mago : public personaje
 
         int usos_hab; // usos de la habilidad especial
 
-        int cant_armas; // la cantidad de armas permitidas
+        int cant_armas; // la cantidad de armas permitidas. 1 <= cant_armas <= 2
 
     public:
 
@@ -47,7 +48,7 @@ class  hechicero : public mago
 {
     private:
         
-        float habilidad_fuente;
+        float habilidad_fuente; // 0 <= habilidad fuente <= 10
 
     public:
 

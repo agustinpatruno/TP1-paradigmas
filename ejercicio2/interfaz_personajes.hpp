@@ -1,3 +1,4 @@
+#pragma once
 #include "abs_combate.hpp"
 #include "abs_items.hpp"
 using namespace std;
@@ -10,17 +11,17 @@ enum tipos_magos {a_hechicero = 1, a_conjurador, a_brujo, a_nigromante};
 
 enum tipos_guerreros {a_barbaro = 1, a_paladin, a_caballero, a_mercenario, a_gladiador};
 
-// enum de las habilidades totales //
+// enum de las habilidades totales([1:5] = habilidades magicas, [6:10] = habilidades de combate) //
 
 enum hab_totales {Explosion_arcana = 1, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental};
 
-/* valores de los daños extra de las habilidades especiales magicas y las de combate */
+/* valores de los daños extra de las habilidades especiales magicas y las de combate([1:5] = daño magicas, [6:10] = daño de combate) */
 
-vector<double> daño_hab_magicos_combate = {5.4, 3.7, 8.2, 6.6, 5, 3.7, 5.3, 7, 4.2, 9};
+extern vector<double> daño_hab_magicos_combate;
 
-/* cant de usos de las habilidades especiales magicas y de combate */
+/* cant de usos de las habilidades especiales magicas y de combate ([1:5] = usos magicas, [6:10] = usos de combate)*/
 
-vector<int> usos_hab_magicas_combate = {3,2,4,1,5,5,3,2,4,3};
+extern vector<int> usos_hab_magicas_combate;
 
 /*funcion que retorna un string del valor en base al enum tipos_magos que se le pase por parametro*/
 

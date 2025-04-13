@@ -1,6 +1,4 @@
-#ifndef INTERFAZ_ARMAS_HPP
-#define INTERFAZ_ARMAS_HPP
-
+#pragma once
 #include <iostream>
 #include <string>
 #include <memory>
@@ -51,5 +49,3 @@ class arma
         virtual void Get_infoarma_general() const = 0; // muestro el tipo de arma, la cantidad de usos disponibles y el daño
         virtual ~arma() = default;
 };
-
-#endif

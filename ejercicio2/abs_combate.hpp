@@ -1,4 +1,5 @@
-#include "interfaz_armas.cpp"
+#pragma once
+#include "interfaz_armas.hpp"
 
 class armas_combate : public arma
 {
@@ -60,6 +61,9 @@ class hacha_doble : public armas_combate
         hacha_doble(float durabilidad,float precision, float longitud, double daño);
 
         void Get_longitud_alcanze();
+        /*
+            imprime por consola la longitud de alcanze del hacha doble
+        */
 };
 
 class espada :public armas_combate
@@ -72,6 +76,9 @@ class espada :public armas_combate
         espada(float durabilidad, float precision, float corte, double daño);
 
         void Get_nivel_corte();
+        /*
+            imprime por consola el nivel de corta de la espada
+        */
 };
 
 class lanza : public armas_combate

@@ -155,9 +155,3 @@ void amuleto::Get_suerte()
 {
     cout << "suerte del amuleto: " << suerte << endl;
 }
-
-int main()
-{
-    cout << " se ejecuto correctamente" << endl;
-
-}
