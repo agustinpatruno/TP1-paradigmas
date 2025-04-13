@@ -6,7 +6,7 @@ guerrero::guerrero(tipos_guerreros guerrero, float fuerza, hab_totales hab_espec
 {
     try
     {
-        if (corroborar_intervalo(0,fuerza,1000) && corroborar_intervalo(0, vida, 100) && corroborar_intervalo(0, armas, 2))
+        if (corroborar_intervalo(0,fuerza,1000) && corroborar_intervalo(0,static_cast<float>(armas), 2))
         {
             tipo_guerrero = guerrero;
 
@@ -20,13 +20,13 @@ guerrero::guerrero(tipos_guerreros guerrero, float fuerza, hab_totales hab_espec
         
             if (!pertenece_hab_magicas(hab_especial)) // en caso de que la habilidad sea de las de combate, se usa el 100% del daño
             {
-               daño_hab = daño_hab_magicos_combate[static_cast<int>(hab_especial)];
+               daño_hab = daño_hab_magicos_combate[static_cast<size_t>(hab_especial)];
             }
             else // en caso de que la habilidad sea de las magicas, se usa el 60% del daño
             {
-                daño_hab = daño_hab_magicos_combate[static_cast<int>(hab_especial)]*(0.6);
+                daño_hab = daño_hab_magicos_combate[static_cast<size_t>(hab_especial)]*(0.6);
             }
-            usos_hab = usos_hab_magicas_combate[static_cast<int>(hab_especial)];
+            usos_hab = usos_hab_magicas_combate[static_cast<size_t>(hab_especial)];
         }
         else
         {
@@ -91,7 +91,7 @@ void guerrero::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, f
     {
         if (contar_armas() < cant_armas)
         {
-            double daño = daño_magicos_combate[static_cast<int>(tipo_arma)];
+            double daño = daño_magicos_combate[static_cast<size_t>(tipo_arma)];
 
             if (pertenece_armas_combate(tipo_arma)) // en caso de que pertenezca a un item magico, se usa el 100% del daño 
             {

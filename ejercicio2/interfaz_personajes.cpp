@@ -34,13 +34,27 @@ string getTipoMago(tipos_magos tipo) {
 // Función para el enum de tipos_guerreros
 
 string getTipoGuerrero(tipos_guerreros tipo) {
-    switch (tipo) {
-        case a_barbaro: return "barbaro";
-        case a_paladin: return "paladin";
-        case a_caballero: return "caballero";
-        case a_mercenario: return "mercenario";
-        case a_gladiador: return "gladiador";
-        default: return "tipo desconocido";
+
+    switch (tipo) 
+    {
+        case a_barbaro: 
+            return "barbaro";
+            break;
+        case a_paladin: 
+            return "paladin";
+            break;
+        case a_caballero: 
+            return "caballero";
+            break;
+        case a_mercenario: 
+            return "mercenario";
+            break;
+        case a_gladiador: 
+            return "gladiador";
+            break;
+        default: 
+            return "tipo desconocido";
+            break;
     }
 }
 
@@ -48,18 +62,42 @@ string getTipoGuerrero(tipos_guerreros tipo) {
 // "habilidad desconocida"
 
 string getHabilidad(hab_totales habilidad) {
-    switch (habilidad) {
-        case Explosion_arcana: return "Explosion_arcana";
-        case Golpe_elemental: return "Golpe_elemental";
-        case Corte_espectral: return "Corte_espectral";
-        case Encantamiento_explosivo: return "Encantamiento_explosivo";
-        case Rafaga_magica: return "Rafaga_magica";
-        case Impacto_devastador: return "Impacto_devastador";
-        case Corte_giratorio: return "Corte_giratorio";
-        case Golpe_perforante: return "Golpe_perforante";
-        case Ataque_ensordecedor: return "Ataque_ensordecedor";
-        case Ruptura_elemental: return "Ruptura_elemental";
-        default: return "habilidad desconocida";
+    
+    switch (habilidad) 
+    {
+        case Explosion_arcana: 
+            return "Explosion_arcana";
+            break;
+        case Golpe_elemental: 
+            return "Golpe_elemental";
+            break;
+        case Corte_espectral: 
+            return "Corte_espectral";
+            break;
+        case Encantamiento_explosivo: 
+            return "Encantamiento_explosivo";
+            break;
+        case Rafaga_magica: 
+            return "Rafaga_magica";
+            break;
+        case Impacto_devastador: 
+            return "Impacto_devastador";
+            break;
+        case Corte_giratorio: 
+            return "Corte_giratorio";
+            break;
+        case Golpe_perforante: 
+            return "Golpe_perforante";
+            break;
+        case Ataque_ensordecedor: 
+            return "Ataque_ensordecedor";
+            break;
+        case Ruptura_elemental: 
+            return "Ruptura_elemental";
+            break;
+        default: 
+            return "habilidad desconocida";
+            break;
     }
 }
 
@@ -73,29 +111,31 @@ unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, f
     switch (tipo_arma)
     {
         case arma_baston:
-
-            return make_unique<baston>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<baston>(dato1, dato2, dato3, daño);
             break;
         case arma_libro_de_hechizos:
-            return make_unique<libro_de_hechizos>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<libro_de_hechizos>(dato1, dato2, dato3, daño);
             break;
         case arma_pocion:
-            return make_unique<pocion>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<pocion>(dato1, dato2, dato3, daño);
             break;
         case arma_amuleto:
-            return make_unique<amuleto>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<amuleto>(dato1, dato2, dato3, daño);
             break;
         case arma_hacha_simple:
-            return make_unique<hacha_simple>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<hacha_simple>(dato1, dato2, dato3, daño);
             break;
         case arma_hacha_doble:
-            return make_unique<hacha_doble>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<hacha_doble>(dato1, dato2, dato3, daño);
             break;
         case arma_espada:
-            return make_unique<espada>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<espada>(dato1, dato2, dato3, daño);
             break;
         case arma_garrote:
-            return make_unique<garrote>(tipo_arma, dato1, dato2, dato3, daño);
+            return make_unique<garrote>(dato1, dato2, dato3, daño);
+            break;
+        case arma_lanza:
+            return make_unique<lanza>(dato1, dato2, dato3, daño);
             break;
         default:
             return nullptr;

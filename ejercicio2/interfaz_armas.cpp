@@ -57,7 +57,7 @@ bool pertenece_armas_combate(armas_totales tipo_arma)
     return arma_hacha_simple <= tipo_arma && tipo_arma <= arma_garrote;
 }
 
-bool corroborar_intervalo(int min, float valor, int max)
+bool corroborar_intervalo(float min, float valor, float max)
 {
     if (max < min)
     {

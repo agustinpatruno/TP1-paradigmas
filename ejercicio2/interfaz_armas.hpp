@@ -29,7 +29,7 @@ bool pertenece_armas_combate(armas_totales tipo_arma);
     retorna true si el tipo de arma pertenece a las armas de combate, retorna false en caso contrario.
 */
 
-bool corroborar_intervalo(int min, float valor, int max);
+bool corroborar_intervalo(float min, float valor, float max);
 /*
     retorna true si el valor esta dentro del intervalo, retorna false en caso contrario y en caso de que max < min. 
 */

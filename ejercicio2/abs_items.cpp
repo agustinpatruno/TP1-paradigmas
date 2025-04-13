@@ -12,7 +12,7 @@ items_magicos::items_magicos(armas_totales tip_arma, float level_magico, float r
 
             Daño = daño;
 
-            cant_usos = usos_armas_magicas_combate[static_cast<int>(tip_arma)];
+            cant_usos = usos_armas_magicas_combate[static_cast<size_t>(tip_arma)];
 
             this->nivel_magico = level_magico;
 
@@ -75,7 +75,7 @@ baston::baston(float level_magico, float resistencia, float long_baston, double 
     {
         if (!corroborar_intervalo(1, long_baston, 6))
         {
-            throw logic_error("error, verifique que los parametros ingresados esten dentro del rango. long_baston[0,6], level_magico[0,10], resistencia[0,100]");
+            throw logic_error("error, verifique que los parametros ingresados esten dentro del rango. long_baston[0,6] y que el tipo de arma sea arma_baston");
         }   
     }
     catch(const std::exception& e)
@@ -98,7 +98,7 @@ libro_de_hechizos::libro_de_hechizos(float level_magico, float resistencia, floa
     {
         if (!corroborar_intervalo(0, prestigio_libro, 1000))
         {
-            throw logic_error(" error, ingrese un valor de prestigio[0,1000] dentro del intervalo");
+            throw logic_error(" error, ingrese un valor de prestigio[0,1000] dentro del intervalo y que el tipo de arma sea arma_libro_de_hechizos");
         }   
     }
     catch(const exception& e)
@@ -114,13 +114,14 @@ void libro_de_hechizos::Get_prestigio()
 
 // implementacion de metodos de la clase derivada pocion //
 
-pocion::pocion(float level_magico, float resistencia, float duracion_pocion, double daño): items_magicos(arma_pocion, level_magico, resistencia, daño), durabilidad_pocion(duracion_pocion)
+pocion::pocion(float level_magico, float resistencia, float duracion_pocion, double daño)
+: items_magicos(arma_pocion, level_magico, resistencia, daño), durabilidad_pocion(duracion_pocion)
 {
     try
     {
         if (!corroborar_intervalo(0, duracion_pocion, 25))
         {
-            throw logic_error(" error, ingrese una duracion de la pocion[0,25] dentro del intervalo");
+            throw logic_error(" error, ingrese una duracion de la pocion[0,25] dentro del intervalo y que el tipo de arma sea arma_pocion");
         }   
     }
     catch(const exception& e)
@@ -136,13 +137,14 @@ void pocion::Get_durabilidad()
 
 // implementacion de metodos de la clase derivada amuleto //
 
-amuleto::amuleto(float level_magico, float resistencia, float capacidad_suerte, double daño): items_magicos(arma_amuleto, level_magico, resistencia, daño), suerte(capacidad_suerte)
+amuleto::amuleto(float level_magico, float resistencia, float capacidad_suerte, double daño)
+: items_magicos(arma_amuleto, level_magico, resistencia, daño), suerte(capacidad_suerte)
 {
     try
     {
         if (!corroborar_intervalo(0, suerte, 10))
         {
-            throw logic_error(" error, ingrese una poder de suerte[0,10] dentro del intervalo");
+            throw logic_error(" error, ingrese una poder de suerte[0,10] dentro del intervalo t que el tipo de arma sea arma_amuleto");
         }   
     }
     catch(const exception& e)

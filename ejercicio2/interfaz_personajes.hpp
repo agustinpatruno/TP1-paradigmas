@@ -13,7 +13,7 @@ enum tipos_guerreros {a_barbaro = 1, a_paladin, a_caballero, a_mercenario, a_gla
 
 // enum de las habilidades totales([1:5] = habilidades magicas, [6:10] = habilidades de combate) //
 
-enum hab_totales {Explosion_arcana = 1, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental};
+enum hab_totales {Explosion_arcana = 0, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental};
 
 /* valores de los daños extra de las habilidades especiales magicas y las de combate([1:5] = daño magicas, [6:10] = daño de combate) */
 
@@ -39,7 +39,7 @@ bool pertenece_hab_magicas(hab_totales habilidad);
 
 unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3, double daño);
 
-///////////// interfaz de pesonaje ////////////////
+///////////////////////////////////// interfaz de pesonaje /////////////////////////////////////
 
 class personaje
 {

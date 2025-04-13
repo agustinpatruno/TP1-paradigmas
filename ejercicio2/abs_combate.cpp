@@ -16,7 +16,7 @@ armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float pr
 
             Daño = daño;
 
-            cant_usos = usos_armas_magicas_combate[static_cast<int>(tip_arma)];
+            cant_usos = usos_armas_magicas_combate[static_cast<size_t>(tip_arma)];
         }
         else
         {
@@ -67,7 +67,8 @@ void armas_combate::Get_arma_combate()
 
 // implementacion de metodos de la clase derivada hacha simple //
 
-hacha_simple::hacha_simple(float durabilidad, float precision, float filo, double daño): armas_combate(arma_hacha_simple, durabilidad, precision, daño), Filo(filo)
+hacha_simple::hacha_simple(float durabilidad, float precision, float filo, double daño)
+: armas_combate(arma_hacha_simple, durabilidad, precision, daño), Filo(filo)
 {
     try
     {
@@ -89,7 +90,8 @@ void hacha_simple::Get_filo()
 
 // implementacion de metodos de la clase derivada hacha doble //
 
-hacha_doble::hacha_doble(float durabilidad, float precision, float longitud, double daño): armas_combate(arma_hacha_doble, durabilidad, precision, daño), longitud_alcanze(longitud)
+hacha_doble::hacha_doble(float durabilidad, float precision, float longitud, double daño)
+: armas_combate(arma_hacha_doble, durabilidad, precision, daño), longitud_alcanze(longitud)
 {
     try
     {
@@ -111,7 +113,8 @@ void hacha_doble::Get_longitud_alcanze()
 
 // implementacion de metodos de la clase derivada espada //
 
-espada::espada(float durabilidad, float precision, float corte, double daño): armas_combate(arma_espada, durabilidad, precision, daño), nivel_corte(corte)
+espada::espada(float durabilidad, float precision, float corte, double daño)
+: armas_combate(arma_espada, durabilidad, precision, daño), nivel_corte(corte)
 {
     try
     {
@@ -133,7 +136,8 @@ void espada::Get_nivel_corte()
 
 // implementacion de metodos de la clase lanza //
 
-lanza::lanza(float durabilidad, float precision, float alcanze, double daño): armas_combate(arma_lanza, durabilidad, precision, daño), distancia_alcanze(alcanze)
+lanza::lanza(float durabilidad, float precision, float alcanze, double daño)
+: armas_combate(arma_lanza, durabilidad, precision, daño), distancia_alcanze(alcanze)
 {
     try
     {
@@ -155,7 +159,8 @@ void lanza::Get_distancia_alcanze()
 
 // implementacion de metodos de la clase garrote //
 
-garrote::garrote(float durabilidad, float precision, float peso, double daño): armas_combate(arma_garrote, durabilidad, precision, daño), peso__garrote(peso)
+garrote::garrote(float durabilidad, float precision, float peso, double daño)
+: armas_combate(arma_garrote, durabilidad, precision, daño), peso__garrote(peso)
 {
     try
     {
