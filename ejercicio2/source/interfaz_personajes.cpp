@@ -1,4 +1,4 @@
-#include "interfaz_personajes.hpp"
+#include "../includes/interfaz_personajes.hpp"
 
 /* valores de los daños extra de las habilidades especiales magicas y las de combate([1:5] = daño magicas, [6:10] = daño de combate) */
 

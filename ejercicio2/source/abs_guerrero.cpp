@@ -1,4 +1,4 @@
-#include "abs_guerrero.hpp"
+#include "../includes/abs_guerrero.hpp"
 
 ////////////////////////////////////////////implementacion metodos de la clase abstracta guerrero/////////////////////////////////
 
@@ -226,7 +226,7 @@ void caballero::Get_habilidad_marcial()
 
 // implementacion de la clase derivada mercenario //
 
-mercenario::mercenario(hab_totales habilidad, float fuerza, float aura, int max_armas, float astucia) : guerrero(a_mercenario,fuerza, habilidad, 100, max_armas), nivel_astucia(astucia)
+mercenario::mercenario(hab_totales habilidad, float fuerza, int max_armas, float astucia) : guerrero(a_mercenario,fuerza, habilidad, 100, max_armas), nivel_astucia(astucia)
 {
     try
     {
@@ -248,7 +248,7 @@ void mercenario::Get_astucia()
 
 // implementacion de la clase derivada gladiador //
 
-gladiador::gladiador(hab_totales habilidad, float fuerza, float aura, int max_armas, float adaptacion) : guerrero(a_gladiador,fuerza, habilidad, 100, max_armas), adaptabilidad(adaptacion)
+gladiador::gladiador(hab_totales habilidad, float fuerza, int max_armas, float adaptacion) : guerrero(a_gladiador,fuerza, habilidad, 100, max_armas), adaptabilidad(adaptacion)
 {
     try
     {

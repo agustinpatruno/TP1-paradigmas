@@ -1,4 +1,4 @@
-#include "abs_items.hpp"
+#include "../includes/abs_items.hpp"
 
 /////////////////////////////////////////////implementacion de metodos de la clase items magicos//////////////////////////////////////
 

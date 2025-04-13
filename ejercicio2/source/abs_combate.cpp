@@ -1,4 +1,4 @@
-#include "abs_combate.hpp"
+#include "../includes/abs_combate.hpp"
 
 ///////////////////// implementacion de los metodos de la clase abstracta armas_combate //////////////////////////
 

@@ -28,7 +28,7 @@ void crear_personajes()
     {
         int numero_mago = generarAleatorio(1,4); // valor aleatoria que representa el numero de mago en el enum de tipos_magos
 
-        int numero_habilidad = generarAleatorio(1,10); // valor aleatorio que representa la habilidad del mago
+        int numero_habilidad = generarAleatorio(0,9); // valor aleatorio que representa la habilidad del mago
 
         int cant_armas = generarAleatorio(0,2); // valor aleatorio que representa la cantidad de armas
 
@@ -61,24 +61,25 @@ void crear_personajes()
         if (cant_armas != 0)
         {
             int random_arma = generarAleatorio(1,9);
-            // datos adicionales del arma
+            // datos adicionales del arma1
             int da1 = generarAleatorio(1,10);
             int da2 = generarAleatorio(1,10);
             int da3 = generarAleatorio(1,10);
 
-            nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma), da1, da2, da3);   
+            nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma),static_cast<float>(da1),static_cast<float>(da2),static_cast<float>(da3));   
             
             if ( cant_armas == 2)
             {
                 int random_arma2 = generarAleatorio(1,9);
-                // datos adicionales del arma
+                // datos adicionales del arma2
                 int d1 = generarAleatorio(1,10);
                 int d2 = generarAleatorio(1,10);
                 int d3 = generarAleatorio(1,10);
 
-                nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma2), d1, d2, d3);   
+                nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma2), static_cast<float>(da1),static_cast<float>(da2),static_cast<float>(da3));   
             }
         }  
+        magos.push_back(nuevo_mago);
     }
 
     for (int i = 0; i < cant_guerreros; i++)
@@ -126,7 +127,7 @@ void crear_personajes()
             int da2 = generarAleatorio(1,10);
             int da3 = generarAleatorio(1,10);
 
-            nuevo_guerrero ->agregar_arma(static_cast<armas_totales>(random_arma), da1, da2, da3);   
+            nuevo_guerrero ->agregar_arma(static_cast<armas_totales>(random_arma), static_cast<float>(da1),static_cast<float>(da2),static_cast<float>(da3));   
             
             if ( cant_armas == 2)
             {
@@ -136,25 +137,32 @@ void crear_personajes()
                 int d2 = generarAleatorio(1,10);
                 int d3 = generarAleatorio(1,10);
 
-                nuevo_guerrero ->agregar_arma(static_cast<armas_totales>(random_arma2), d1, d2, d3);   
+                nuevo_guerrero ->agregar_arma(static_cast<armas_totales>(random_arma2), static_cast<float>(d1),static_cast<float>(d2),static_cast<float>(d3));   
             }
         }  
+        guerreros.push_back(nuevo_guerrero);
     }
     
-    for (int i = 0; i < guerreros.size(); i++)
+    cout << "---------------personajes guerreros creados aleatoriamente-----------" << endl;
+
+    for (size_t i = 0; i < guerreros.size(); i++)
     {
+        cout << "guerrero n°" << "---------" << i << endl;
         guerreros[i] -> mostrar_info_personaje();
     }
     
-    for (int i = 0; i < magos.size(); i++)
+    cout << "---------------personajes magos creados aleatoriamente-------------" << endl;
+
+    for (size_t i = 0; i < magos.size(); i++)
     {
+        cout << "mago n°" << i << "------------" << endl;
         magos[i] -> mostrar_info_personaje();
     }
 }
 
 int main()
 {
-    srand(time(0));
+    srand(static_cast<unsigned int>(time(0)));
     
     crear_personajes();
 }

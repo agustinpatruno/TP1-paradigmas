@@ -1,4 +1,4 @@
-#include "interfaz_armas.hpp"
+#include "../includes/interfaz_armas.hpp"
 
 ////// funciones auxiliares ///////
 

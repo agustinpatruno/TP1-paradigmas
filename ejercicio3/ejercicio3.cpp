@@ -1,6 +1,5 @@
 #include "ejercicio3.hpp"
 
-
 PersonajeFactory::PersonajeFactory()
 {
     cout << " se creo el objeto factory" << endl;
@@ -10,7 +9,7 @@ shared_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, f
 {
     unique_ptr<arma> nueva_arma;
 
-    double daño = daño_magicos_combate[static_cast<int>(tipo_arma)];
+    double daño = daño_magicos_combate[static_cast<size_t>(tipo_arma)];
     
    nueva_arma = crear_arma(tipo_arma, dato1, dato2, dato3, daño);
     
@@ -34,17 +33,16 @@ shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_total
             switch (tipo_mago)
             {
                 case a_hechicero:
-    
-                    nuevo_personaje = make_shared<hechicero>(hab_especial, dato1, 0, dato_personal);
+                    nuevo_personaje = make_shared<hechicero>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_conjurador:
-                    nuevo_personaje = make_shared<conjurador>(hab_especial, dato1, 0, dato_personal);
+                    nuevo_personaje = make_shared<conjurador>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_brujo:
-                    nuevo_personaje = make_shared<brujo>(hab_especial, dato1, 0, dato_personal);
+                    nuevo_personaje = make_shared<brujo>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_nigromante:
-                    nuevo_personaje = make_shared<nigromante>(hab_especial, dato1, 0, dato_personal);
+                    nuevo_personaje = make_shared<nigromante>(hab_especial, dato1, 2, dato_personal);
                     break;
             }
         }
@@ -83,4 +81,24 @@ shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_total
     {
         std::cerr << e.what() << '\n';
     }
+}
+
+shared_ptr<personaje> PersonajeFactory::crear_personaje_armado_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal, armas_totales tip_arma, float dato2, float dato3, float dato4)
+{
+    shared_ptr<PersonajeFactory> perso_factory = make_shared<PersonajeFactory>();
+
+    shared_ptr<personaje> nuevo_personaje = perso_factory -> crear_personaje_factory(perso, hab_especial, dato1, dato_personal);
+
+    nuevo_personaje -> agregar_arma(tip_arma, dato2, dato3, dato4);
+}
+
+void crear_elementos()
+{
+
+    
+}
+
+int main()
+{
+    return 0;
 }

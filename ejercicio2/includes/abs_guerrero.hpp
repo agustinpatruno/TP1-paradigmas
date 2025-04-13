@@ -122,7 +122,7 @@ class mercenario : public guerrero
 
     public:
 
-        mercenario(hab_totales habilidad, float fuerza, float aura, int max_armas, float astucia);
+        mercenario(hab_totales habilidad, float fuerza, int max_armas, float astucia);
 
         void Get_astucia();
         /*
@@ -138,7 +138,7 @@ class gladiador : public guerrero
 
     public:
 
-        gladiador(hab_totales habilidad, float fuerza, float aura, int max_armas, float adaptacion);
+        gladiador(hab_totales habilidad, float fuerza, int max_armas, float adaptacion);
 
         void Get_adaptacion();
         /*

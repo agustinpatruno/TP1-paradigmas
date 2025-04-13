@@ -1,4 +1,4 @@
-#include "abs_mago.hpp"
+#include "../includes/abs_mago.hpp"
 
 ////////////////////////////////implementacion metodos de la clase abstracta mago/////////////////////////////////
 

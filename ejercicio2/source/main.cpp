@@ -1,9 +1,14 @@
-#include "abs_mago.hpp"
-#include "abs_guerrero.hpp"
+#include "../includes/abs_mago.hpp"
+#include "../includes/abs_guerrero.hpp"
+
+/*
+// comando para compilar
+// g++ abs_combate.cpp abs_guerrero.cpp abs_items.cpp abs_mago.cpp interfaz_personajes.cpp interfaz_armas.cpp main.cpp  -o programa //
 
 int main()
 {
     // menu para corroborar el funcionamiento de los personajes // 
+    
     unique_ptr<hechicero> nuevo_hechicero = make_unique<hechicero>(Corte_giratorio, 7, 2, 8);
 
     nuevo_hechicero ->mostrar_info_personaje();
@@ -40,4 +45,7 @@ int main()
 
     nuevo_barbaro ->agregar_arma(arma_pocion, 6, 3, 5.4);
     nuevo_barbaro ->info_arma();
+    
+   return 0;
 }
+*/
