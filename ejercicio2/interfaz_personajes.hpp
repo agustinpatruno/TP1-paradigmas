@@ -67,7 +67,9 @@ class personaje
 
         virtual void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3) = 0;
 
-        virtual int contar_armas() = 0;
+        virtual void info_arma()const = 0;
+
+        virtual int contar_armas() const = 0;
 
         virtual ~personaje() = default;
 };

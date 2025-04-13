@@ -52,10 +52,12 @@ class guerrero : public personaje
 
         void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3);
         /*
-            crear un arma y la agrega al vector de armas
+            crear un arma y la agrega a alguno de los 
         */
 
-        int contar_armas() override;
+        void info_arma() const override;
+
+        int contar_armas() const override;
         /*
             cretorna la cantidad de armas existentes. 
         */
@@ -67,7 +69,7 @@ class barbaro : public guerrero
 {
     private:
         
-        float espiritu_salvaje;
+        float espiritu_salvaje; // 0 <= espiritu_salvaje <= 10
 
     public:
 

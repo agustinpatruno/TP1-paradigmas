@@ -20,7 +20,7 @@ items_magicos::items_magicos(armas_totales tip_arma, float level_magico, float r
         }
         else
         {
-            throw logic_error("error, verifique que los parametros ingresados esten dentro de los rangos");
+            throw logic_error("error, verifique que los parametros ingresados sean correctos");
         }
     }
     catch(const std::exception& e)
@@ -51,17 +51,18 @@ void items_magicos::restar_usos()
 
 void items_magicos::Get_infoarma_general() const
 {
+    Get_item_magico();
     cout << "daño del arma magica: " << Daño << endl;
     cout << "cantidad de usos del arma magica: " << cant_usos << endl;
 }
 
-void items_magicos::Get_info_magia()
+void items_magicos::Get_info_magia() const
 {
     cout << "nivel de magia: " << nivel_magico << endl;
     cout << "resistencia a la magia oscura: " << resistencia_magia_oscura << endl;
 }
 
-void items_magicos::Get_item_magico()
+void items_magicos::Get_item_magico() const
 {
     cout << "tipo de item magico: " << obtenerNombreArma(tipo_arma) << endl;
 }
@@ -75,7 +76,7 @@ baston::baston(float level_magico, float resistencia, float long_baston, double 
     {
         if (!corroborar_intervalo(1, long_baston, 6))
         {
-            throw logic_error("error, verifique que los parametros ingresados esten dentro del rango. long_baston[0,6] y que el tipo de arma sea arma_baston");
+            throw logic_error("error en la creacion de un baston, verifique que los parametros ingresados esten dentro del rango. long_baston[0,6]");
         }   
     }
     catch(const std::exception& e)
@@ -98,7 +99,7 @@ libro_de_hechizos::libro_de_hechizos(float level_magico, float resistencia, floa
     {
         if (!corroborar_intervalo(0, prestigio_libro, 1000))
         {
-            throw logic_error(" error, ingrese un valor de prestigio[0,1000] dentro del intervalo y que el tipo de arma sea arma_libro_de_hechizos");
+            throw logic_error(" error en la creacion de un libro de hechizos, ingrese un valor de prestigio[0,1000] dentro del intervalo");
         }   
     }
     catch(const exception& e)
@@ -121,7 +122,7 @@ pocion::pocion(float level_magico, float resistencia, float duracion_pocion, dou
     {
         if (!corroborar_intervalo(0, duracion_pocion, 25))
         {
-            throw logic_error(" error, ingrese una duracion de la pocion[0,25] dentro del intervalo y que el tipo de arma sea arma_pocion");
+            throw logic_error(" error en la creacion de una pocion, ingrese una duracion de la pocion[0,25] dentro del intervalo");
         }   
     }
     catch(const exception& e)
@@ -144,7 +145,7 @@ amuleto::amuleto(float level_magico, float resistencia, float capacidad_suerte, 
     {
         if (!corroborar_intervalo(0, suerte, 10))
         {
-            throw logic_error(" error, ingrese una poder de suerte[0,10] dentro del intervalo t que el tipo de arma sea arma_amuleto");
+            throw logic_error("error en la creacion de un amuleto, ingrese una poder de suerte[0,10] dentro del intervalo");
         }   
     }
     catch(const exception& e)

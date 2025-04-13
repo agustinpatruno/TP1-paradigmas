@@ -39,7 +39,9 @@ class mago : public personaje
 
         void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3);
 
-        int contar_armas();
+        void info_arma() const override;
+
+        int contar_armas() const override;
 };
 
 // clases derivadas de la clase mago //
@@ -64,7 +66,7 @@ class  conjurador : public mago
 {
     private:
         
-        float conocimiento_ancestral;
+        float conocimiento_ancestral; // 0 <= conocimiento_ancestral <= 10
 
     public:
 

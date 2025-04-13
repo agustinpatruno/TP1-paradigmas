@@ -30,7 +30,7 @@ mago::mago(tipos_magos tip_mago, hab_totales hab_especial, int magia, double vid
         }
         else
         {
-            throw logic_error("error, verifique que los parametros ingresados sean correctos");
+            throw logic_error("error en la creacion de un personaje mago, verifique que todos los parametros ingresados sean correctos");
         }
     }
     catch(const std::exception& e)
@@ -50,7 +50,7 @@ void mago::mostrar_info_personaje() const
 
 void mago::mostrar_hp() const
 {
-    cout << "cantidad de vida: " << hp << endl;
+    cout << "Hp del mago: " << hp << endl;
 }
 
 double mago::retornar_hp() const
@@ -131,7 +131,19 @@ void mago::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float
     }
 }
 
-int mago::contar_armas()
+void mago::info_arma() const
+{
+    if (arma1)
+    {
+        arma1 ->Get_infoarma_general();
+    }
+    if ( arma2)
+    {
+        arma2 ->Get_infoarma_general();
+    }
+}
+
+int mago::contar_armas() const
 {
     int c = 0;
 
@@ -154,7 +166,7 @@ hechicero::hechicero(hab_totales hab_especial, int magia, int max_armas, float h
     {
         if (!corroborar_intervalo(0, hab_fuente, 10))
         {
-            throw logic_error("error, ingrese una habilidad de fuente[0,10] dentro del rango");
+            throw logic_error("error en la creacion de un personaje hechicero, ingrese una habilidad de fuente[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -176,7 +188,7 @@ conjurador::conjurador(hab_totales hab_especial, int magia, int max_armas, float
     {
         if (!corroborar_intervalo(0, conocimiento, 10))
         {
-            throw logic_error("error, ingrese una nivel de conocimiento ancestral[0,10] dentro del rango");
+            throw logic_error("error en la creacion de un personaje conjurador, ingrese una nivel de conocimiento ancestral[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -198,7 +210,7 @@ brujo::brujo(hab_totales hab_especial, int magia, int max_armas, float manipulac
     {
         if (!corroborar_intervalo(0, manipulacion, 10))
         {
-            throw logic_error("error, ingrese una nivel de manipulacion de naturaleza[0,10] dentro del rango");
+            throw logic_error("error en la creacion de un personaje brujo, ingrese una nivel de manipulacion de naturaleza[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -220,7 +232,7 @@ nigromante::nigromante(hab_totales hab_especial, int magia, int max_armas, float
     {
         if (!corroborar_intervalo(0, mani_almas, 10))
         {
-            throw logic_error("error, ingrese una nivel de manipulacion de almas[0,10] dentro del rango");
+            throw logic_error("error en la creacion de un personaje nigromante, ingrese una nivel de manipulacion de almas[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)

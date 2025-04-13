@@ -20,7 +20,7 @@ armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float pr
         }
         else
         {
-            throw logic_error("error, verifique que los parametros ingresados sean correctos");
+            throw logic_error("error en la creacion de un arma de combate, verifique que los parametros ingresados sean correctos");
         }
     }
     catch(const std::exception& e)
@@ -41,7 +41,6 @@ void armas_combate::restar_usos()
         {
             throw logic_error("error, te has quedado sin golpes disponibles, verifique si quedan golpes especiales");
         }
-        
     }
     catch(const std::exception& e)
     {
@@ -51,16 +50,17 @@ void armas_combate::restar_usos()
 
 void armas_combate::Get_infoarma_general() const
 {
+    Get_arma_combate();
     cout << " daño del arma de combate: " << Daño << endl;
-    cout << " cantidad de usos del arma magica: " << cant_usos << endl;
+    cout << " cantidad de usos del arma de combate: " << cant_usos << endl;
 }
 
-void armas_combate::Get_info_combate()
+void armas_combate::Get_info_combate() const
 {
     cout << "durabilidad al polvo del arma: "<< durabilidad_polvo << endl;
 }
 
-void armas_combate::Get_arma_combate()
+void armas_combate::Get_arma_combate() const
 {
     cout << "tipo de arma de combate: " << obtenerNombreArma(tipo_arma) << endl;
 }
@@ -74,7 +74,7 @@ hacha_simple::hacha_simple(float durabilidad, float precision, float filo, doubl
     {
         if (!corroborar_intervalo(0, filo, 10))
         {
-            throw logic_error("error, ingrese un filo[0,25] mayor a cero");
+            throw logic_error("error en la creacion de una hacha_simple, ingrese un filo[0,25] mayor a cero");
         }
     }
     catch(const std::exception& e)
@@ -97,7 +97,7 @@ hacha_doble::hacha_doble(float durabilidad, float precision, float longitud, dou
     {
         if (!corroborar_intervalo(0, longitud, 25))
         {
-            throw logic_error("error, ingrese una longitud[0,25] dentro del rango");
+            throw logic_error("error en la creacion de un hacha doble, ingrese una longitud[0,25] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -120,7 +120,7 @@ espada::espada(float durabilidad, float precision, float corte, double daño)
     {
         if (!corroborar_intervalo(0, corte, 10) )
         {
-            throw logic_error("error, ingrese un nivel de corte[0,10] dentro del rango");
+            throw logic_error("error en la cracion de una espada, ingrese un nivel de corte[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -143,7 +143,7 @@ lanza::lanza(float durabilidad, float precision, float alcanze, double daño)
     {
         if (!corroborar_intervalo(0, alcanze, 20) )
         {
-            throw logic_error("error, ingrese una distancia de alcanze[0,20] dentro del rango");
+            throw logic_error("error en la creacion de una lanza, ingrese una distancia de alcanze[0,20] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -164,9 +164,9 @@ garrote::garrote(float durabilidad, float precision, float peso, double daño)
 {
     try
     {
-        if (!corroborar_intervalo(0, peso, 50) )
+        if (!corroborar_intervalo(0, peso, 50))
         {
-            throw logic_error("error, ingrese un peso del garrote[0,50] dentro del rango");
+            throw logic_error("error en la creacion de un garrote, ingrese un peso del garrote[0,50] dentro del rango");
         }
     }
     catch(const std::exception& e)

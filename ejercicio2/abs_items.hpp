@@ -27,12 +27,12 @@ class items_magicos: public arma
             imprime por consola la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
         */
 
-        void Get_info_magia();
+        void Get_info_magia() const;
         /*
             imprime por consola el nivel de magia del item magico y la resistencia a magia oscura
         */
 
-        void Get_item_magico();
+        void Get_item_magico() const;
         /*
             imprime por consola el tipo de item magico
         */

@@ -30,7 +30,7 @@ guerrero::guerrero(tipos_guerreros guerrero, float fuerza, hab_totales hab_espec
         }
         else
         {
-            throw logic_error("error, verifique que todos los parametros ingresados sean correctos y esten dentro del rango");
+            throw logic_error("error en la creacion de un objeto guerrero, verifique que todos los parametros ingresados sean correctos");
         }
     }
     catch(const std::exception& e)
@@ -43,14 +43,14 @@ void guerrero::mostrar_info_personaje() const
 {
     cout << "tipo de guerrero: " << getTipoGuerrero(tipo_guerrero) << endl;
     cout << "habilidad especial: " << getHabilidad(habilidad_especial) << endl;
-    cout << "cantidad de daño de la habilidad especial: " << daño_hab;
-    cout << "cantidad de usos de la habilidad especial: " << usos_hab;
-    cout << "capacidad de fuerza: " << capacidad_fuerza << endl;
+    cout << "cantidad de daño de la habilidad especial: " << daño_hab << endl;
+    cout << "cantidad de usos de la habilidad especial: " << usos_hab << endl;
+    cout << "capacidad de fuerza: " << capacidad_fuerza << " Kg" << endl;
 }
 
 void guerrero::mostrar_hp() const
 {
-    cout << "vida del guerrero: " << hp << endl;
+    cout << "Hp del guerrero: " << hp << endl;
 }
 
 double guerrero::retornar_hp() const
@@ -131,7 +131,19 @@ void guerrero::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, f
     }
 }
 
-int guerrero::contar_armas()
+void guerrero::info_arma() const
+{
+    if (arma1)
+    {
+        arma1 -> Get_infoarma_general();
+    }
+    if (arma2)
+    {
+        arma2 -> Get_infoarma_general();
+    }
+}
+
+int guerrero::contar_armas() const
 {
     int c = 0;
 
@@ -154,7 +166,7 @@ barbaro::barbaro(hab_totales habilidad, float fuerza, int max_armas, float salva
     {
         if (!corroborar_intervalo(0, salvaje, 10))
         {
-            throw logic_error("error, ingrese un nivel de espiritu salvaje[0,10] dentro del rango");
+            throw logic_error("error en la creacion de un personaje barbaro, ingrese un nivel de espiritu salvaje[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -176,7 +188,7 @@ paladin::paladin(hab_totales habilidad, float fuerza, int max_armas, float aura)
     {
         if (!corroborar_intervalo(0, aura, 10))
         {
-            throw("error, ingrese un nivel de aura protectora[0,10] dentro del rango");
+            throw("error en la creacion de un personaje paladin, ingrese un nivel de aura protectora[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -198,7 +210,7 @@ caballero::caballero(hab_totales habilidad, float fuerza, int max_armas, float h
     {
         if (!corroborar_intervalo(0, hab_marcial, 10))
         {
-            throw("error, ingrese un nivel de habilidad marcial[0,10] dentro del rango");
+            throw("error en la creacion de un personaje caballero, ingrese un nivel de habilidad marcial[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)
@@ -220,7 +232,7 @@ mercenario::mercenario(hab_totales habilidad, float fuerza, float aura, int max_
     {
         if (!corroborar_intervalo(0, astucia, 10))
         {
-            throw("error, ingrese un nivel de astucia[0,10] dentro del rango");
+            throw("error en la creacion de un personaje mercenario, ingrese un nivel de astucia[0,10] dentro del rango");
         }
     }
     catch(const std::exception& e)

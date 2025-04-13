@@ -19,15 +19,15 @@ class armas_combate : public arma
 
         void Get_infoarma_general() const override;
         /*
-            imprime por consola la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
+            imprime por consola el tipo de arma, la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
         */
 
-        void Get_info_combate();
+        void Get_info_combate() const;
         /*
             imprime por consola la durabilidad al polvo del arma y la precision del disparo
         */
 
-        void Get_arma_combate();
+        void Get_arma_combate() const;
         /*
             imprime por consola el tipo de arma de combate
         */
