@@ -1,10 +1,11 @@
 #include "../includes/abs_mago.hpp"
 #include "../includes/abs_guerrero.hpp"
 
-/*
+
 // comando para compilar
 // g++ abs_combate.cpp abs_guerrero.cpp abs_items.cpp abs_mago.cpp interfaz_personajes.cpp interfaz_armas.cpp main.cpp  -o programa //
 
+/*
 int main()
 {
     // menu para corroborar el funcionamiento de los personajes // 
@@ -13,7 +14,7 @@ int main()
 
     nuevo_hechicero ->mostrar_info_personaje();
     nuevo_hechicero ->mostrar_hp();
-    nuevo_hechicero ->Get_habilidad_fuente();
+    nuevo_hechicero ->mostrar_caracteristica_mago();
     nuevo_hechicero ->modificar_hp(16);
     cout << "vida: " << nuevo_hechicero ->retornar_hp()<< endl; 
 
@@ -26,7 +27,7 @@ int main()
 
     nuevo_conjurador -> mostrar_info_personaje();
     nuevo_conjurador -> mostrar_hp();
-    nuevo_conjurador -> Get_conocimiento();
+    nuevo_conjurador -> mostrar_caracteristica_mago();
     nuevo_conjurador -> modificar_hp(16);
     cout << "vida: " << nuevo_conjurador ->retornar_hp()<< endl; 
 
@@ -39,7 +40,7 @@ int main()
 
     nuevo_barbaro -> mostrar_info_personaje();
     nuevo_barbaro -> mostrar_hp();
-    nuevo_barbaro ->Get_espiritu_salvaje();
+    nuevo_barbaro -> mostrar_caracteristica_guerrero();
     nuevo_barbaro -> modificar_hp(18);
     cout << "vida: " << nuevo_barbaro ->retornar_hp()<< endl; 
 

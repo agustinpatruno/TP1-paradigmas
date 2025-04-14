@@ -27,7 +27,7 @@ class guerrero : public personaje
 
     public:
 
-        guerrero(tipos_guerreros guerrero, float fuerza, hab_totales hab_especial, double vida, int armas);
+        guerrero(tipos_guerreros nombre_guerrero, float fuerza, hab_totales hab_especial, double vida, int armas);
 
         void mostrar_info_personaje() const override;
         /*
@@ -45,14 +45,11 @@ class guerrero : public personaje
             retorna el hp del personaje
         */
 
+        double daño(bool normal) override;
+
         void modificar_hp(double daño);
         /*
             modifica el hp del personaje, restandole el daño
-        */
-
-        void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3);
-        /*
-            crear un arma y la agrega a alguno de los 
         */
 
         void info_arma() const override;
@@ -61,6 +58,15 @@ class guerrero : public personaje
         /*
             cretorna la cantidad de armas existentes. 
         */
+
+        void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3);
+        /*
+            crear un arma y la agrega a alguno de los 
+        */
+
+        virtual void mostrar_caracteristica_guerrero() const = 0;
+
+       virtual ~guerrero() = 0;
 };
 
 // clases derivadas de la clase guerrero //
@@ -75,7 +81,8 @@ class barbaro : public guerrero
 
         barbaro(hab_totales habilidad, float fuerza, int max_armas, float salvaje);
 
-        void Get_espiritu_salvaje();
+
+        void mostrar_caracteristica_guerrero() const override;
         /*
             imprime por consola el nivel de espiritu salvaje del guerrero
         */
@@ -85,13 +92,13 @@ class paladin : public guerrero
 {
     private:
         
-        float aura_protectora;
+        float aura_protectora; // 0 <= aura protectora <= 10
 
     public:
 
         paladin(hab_totales habilidad, float fuerza, int max_armas, float aura);
 
-        void Get_aura_protectora();
+        void mostrar_caracteristica_guerrero() const override;
         /*
             imprime por consola el nivel de aura protectora del paladin
         */
@@ -107,7 +114,7 @@ class  caballero : public guerrero
 
         caballero(hab_totales habilidad, float fuerza, int max_armas, float hab_marcial);
 
-        void Get_habilidad_marcial();
+        void mostrar_caracteristica_guerrero() const override;
         /*
             imprime por consola el nivel de habilidad marcial del caballero
         */
@@ -124,7 +131,7 @@ class mercenario : public guerrero
 
         mercenario(hab_totales habilidad, float fuerza, int max_armas, float astucia);
 
-        void Get_astucia();
+        void mostrar_caracteristica_guerrero() const override;
         /*
             imprime por consola el nivel de astucia del mercenario
         */
@@ -140,7 +147,7 @@ class gladiador : public guerrero
 
         gladiador(hab_totales habilidad, float fuerza, int max_armas, float adaptacion);
 
-        void Get_adaptacion();
+        void mostrar_caracteristica_guerrero() const override;
         /*
             imprime por consola el nivel de adaptabilidad
         */

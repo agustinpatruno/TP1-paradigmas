@@ -11,7 +11,7 @@ enum tipos_magos {a_hechicero = 1, a_conjurador, a_brujo, a_nigromante};
 
 enum tipos_guerreros {a_barbaro = 1, a_paladin, a_caballero, a_mercenario, a_gladiador};
 
-// enum de las habilidades totales([1:5] = habilidades magicas, [6:10] = habilidades de combate) //
+// enum de las habilidades totales([0:4] = habilidades magicas, [5:9] = habilidades de combate) //
 
 enum hab_totales {Explosion_arcana = 0, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental};
 
@@ -66,10 +66,29 @@ class personaje
         */
 
         virtual void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3) = 0;
+        /*
+            crea un arma y la agrega al personaje, en caso de que no se pueda agregar, arroja un throw y lo
+            captura con un catch diciendo que no hay lugar disponible o por algun otro motivo posible
+        */
 
         virtual void info_arma()const = 0;
+        /*
+            imprime por consola la informacion del arma
+        */
 
         virtual int contar_armas() const = 0;
+        /*
+            cuenta la cantidad de armas que hay
+        */
+
+        virtual double daño(bool normal) = 0;
+        /*
+            retorna el ataque del arma, en caso de que normal = true, en caso de que se false, retorna el daño
+            mas el daño de la habilidad
+        */
 
         virtual ~personaje() = default;
+        /*
+            destructor virtual por default
+        */
 };

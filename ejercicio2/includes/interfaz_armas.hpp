@@ -5,7 +5,7 @@
 #include <vector>
 using namespace std;
 
-// enum de las armas totales. ([1:5] = armas magicas, [6:10] = armas de combate)//
+// enum de las armas totales. ([0:4] = armas magicas, [5:9] = armas de combate)//
 
 enum armas_totales {arma_baston = 0, arma_libro_de_hechizos, arma_pocion, arma_amuleto, arma_hacha_simple, arma_hacha_doble, arma_espada, arma_lanza, arma_garrote};
 
@@ -47,5 +47,10 @@ class arma
     public:
 
         virtual void Get_infoarma_general() const = 0; // muestro el tipo de arma, la cantidad de usos disponibles y el daño
+        
+        virtual double retornar_daño() const = 0;
+
+        virtual bool restar_usos() = 0;
+
         virtual ~arma() = default;
 };

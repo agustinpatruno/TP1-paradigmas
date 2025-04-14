@@ -35,6 +35,12 @@ class mago : public personaje
 
         double retornar_hp() const override;
 
+        double daño(bool normal) override;
+        /*
+            retorna el daño del arma, en caso de que normal = true, en caso de que se false, retorna el daño
+            mas el daño de la habilidad
+        */
+
         void modificar_hp(double daño);
 
         void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3);
@@ -42,6 +48,10 @@ class mago : public personaje
         void info_arma() const override;
 
         int contar_armas() const override;
+
+        virtual void mostrar_caracteristica_mago() const = 0;
+
+        virtual ~mago() = 0;
 };
 
 // clases derivadas de la clase mago //
@@ -56,7 +66,7 @@ class  hechicero : public mago
 
         hechicero(hab_totales hab_especial, int magia, int max_armas, float hab_fuente);
     
-        void Get_habilidad_fuente();
+        void mostrar_caracteristica_mago() const override;
         /*
             imprime por consola la habilidad con la fuente que tiene el hechicero
         */
@@ -72,7 +82,7 @@ class  conjurador : public mago
 
         conjurador(hab_totales hab_especial, int magia, int max_armas, float conocimiento);
 
-        void Get_conocimiento();
+        void  mostrar_caracteristica_mago() const override;
         /*
             imprime por consola el nivel de conocimiento ancestral del conjurador
         */
@@ -88,7 +98,7 @@ class brujo : public mago
     
         brujo(hab_totales hab_especial, int magia, int max_armas, float manipulacion);
     
-        void Get_manipulacion_naturaleza();
+        void mostrar_caracteristica_mago() const override;
         /*
             imprime por consola el nivel de manipulacion de naturaleza que tiene el brujo
         */
@@ -104,7 +114,7 @@ class nigromante : public mago
 
         nigromante(hab_totales hab_especial, int magia, int max_armas, float mani_almas);
 
-        void Get_manipulacion_almas();
+        void mostrar_caracteristica_mago() const override;
         /*
             imprime por conosola el nivel de manipulacion de almas del nigronte
         */

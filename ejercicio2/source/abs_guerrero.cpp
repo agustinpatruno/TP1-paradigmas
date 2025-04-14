@@ -2,13 +2,13 @@
 
 ////////////////////////////////////////////implementacion metodos de la clase abstracta guerrero/////////////////////////////////
 
-guerrero::guerrero(tipos_guerreros guerrero, float fuerza, hab_totales hab_especial, double vida, int armas)
+guerrero::guerrero(tipos_guerreros nombre_guerrero, float fuerza, hab_totales hab_especial, double vida, int armas)
 {
     try
     {
         if (corroborar_intervalo(0,fuerza,1000) && corroborar_intervalo(0,static_cast<float>(armas), 2))
         {
-            this -> tipo_guerrero = guerrero;
+            this -> tipo_guerrero = nombre_guerrero;
 
             habilidad_especial = hab_especial;
         
@@ -56,6 +56,34 @@ void guerrero::mostrar_hp() const
 double guerrero::retornar_hp() const
 {
     return hp;
+}
+
+double guerrero::daño(bool normal)
+{
+    if (normal)
+    {
+        if (arma1->restar_usos())
+        {
+            return arma1 ->retornar_daño();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+      if (usos_hab > 0)
+        {
+            usos_hab -= 1;
+            return arma1 ->retornar_daño() + daño_hab;
+        }
+      else
+        {
+            cout << "te has quedado sin golpes especailes" << endl;
+            return 0;
+        }
+    }
 }
 
 void guerrero::modificar_hp(double daño)
@@ -158,6 +186,8 @@ int guerrero::contar_armas() const
     return c;
 }
 
+guerrero::~guerrero(){}
+
 // implementacion de la clase derivada barbaro //
 
 barbaro::barbaro(hab_totales habilidad, float fuerza, int max_armas, float salvaje) : guerrero( a_barbaro, fuerza, habilidad, 100, max_armas), espiritu_salvaje(salvaje)
@@ -175,7 +205,7 @@ barbaro::barbaro(hab_totales habilidad, float fuerza, int max_armas, float salva
     }
 }
 
-void barbaro::Get_espiritu_salvaje()
+void barbaro::mostrar_caracteristica_guerrero() const
 {
     cout << "nivel de espiritu salvaje: " << espiritu_salvaje << endl;
 }
@@ -197,7 +227,7 @@ paladin::paladin(hab_totales habilidad, float fuerza, int max_armas, float aura)
     }
 }
 
-void paladin::Get_aura_protectora()
+void paladin::mostrar_caracteristica_guerrero() const
 {
     cout << "nivel de aura protectora: " << aura_protectora << endl;
 }
@@ -219,7 +249,7 @@ caballero::caballero(hab_totales habilidad, float fuerza, int max_armas, float h
     }
 }
 
-void caballero::Get_habilidad_marcial()
+void caballero::mostrar_caracteristica_guerrero() const
 {
     cout << "nivel de habilidad marcial: " << habilidad_marcial << endl;
 }
@@ -241,7 +271,7 @@ mercenario::mercenario(hab_totales habilidad, float fuerza, int max_armas, float
     }
 }
 
-void mercenario::Get_astucia()
+void mercenario::mostrar_caracteristica_guerrero() const
 {
     cout << "nivel de astucia: " << nivel_astucia << endl;
 }
@@ -263,7 +293,7 @@ gladiador::gladiador(hab_totales habilidad, float fuerza, int max_armas, float a
     }
 }
 
-void gladiador::Get_adaptacion()
+void gladiador::mostrar_caracteristica_guerrero() const
 {
     cout << "nivel de adaptabilidad: " << adaptabilidad << endl;
 }

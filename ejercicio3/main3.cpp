@@ -1,17 +1,5 @@
 #include "ejercicio3.hpp"
 
-int generarAleatorio(int minimo, int maximo) 
-{
-    if (minimo > maximo)
-    {
-        return 0;
-    }
-    
-    return minimo + (rand() % (maximo - minimo + 1));
-}
-
-////////////////////////////////////////implementacion de los metodos de personaje armado//////////////////////////////////////////////
-
 void crear_personajes_aleatorios()
 {
     int cant_magos = generarAleatorio(3,7);
@@ -150,6 +138,7 @@ void crear_personajes_aleatorios()
         cout << "guerrero n°" << "---------" << i << endl;
         guerreros[i] -> mostrar_info_personaje();
         guerreros[i] ->info_arma();
+        guerreros[i] ->mostrar_caracteristica_guerrero();
     }
     
     cout << "---------------personajes magos creados aleatoriamente-------------" << endl;
@@ -159,22 +148,77 @@ void crear_personajes_aleatorios()
         cout << "mago n°" << i << "------------" << endl;
         magos[i] -> mostrar_info_personaje();
         magos[i] -> info_arma();
+        magos[i] ->mostrar_caracteristica_mago();
     }
 }
 
+void crear_elementos()
+{
+    shared_ptr<PersonajeFactory> perso_factory = make_shared<PersonajeFactory>();
+
+    cout << "---------informacion del arma: " << endl;
+
+    shared_ptr<arma> arma = perso_factory ->crear_arma_factory(arma_baston, 5, 4, 3);
+
+    arma ->Get_infoarma_general();
+
+    cout << "---------informacion del personaje-------------- " << endl;
+
+    shared_ptr<personaje> crear_personaje = perso_factory ->crear_personaje_factory(hechicero3, Explosion_arcana,7, 8);
+    
+    crear_personaje ->mostrar_info_personaje();
+    crear_personaje ->mostrar_hp();
+    crear_personaje ->modificar_hp(15);
+    cout << "hp: " << crear_personaje ->retornar_hp() << endl;
+
+    cout << "---------informacion del personaje armado-------------" << endl;
+
+    shared_ptr<personaje> crear_personaje_armado= perso_factory ->crear_personaje_armado_factory(hechicero3, Explosion_arcana,7, 8, arma_baston, 5, 4, 3);
+
+    crear_personaje_armado -> mostrar_info_personaje();
+    crear_personaje_armado -> info_arma();
+    crear_personaje_armado ->mostrar_hp();
+    crear_personaje_armado ->modificar_hp(16);
+    cout << "hp: " << crear_personaje_armado ->retornar_hp() << endl;
+
+    return;
+}
+
 /*
-comando para compilar manualmente:
+    comando para compilar manualmente: 
 
-    g++ -std=c++17 -Wall -I../ejercicio2/include  ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ejercicio3,1.cpp -o programa_pt1
+        g++ -std=c++17 -Wall -I../ejercicio2/include -o programa \ ../ejercicio2/source/abs_combate.cpp \ ../ejercicio2/source/abs_guerrero.cpp \ ../ejercicio2/source/abs_items.cpp \ ../ejercicio2/source/abs_mago.cpp \ ../ejercicio2/source/interfaz_personajes.cpp \ ../ejercicio2/source/interfaz_armas.cpp \ ../ejercicio3/ejercicio3.cpp \ main3.cpp
 
-comando para ejecutar:
+    comando para compilar con makefile:
 
-    ./programa_pt1
+        make
+
+    comando para ejecutar manualmente y con makefile:
+
+        ./programa
+
+    primera parte: 
+
+        crea varios personajes aleatorios de guerreros y magos, con datos aleatorios y luego imprime 
+        sus valores por consola
+     
+    segunda paerte:
+
+        crea un arma, un personaje y un personaje armado
+        muestra los datos por pantalla
 */
 
 int main()
 {
+    cout << "--------------creacion de personajes guerreros y magos aleatoriamente" << endl;
+
     srand(static_cast<unsigned int>(time(0)));
     
     crear_personajes_aleatorios();
+    
+    cout << "--------------creacion de un objeto arma, un objeto personaje y un objeto personaje armado" << endl;
+
+    crear_elementos();
+
+    return 0;
 }

@@ -9,6 +9,8 @@
 #include "../ejercicio2/includes/interfaz_armas.hpp"
 using namespace std;
 
+int generarAleatorio(int minimo, int maximo);
+
 // enum de los personajes totales (tienen el numero 3 para diferenciarlos del otro enum definido en el hpp de personajes)//
 
 enum personajes_totales {hechicero3=1, conjurador3, brujo3, nigromante3, barbaro3, paladin3, caballero3, mercenario3, gladiador3};

@@ -14,13 +14,15 @@ class armas_combate : public arma
     public:
 
         armas_combate(armas_totales tip_arma, float durabilidad, float precision, double daño);
-       
-        void restar_usos();
 
         void Get_infoarma_general() const override;
         /*
             imprime por consola el tipo de arma, la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
         */
+
+        double retornar_daño() const override;
+
+        bool restar_usos();
 
         void Get_info_combate() const;
         /*
@@ -31,6 +33,10 @@ class armas_combate : public arma
         /*
             imprime por consola el tipo de arma de combate
         */
+
+        virtual void Get_caracteristica_arma() const = 0;
+
+        virtual ~armas_combate() = 0;
 };
 
 /////////////////clases derivadas de armas de combate /////////////
@@ -44,7 +50,7 @@ class hacha_simple : public armas_combate
     public:
         hacha_simple(float durabilidad, float precision, float filo, double daño);
 
-        void Get_filo();
+        void Get_caracteristica_arma() const override;
         /*
             imprime por consola el filo del hacha simple
         */
@@ -60,7 +66,7 @@ class hacha_doble : public armas_combate
 
         hacha_doble(float durabilidad,float precision, float longitud, double daño);
 
-        void Get_longitud_alcanze();
+        void Get_caracteristica_arma() const override;
         /*
             imprime por consola la longitud de alcanze del hacha doble
         */
@@ -75,7 +81,7 @@ class espada :public armas_combate
     public:
         espada(float durabilidad, float precision, float corte, double daño);
 
-        void Get_nivel_corte();
+        void Get_caracteristica_arma() const override;
         /*
             imprime por consola el nivel de corta de la espada
         */
@@ -90,7 +96,7 @@ class lanza : public armas_combate
     public:
         lanza(float durabilidad, float precision, float alcanze, double daño);
 
-        void Get_distancia_alcanze();
+        void Get_caracteristica_arma() const override;
         /*
             imprime por consola la distancia que se puede alcanzar con la lanza
         */
@@ -105,7 +111,7 @@ class garrote : public armas_combate
     public:
         garrote(float durabilidad, float precision, float peso, double daño);
 
-        void Get_peso();
+        void Get_caracteristica_arma() const override;
         /* 
             imprime por consola el peso del garrote
         */

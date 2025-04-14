@@ -58,6 +58,34 @@ double mago::retornar_hp() const
     return hp;
 }
 
+double mago::daño(bool normal)
+{
+    if (normal)
+    {
+        if (arma1->restar_usos())
+        {
+            return arma1 ->retornar_daño();
+        }
+        else
+        {
+            return 0;
+        }
+    }
+    else
+    {
+      if (usos_hab > 0)
+        {
+            usos_hab -= 1;
+            return arma1 ->retornar_daño() + daño_hab;
+        }
+      else
+        {
+            cout << "te has quedado sin golpes especailes" << endl;
+            return 0;
+        }
+    }
+}
+
 void mago::modificar_hp(double daño)
 {
     try
@@ -158,6 +186,8 @@ int mago::contar_armas() const
     return c;
 }
 
+mago::~mago(){}
+
 // implementacion de la clase derivada hechicero //
 
 hechicero::hechicero(hab_totales hab_especial, int magia, int max_armas, float hab_fuente) : mago(a_hechicero, hab_especial, magia, 100, max_armas), habilidad_fuente(hab_fuente)
@@ -175,7 +205,7 @@ hechicero::hechicero(hab_totales hab_especial, int magia, int max_armas, float h
     }
 }
 
-void hechicero::Get_habilidad_fuente()
+void hechicero::mostrar_caracteristica_mago() const
 {
     cout << "habilidad en la fuente: " << habilidad_fuente << endl;
 }
@@ -197,7 +227,7 @@ conjurador::conjurador(hab_totales hab_especial, int magia, int max_armas, float
     }
 }
 
-void conjurador::Get_conocimiento()
+void conjurador:: mostrar_caracteristica_mago() const
 {
     cout << "conocimiento ancestral: " << conocimiento_ancestral << endl;
 }
@@ -219,7 +249,7 @@ brujo::brujo(hab_totales hab_especial, int magia, int max_armas, float manipulac
     }
 }
 
-void brujo::Get_manipulacion_naturaleza()
+void brujo::mostrar_caracteristica_mago() const
 {
     cout << "nivel de manipulacion de naturaleza: " << manipulacion_naturaleza << endl;
 }
@@ -241,7 +271,7 @@ nigromante::nigromante(hab_totales hab_especial, int magia, int max_armas, float
     }
 }
 
-void nigromante::Get_manipulacion_almas()
+void nigromante::mostrar_caracteristica_mago() const
 {
     cout << "nivel de manipulacion de almas: " << manipulacion_almas << endl;
 }

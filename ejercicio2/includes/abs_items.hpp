@@ -17,14 +17,16 @@ class items_magicos: public arma
 
         items_magicos(armas_totales tip_arma, float level_magico, float resistencia, double daño);
 
-        virtual void restar_usos();
-        /*
-            funcion que resta los usos del arma cada vez que se ataca. dependiendo se 
-        */
-
         void Get_infoarma_general() const override;
         /*
             imprime por consola la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
+        */
+
+        double retornar_daño() const override;
+
+        bool restar_usos();
+        /*
+            funcion que resta los usos del arma cada vez que se ataca. dependiendo se 
         */
 
         void Get_info_magia() const;
@@ -36,6 +38,10 @@ class items_magicos: public arma
         /*
             imprime por consola el tipo de item magico
         */
+
+        virtual void Get_caracteristica_arma_magica() const = 0;
+
+        virtual ~items_magicos() = 0;
 };
 
 //////////////// clases derivadas de items magicos //////////////////
@@ -50,7 +56,7 @@ class baston : public items_magicos
 
         baston(float level_magico, float resistencia, float largo_baston, double daño);
 
-        void Get_largo_baston();
+        void Get_caracteristica_arma_magica() const override;
         /*
             imprime por consola el largo del baston
         */
@@ -70,7 +76,7 @@ class libro_de_hechizos : public items_magicos
             oscura, el prestigio del libro y el daño que puede causar
         */
 
-        void Get_prestigio();
+        void Get_caracteristica_arma_magica() const override;
         /*
             imprime por consola el nivel de presitigo del libro. (representa la antiguedad del mismo)
         */
@@ -90,7 +96,7 @@ class pocion : public items_magicos
             oscura, la durabilidad de una pocion y el daño que puede causar
         */
 
-        void Get_durabilidad();
+        void Get_caracteristica_arma_magica() const override;
         /*
             imprime por consola la durabilidad de la pocion. representa segundos
         */
@@ -110,7 +116,7 @@ class amuleto : public items_magicos
             oscura, el nivel de suerte y el daño que puede causar
         */
 
-        void Get_suerte();
+        void Get_caracteristica_arma_magica() const override;
         /*
             imprime por consola el nivel de suerte del amuleto
         */

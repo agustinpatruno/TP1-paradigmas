@@ -29,23 +29,23 @@ items_magicos::items_magicos(armas_totales tip_arma, float level_magico, float r
     }
 }
 
-void items_magicos::restar_usos()
+double items_magicos::retornar_daño() const 
 {
-    try
+    return Daño;
+}
+
+bool items_magicos::restar_usos()
+{
+   
+    if (cant_usos > 0)
     {
-        if (cant_usos > 0)
-        {
-            cant_usos-=1;
-        }
-        else
-        {
-            throw logic_error("error, te has quedado sin golpes disponibles, verifique si quedan golpes especiales");
-        }
-        
+        cant_usos-=1;
+        return true;
     }
-    catch(const std::exception& e)
+    else
     {
-        cerr << e.what() << '\n';
+       cout << "te has quedado sin golpes disponibles, verifique si quedan golpes especiales" << endl;
+       return false;
     }
 }
 
@@ -67,6 +67,8 @@ void items_magicos::Get_item_magico() const
     cout << "tipo de item magico: " << obtenerNombreArma(tipo_arma) << endl;
 }
 
+items_magicos::~items_magicos(){}
+
 // implementacion de metodos de la clase derivada baston //
 
 baston::baston(float level_magico, float resistencia, float long_baston, double daño)
@@ -85,7 +87,7 @@ baston::baston(float level_magico, float resistencia, float long_baston, double 
     }
 }
 
-void baston::Get_largo_baston()
+void baston::Get_caracteristica_arma_magica() const
 {
     cout << "largo del baston: " << largo_baston << endl;
 }
@@ -108,7 +110,7 @@ libro_de_hechizos::libro_de_hechizos(float level_magico, float resistencia, floa
     }
 }
 
-void libro_de_hechizos::Get_prestigio()
+void libro_de_hechizos::Get_caracteristica_arma_magica() const
 {
     cout << "prestigio del libro de hechizos: " << prestigio_libro << endl;
 }
@@ -131,7 +133,7 @@ pocion::pocion(float level_magico, float resistencia, float duracion_pocion, dou
     }
 }
 
-void pocion::Get_durabilidad()
+void pocion::Get_caracteristica_arma_magica() const
 {
     cout << "durabilidad de la pocion: " << durabilidad_pocion << endl;
 }
@@ -154,7 +156,7 @@ amuleto::amuleto(float level_magico, float resistencia, float capacidad_suerte, 
     }
 }
 
-void amuleto::Get_suerte()
+void amuleto::Get_caracteristica_arma_magica() const
 {
     cout << "suerte del amuleto: " << suerte << endl;
 }

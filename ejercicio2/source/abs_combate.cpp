@@ -29,30 +29,32 @@ armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float pr
     }
 }
 
-void armas_combate::restar_usos()
-{
-    try
-    {
-        if (cant_usos > 0)
-        {
-            cant_usos-=1;
-        }
-        else
-        {
-            throw logic_error("error, te has quedado sin golpes disponibles, verifique si quedan golpes especiales");
-        }
-    }
-    catch(const std::exception& e)
-    {
-        cerr << e.what() << '\n';
-    }
-}
 
 void armas_combate::Get_infoarma_general() const
 {
     Get_arma_combate();
     cout << " daño del arma de combate: " << Daño << endl;
     cout << " cantidad de usos del arma de combate: " << cant_usos << endl;
+}
+
+double armas_combate::retornar_daño() const
+{
+    return Daño;
+}
+
+bool armas_combate::restar_usos()
+{
+    if (cant_usos > 0)
+    {
+        cant_usos-=1;
+        return false;
+    }
+    else
+    {
+        cout << "te has quedado sin golpes disponibles, verifique si quedan golpes especiales" << endl;
+        return false;
+    }
+
 }
 
 void armas_combate::Get_info_combate() const
@@ -64,6 +66,8 @@ void armas_combate::Get_arma_combate() const
 {
     cout << "tipo de arma de combate: " << obtenerNombreArma(tipo_arma) << endl;
 }
+
+armas_combate::~armas_combate(){}
 
 // implementacion de metodos de la clase derivada hacha simple //
 
@@ -83,7 +87,7 @@ hacha_simple::hacha_simple(float durabilidad, float precision, float filo, doubl
     }
 }
 
-void hacha_simple::Get_filo()
+void hacha_simple::Get_caracteristica_arma() const
 {
     cout << "filo del hacha simple: " << Filo << endl;
 }
@@ -106,7 +110,7 @@ hacha_doble::hacha_doble(float durabilidad, float precision, float longitud, dou
     }
 }
 
-void hacha_doble::Get_longitud_alcanze()
+void hacha_doble::Get_caracteristica_arma() const
 {
     cout << "longitud de alcanza del hacha doble:" << longitud_alcanze << endl;
 }
@@ -129,7 +133,7 @@ espada::espada(float durabilidad, float precision, float corte, double daño)
     }
 }
 
-void espada::Get_nivel_corte()
+void espada::Get_caracteristica_arma() const
 {
     cout << "nivel de corte de la espada: " << nivel_corte << endl;
 }
@@ -152,7 +156,7 @@ lanza::lanza(float durabilidad, float precision, float alcanze, double daño)
     }
 }
 
-void lanza::Get_distancia_alcanze()
+void lanza::Get_caracteristica_arma() const
 {
     cout << "distancia de alcanze de la espada: " << distancia_alcanze << endl;
 }
@@ -175,7 +179,7 @@ garrote::garrote(float durabilidad, float precision, float peso, double daño)
     }
 }
 
-void garrote::Get_peso()
+void garrote::Get_caracteristica_arma() const
 {
     cout << "peso del garrote: " << peso__garrote << endl;
 }
