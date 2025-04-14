@@ -12,13 +12,13 @@ int generarAleatorio(int minimo, int maximo)
 
 ////////////////////////////////////////implementacion de los metodos de personaje armado//////////////////////////////////////////////
 
-void crear_personajes()
+void crear_personajes_aleatorios()
 {
     int cant_magos = generarAleatorio(3,7);
-    cout << "numero aleatorio de la cantidad de magos" << endl;
+    cout << "numero aleatorio de la cantidad de magos: " << cant_magos << endl;
 
     int cant_guerreros = generarAleatorio(3,7);
-    cout << "numero aleatorio de la cantidad de guerreros" << endl;
+    cout << "numero aleatorio de la cantidad de guerreros: " << cant_guerreros << endl;
 
     vector<shared_ptr<mago>> magos;
 
@@ -76,7 +76,7 @@ void crear_personajes()
                 int d2 = generarAleatorio(1,10);
                 int d3 = generarAleatorio(1,10);
 
-                nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma2), static_cast<float>(da1),static_cast<float>(da2),static_cast<float>(da3));   
+                nuevo_mago ->agregar_arma(static_cast<armas_totales>(random_arma2), static_cast<float>(d1),static_cast<float>(d2),static_cast<float>(d3));   
             }
         }  
         magos.push_back(nuevo_mago);
@@ -149,6 +149,7 @@ void crear_personajes()
     {
         cout << "guerrero n°" << "---------" << i << endl;
         guerreros[i] -> mostrar_info_personaje();
+        guerreros[i] ->info_arma();
     }
     
     cout << "---------------personajes magos creados aleatoriamente-------------" << endl;
@@ -157,12 +158,23 @@ void crear_personajes()
     {
         cout << "mago n°" << i << "------------" << endl;
         magos[i] -> mostrar_info_personaje();
+        magos[i] -> info_arma();
     }
 }
+
+/*
+comando para compilar manualmente:
+
+    g++ -std=c++17 -Wall -I../ejercicio2/include  ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ejercicio3,1.cpp -o programa_pt1
+
+comando para ejecutar:
+
+    ./programa_pt1
+*/
 
 int main()
 {
     srand(static_cast<unsigned int>(time(0)));
     
-    crear_personajes();
+    crear_personajes_aleatorios();
 }

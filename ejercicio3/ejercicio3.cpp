@@ -20,7 +20,7 @@ shared_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, f
     
    shared_ptr<arma> arma_shared = move(nueva_arma);
 
-   return nueva_arma;
+   return arma_shared;
 }
 
 shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal)
@@ -105,9 +105,13 @@ void crear_elementos()
 {
     shared_ptr<PersonajeFactory> perso_factory = make_shared<PersonajeFactory>();
 
+    cout << "---------informacion del arma: " << endl;
+
     shared_ptr<arma> arma = perso_factory ->crear_arma_factory(arma_baston, 5, 4, 3);
 
     arma ->Get_infoarma_general();
+
+    cout << "---------informacion del personaje-------------- " << endl;
 
     shared_ptr<personaje> crear_personaje = perso_factory ->crear_personaje_factory(hechicero3, Explosion_arcana,7, 8);
     
@@ -115,7 +119,30 @@ void crear_elementos()
     crear_personaje ->mostrar_hp();
     crear_personaje ->modificar_hp(15);
     cout << "hp: " << crear_personaje ->retornar_hp() << endl;
+
+    cout << "---------informacion del personaje armado-------------" << endl;
+
+    shared_ptr<personaje> crear_personaje_armado= perso_factory ->crear_personaje_armado_factory(hechicero3, Explosion_arcana,7, 8, arma_baston, 5, 4, 3);
+
+    crear_personaje_armado -> mostrar_info_personaje();
+    crear_personaje_armado -> info_arma();
+    crear_personaje_armado ->mostrar_hp();
+    crear_personaje_armado ->modificar_hp(16);
+    cout << "hp: " << crear_personaje_armado ->retornar_hp() << endl;
+
+    return;
 }
+
+/*
+comando para compilar manualmente: 
+
+    g++ -std=c++17 -Wall -I../ejercicio2/include  ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ejercicio3.cpp -o programa_pt2
+
+comando para ejecutar:
+
+    ./programa_pt2
+
+*/
 
 int main()
 {

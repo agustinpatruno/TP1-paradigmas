@@ -8,7 +8,7 @@ guerrero::guerrero(tipos_guerreros guerrero, float fuerza, hab_totales hab_espec
     {
         if (corroborar_intervalo(0,fuerza,1000) && corroborar_intervalo(0,static_cast<float>(armas), 2))
         {
-            tipo_guerrero = guerrero;
+            this -> tipo_guerrero = guerrero;
 
             habilidad_especial = hab_especial;
         

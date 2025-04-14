@@ -11,7 +11,7 @@ COMMON_SRC = ../ejercicio2/source/abs_combate.cpp \
 
 # Archivos individuales
 PT1_SRC = $(COMMON_SRC) ejercicio3,1.cpp
-PT2_SRC = $(COMMON_SRC) ejercicio3,2.cpp
+PT2_SRC = $(COMMON_SRC) ejercicio3.cpp
 
 # Ejecutables
 PT1_EXE = programa_pt1
