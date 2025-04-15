@@ -14,12 +14,12 @@ float devolver_intervalo(float valor, float min, float max);
     del rango
 */
 
-shared_ptr<personaje> crear_personaje_armado();
+unique_ptr<personaje> crear_personaje_armado();
 /*
     retorna un puntero a un personaje armado. crea dicho personaje con los parametros solicitados por terminal
 */
 
-shared_ptr<personaje> generar_personaje_aleatorio();
+unique_ptr<personaje> generar_personaje_aleatorio();
 /*
     retorna un pesonaje armado aleatorio, con todos los datos aleatorios
 */

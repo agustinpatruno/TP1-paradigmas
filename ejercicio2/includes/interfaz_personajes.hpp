@@ -13,13 +13,13 @@ enum tipos_guerreros {a_barbaro = 1, a_paladin, a_caballero, a_mercenario, a_gla
 
 // enum de las habilidades totales([0:4] = habilidades magicas, [5:9] = habilidades de combate) //
 
-enum hab_totales {Explosion_arcana = 0, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental};
+enum hab_totales {Explosion_arcana, Golpe_elemental, Corte_espectral, Encantamiento_explosivo, Rafaga_magica, Impacto_devastador, Corte_giratorio, Golpe_perforante, Ataque_ensordecedor, Ruptura_elemental};
 
 /* valores de los daños extra de las habilidades especiales magicas y las de combate([1:5] = daño magicas, [6:10] = daño de combate) */
 
 extern vector<double> daño_hab_magicos_combate;
 
-/* cant de usos de las habilidades especiales magicas y de combate ([1:5] = usos magicas, [6:10] = usos de combate)*/
+/* cant de usos de las habilidades especiales magicas y de combate ([0:4] = usos magicas, [5:9] = usos de combate)*/
 
 extern vector<int> usos_hab_magicas_combate;
 
@@ -36,8 +36,8 @@ string getHabilidad(hab_totales habilidad);
 /*retorna true si la habilidad pertenece a las habilidades magicas, caso contrario, retorna false*/
 bool pertenece_hab_magicas(hab_totales habilidad);
 
-/*retorna un puntero unique_ptr a un arma  en base a los parametros del tipo de arma, dato1, dato2, dato3 y el daño*/
-unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3, double daño);
+/*retorna true si la habilidad pertenece a las habilidades de combate, caso contrario, retorna false*/
+bool pertenece_hab_combate(hab_totales habilidad);
 
 ///////////////////////////////////// interfaz de pesonaje /////////////////////////////////////
 
@@ -69,6 +69,11 @@ class personaje
         /*
             crea un arma y la agrega al personaje, en caso de que no se pueda agregar, arroja un throw y lo
             captura con un catch diciendo que no hay lugar disponible o por algun otro motivo posible
+        */
+
+        virtual unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3, double daño) = 0;
+        /*
+            retorna un puntero unique_ptr a un arma  en base a los parametros del tipo de arma, dato1, dato2, dato3 y el daño
         */
 
         virtual void info_arma()const = 0;

@@ -2,11 +2,11 @@
 
 ////// funciones auxiliares ///////
 
-// valores del daño de las armas magicas y de combate. ([1:5] = daño magico, [6:10] daño de combate)//
+// valores del daño de las armas magicas y de combate. ([0:3] = daño magico, [4:8] daño de combate)//
 
-vector<double> daño_magicos_combate = {12.5, 13, 14, 10, 9, 16, 13.2, 15, 7.9};
+vector<double> daño_magicos_combate = {12.5, 13.0, 14.0, 10.0, 9.0, 16.0, 13.2, 15.0, 7.9};
 
-// cant de usos de cada arma magica y de combate. ([1:5] = uso de armas magicas, [6,10] usos de armas de combate )//
+// cant de usos de cada arma magica y de combate. ([0:3] = uso de armas magicas, [4,8] usos de armas de combate )//
 
 vector<int> usos_armas_magicas_combate = {12,11,15,10,13,16,12,9,11};
 

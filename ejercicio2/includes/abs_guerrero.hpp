@@ -5,7 +5,7 @@
 
 class guerrero : public personaje
 {
-    private:
+    protected:
 
        unique_ptr<arma> arma1; // arma 1
 
@@ -76,6 +76,11 @@ class guerrero : public personaje
         /*
             agrega un arma al guerrero en caso de que haya lugar disponible, pasando los parametros del tipo de arma, y datos extra com
             dato1, dato2 y dato3
+        */
+
+        unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3, double daño) override;
+        /*
+            retorna un puntero unique_ptr a un arma  en base a los parametros del tipo de arma, dato1, dato2, dato3 y el daño
         */
 
         virtual void mostrar_caracteristica_guerrero() const = 0;

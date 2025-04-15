@@ -64,9 +64,9 @@ float devolver_intervalo(float valor, float min, float max)
     return n;
 }
 
-shared_ptr<personaje> crear_personaje_armado()
+unique_ptr<personaje> crear_personaje_armado()
 {
-    shared_ptr<PersonajeFactory> perso_fact = make_shared<PersonajeFactory>();
+    unique_ptr<PersonajeFactory> perso_fact = make_unique<PersonajeFactory>();
 
     int numero_personaje;
 
@@ -86,7 +86,7 @@ shared_ptr<personaje> crear_personaje_armado()
     cout << "ingrese el tipo de arma que se desea utilizar:" << endl;
     opciones_armas();
     cin >> tip_arma;
-    tip_arma = devolver_intervalo(tip_arma, 1, 9);
+    tip_arma = devolver_intervalo(tip_arma, 0, 8);
     
     //////////////////// ingreso del tipo de habilidad especial ////////////////////////
 
@@ -97,7 +97,7 @@ shared_ptr<personaje> crear_personaje_armado()
 
     /////////////////// ingreso de datos adicionales //////////////////////
     
-    shared_ptr<personaje> nuevo_personaje;
+    unique_ptr<personaje> nuevo_personaje;
 
     personajes_totales tipo_perso = personajes_totales(numero_personaje);
 
@@ -116,7 +116,7 @@ shared_ptr<personaje> crear_personaje_armado()
         cout << "ingrese el poder de magia del mago:" << endl;
         cin >> magia;
 
-        magia = devolver_intervalo(magia, 0, 10);
+        magia = devolver_intervalo(magia, 1, 10);
 
        switch (numero_personaje)
         {
@@ -139,9 +139,9 @@ shared_ptr<personaje> crear_personaje_armado()
         }
        cin >> dato_perso;
 
-       dato_perso = devolver_intervalo(dato_perso, 0, 10);
+       dato_perso = devolver_intervalo(dato_perso, 1, 10);
 
-        shared_ptr<personaje> nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, 5, 5, tipo_arma, 5, 5, 5);
+        nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, magia, dato_perso, tipo_arma, 5, 5, 5);
         
     }
     else
@@ -153,7 +153,7 @@ shared_ptr<personaje> crear_personaje_armado()
         cout << " ingrese la fuerza del guerrero: " << endl;
         cin >> fuerza;
 
-        fuerza = devolver_intervalo(fuerza, 0, 1000);
+        fuerza = devolver_intervalo(fuerza, 1, 1000);
 
        switch (numero_personaje)
         {
@@ -172,17 +172,15 @@ shared_ptr<personaje> crear_personaje_armado()
         }
        cin >> dato_perso;
 
-       dato_perso = devolver_intervalo(dato_perso, 0, 10);
+       dato_perso = devolver_intervalo(dato_perso, 1, 10);
        
-
-        shared_ptr<personaje> nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, 5, 5, tipo_arma, 5, 5, 5);
+        nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, fuerza, dato_perso, tipo_arma, 5, 5, 5);
     }
 
     return nuevo_personaje;
 }
 
-
-shared_ptr<personaje> generar_personaje_aleatorio()
+unique_ptr<personaje> generar_personaje_aleatorio()
 {
     // genero el numero aleatorio del personaje //
 
@@ -192,8 +190,8 @@ shared_ptr<personaje> generar_personaje_aleatorio()
 
     // numeros para completar //
 
-    auto dato1 = generarAleatorio(0,10); // valores cualquiera
-    auto dato2 = generarAleatorio(0,10); // valores cualquiera
+    auto dato1 = generarAleatorio(1,10); // valores cualquiera
+    auto dato2 = generarAleatorio(1,10); // valores cualquiera
 
     // genero la habilidad aleatoria (guardo la habilidad especial, su cantidad de usos y el daño extra)//
 
@@ -207,9 +205,9 @@ shared_ptr<personaje> generar_personaje_aleatorio()
 
     armas_totales tip_arma = armas_totales(ale_arma);
 
-    shared_ptr<PersonajeFactory> factory = make_shared<PersonajeFactory>();
+    unique_ptr<PersonajeFactory> factory = make_unique<PersonajeFactory>();
 
-    shared_ptr<personaje> personaje_aleatorio = factory ->crear_personaje_armado_factory(tip_personaje, hab_especial, dato1, static_cast<float>(dato2),tip_arma, static_cast<float>(3), static_cast<float>(3), static_cast<float>(3));
+    unique_ptr<personaje> personaje_aleatorio = factory ->crear_personaje_armado_factory(tip_personaje, hab_especial, dato1, static_cast<float>(dato2),tip_arma, static_cast<float>(3), static_cast<float>(3), static_cast<float>(3));
 
     // retorno el personaje //
 
@@ -227,9 +225,11 @@ void opciones_golpes()
 
 void interfaz_pelea()
 {
-    shared_ptr<PersonajeFactory> perso_factory = make_shared<PersonajeFactory>();
+    unique_ptr<PersonajeFactory> perso_factory = make_unique<PersonajeFactory>();
 
-    shared_ptr<personaje> personaje_propio= perso_factory ->crear_personaje_armado_factory(hechicero3, Explosion_arcana,7, static_cast<float>(8), arma_baston,static_cast<float>(5), static_cast<float>(4), static_cast<float>(3));
+    unique_ptr<personaje> personaje_propio= crear_personaje_armado();
+
+    //unique_ptr<personaje> personaje_propio= perso_factory ->crear_personaje_armado_factory(hechicero3, Explosion_arcana,7, static_cast<float>(8), arma_baston,static_cast<float>(5), static_cast<float>(4), static_cast<float>(3));
 
     shared_ptr<personaje> personaje_aleatorio = generar_personaje_aleatorio();
 
@@ -281,7 +281,8 @@ void interfaz_pelea()
                 }
                 else
                 {
-                    cout << " personaje 1, no tienes golpes disponibles, pierdes el golpe(verificar que haya golpes disponibles de la habilidad)" << endl;
+                    cout << " personaje 1, no tienes golpes disponibles, te defiendes con los puños, haciendo 5 de daño" << endl;
+                    personaje_aleatorio ->modificar_hp(5);
                 }
             }
             else
@@ -319,7 +320,8 @@ void interfaz_pelea()
                 }
                 else
                 {
-                    cout << "personaje 2, no tienes golpes disponibles, pierdes el golpe(verificar que haya golpes disponibles de la habilidad)" << endl;
+                    cout << "personaje 2, no tienes golpes disponibles, te defenderas con los puños, sacando 5 de daño" << endl;
+                    personaje_propio ->modificar_hp(5);
                 }
             }
             else
@@ -358,6 +360,18 @@ void interfaz_pelea()
 
     comando para ejecutar:
         ./programa
+    
+    comanfo para compilar con flags:
+
+                g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -g -O2 -I../ejercicio2/include \
+        ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp \
+        ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ../ejercicio3/ejercicio3.cpp ejercicio4.cpp \
+        -o programa
+
+    comando para ejcutar con valgrind: 
+
+        valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./programa
+
 
     warnings:
         ejercicio4.cpp:82:43: warning: conversion from ‘int’ to ‘float’ may change value [-Wconversion]
@@ -421,7 +435,6 @@ ejercicio4.cpp:315:34: warning: comparing floating-point with ‘==’ or ‘!=�
 ejercicio4.cpp:328:34: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
   328 |                 if (daño_causado != 0.0)
       |                     ~~~~~~~~~~~~~^~~~~~
-
 
 */
 

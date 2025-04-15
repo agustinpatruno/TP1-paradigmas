@@ -6,7 +6,7 @@ armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float pr
 {
     try
     {
-        if (!corroborar_intervalo(1, durabilidad_polvo, 25) && corroborar_intervalo(1, precision, 10) && pertenece_armas_combate(tip_arma) && daño >0)
+        if (corroborar_intervalo(1, durabilidad,25) && corroborar_intervalo(1, precision, 10) && pertenece_armas_combate(tip_arma) && daño > 0)
         {
             tipo_arma = tip_arma;
 
@@ -20,6 +20,10 @@ armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float pr
         }
         else
         {
+            cout << " tipo arma " << tip_arma << endl;
+            cout << "durabilidad " << durabilidad << endl;
+            cout << "precision " << precision << endl;
+            cout << "daño " << daño<< endl;
             throw logic_error("error en la creacion de un arma de combate, verifique que los parametros ingresados sean correctos");
         }
     }

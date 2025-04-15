@@ -15,7 +15,7 @@ PersonajeFactory::PersonajeFactory()
     cout << " se creo el objeto factory" << endl;
 }
 
-shared_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, float dato1, float dato2, float dato3)
+unique_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, float dato1, float dato2, float dato3)
 {
     try
     {
@@ -29,17 +29,47 @@ shared_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, f
     
         double daño = daño_magicos_combate[static_cast<size_t>(tipo_arma)];
         
-       nueva_arma = crear_arma(tipo_arma, dato1, dato2, dato3, daño);
+        switch (tipo_arma)
+        {
+            case arma_baston:
+                nueva_arma = make_unique<baston>(dato1, dato2, dato3, daño);
+                break;
+            case arma_libro_de_hechizos:
+                nueva_arma = make_unique<libro_de_hechizos>(dato1, dato2, dato3, daño);
+                break;
+            case arma_pocion:
+                nueva_arma = make_unique<pocion>(dato1, dato2, dato3, daño);
+                break;
+            case arma_amuleto:
+                nueva_arma = make_unique<amuleto>(dato1, dato2, dato3, daño);
+                break;
+            case arma_hacha_simple:
+                nueva_arma = make_unique<hacha_simple>(dato1, dato2, dato3, daño);
+                break;
+            case arma_hacha_doble:
+                nueva_arma = make_unique<hacha_doble>(dato1, dato2, dato3, daño);
+                break;
+            case arma_espada:
+                nueva_arma = make_unique<espada>(dato1, dato2, dato3, daño);
+                break;
+            case arma_garrote:
+                nueva_arma = make_unique<garrote>(dato1, dato2, dato3, daño);
+                break;
+            case arma_lanza:
+                nueva_arma = make_unique<lanza>(dato1, dato2, dato3, daño);
+                break;
+            default:
+                nueva_arma = nullptr;
+                break;
+        }
     
        if (!nueva_arma)
         {
             throw logic_error("error, hubo un error en la cracion de la nueva arma, verifique los parametros ingresados");
             return nullptr;
         }
-        
-       shared_ptr<arma> arma_shared = move(nueva_arma);
     
-       return arma_shared;
+       return nueva_arma;
     }
     catch(const std::exception& e)
     {
@@ -48,11 +78,11 @@ shared_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, f
     return nullptr;
 }
 
-shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal)
+unique_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal)
 {
     try
     {
-        shared_ptr<personaje> nuevo_personaje;
+        unique_ptr<personaje> nuevo_personaje;
 
         if (hechicero3 <= perso && perso <= nigromante3)
         {
@@ -63,16 +93,16 @@ shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_total
             switch (tipo_mago)
             {
                 case a_hechicero:
-                    nuevo_personaje = make_shared<hechicero>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<hechicero>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_conjurador:
-                    nuevo_personaje = make_shared<conjurador>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<conjurador>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_brujo:
-                    nuevo_personaje = make_shared<brujo>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<brujo>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_nigromante:
-                    nuevo_personaje = make_shared<nigromante>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<nigromante>(hab_especial, dato1, 2, dato_personal);
                     break;
             }
         }
@@ -85,19 +115,19 @@ shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_total
             switch (tipo_guerrero)
             {
                 case a_barbaro:
-                    nuevo_personaje = make_shared<barbaro>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<barbaro>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_paladin:
-                    nuevo_personaje = make_shared<paladin>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<paladin>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_caballero:
-                    nuevo_personaje = make_shared<caballero>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<caballero>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_mercenario:
-                    nuevo_personaje = make_shared<mercenario>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<mercenario>(hab_especial, dato1, 2, dato_personal);
                     break;
                 case a_gladiador:
-                    nuevo_personaje = make_shared<gladiador>(hab_especial, dato1, 2, dato_personal);
+                    nuevo_personaje = make_unique<gladiador>(hab_especial, dato1, 2, dato_personal);
                     break;
             }
         }
@@ -115,11 +145,11 @@ shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_total
     return nullptr;
 }
 
-shared_ptr<personaje> PersonajeFactory::crear_personaje_armado_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal, armas_totales tip_arma, float dato2, float dato3, float dato4)
+unique_ptr<personaje> PersonajeFactory::crear_personaje_armado_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal, armas_totales tip_arma, float dato2, float dato3, float dato4)
 {
     try
     {
-        shared_ptr<personaje> nuevo_personaje = this -> crear_personaje_factory(perso, hab_especial, dato1, dato_personal);
+        unique_ptr<personaje> nuevo_personaje = this -> crear_personaje_factory(perso, hab_especial, dato1, dato_personal);
 
         if (nuevo_personaje)
         {

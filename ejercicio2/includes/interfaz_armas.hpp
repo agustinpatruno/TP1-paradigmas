@@ -5,9 +5,9 @@
 #include <vector>
 using namespace std;
 
-// enum de las armas totales. ([0:4] = armas magicas, [5:9] = armas de combate)//
+// enum de las armas totales. ([0:3] = armas magicas, [4:8] = armas de combate)//
 
-enum armas_totales {arma_baston = 0, arma_libro_de_hechizos, arma_pocion, arma_amuleto, arma_hacha_simple, arma_hacha_doble, arma_espada, arma_lanza, arma_garrote};
+enum armas_totales {arma_baston, arma_libro_de_hechizos, arma_pocion, arma_amuleto, arma_hacha_simple, arma_hacha_doble, arma_espada, arma_lanza, arma_garrote};
 
 extern vector<double> daño_magicos_combate;
 

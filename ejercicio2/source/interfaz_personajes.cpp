@@ -2,7 +2,7 @@
 
 /* valores de los daños extra de las habilidades especiales magicas y las de combate([0:4] = daño magicas, [5:9] = daño de combate) */
 
-vector<double> daño_hab_magicos_combate = {5.4, 3.7, 8.2, 6.6, 5, 3.7, 5.3, 7, 4.2, 9};
+vector<double> daño_hab_magicos_combate = {5.4, 3.7, 8.2, 6.6, 5.0, 3.7, 5.3, 7.0, 4.2, 3.9};
 
 /* cant de usos de las habilidades especiales magicas y de combate ([0:4] = usos magicas, [5:9] = usos de combate)*/
 
@@ -103,7 +103,12 @@ string getHabilidad(hab_totales habilidad) {
 
 bool pertenece_hab_magicas(hab_totales habilidad)
 {
-    return habilidad >= Explosion_arcana && habilidad <= Rafaga_magica;
+    return Explosion_arcana <= habilidad  && habilidad <= Rafaga_magica;
+}
+
+bool pertenece_hab_combate(hab_totales habilidad)
+{
+    return Impacto_devastador <= habilidad && habilidad <= Ruptura_elemental;
 }
 
 unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3, double daño)

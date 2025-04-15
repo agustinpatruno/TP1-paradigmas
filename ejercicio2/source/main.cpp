@@ -2,9 +2,26 @@
 #include "../includes/abs_guerrero.hpp"
 
 
-// comando para compilar
-// g++ abs_combate.cpp abs_guerrero.cpp abs_items.cpp abs_mago.cpp interfaz_personajes.cpp interfaz_armas.cpp main.cpp  -o programa 
+/* 
+comando para compilar normalmente sin flags
 
+    g++ abs_combate.cpp abs_guerrero.cpp abs_items.cpp abs_mago.cpp interfaz_personajes.cpp interfaz_armas.cpp main.cpp  -o programa 
+
+comando para ejecutar normalmente sin flags:
+
+    ./programa
+
+comando para compilar con las flags de -Wall -Wwxtra -Wpedantic -werror :
+
+    g++ abs_combate.cpp abs_guerrero.cpp abs_items.cpp abs_mago.cpp interfaz_personajes.cpp interfaz_armas.cpp main.cpp \
+    -o programa \
+    -Wall -Wextra -Wpedantic -Werror -g -O2 -std=c++17
+
+comando para ejecutar con valgrind: 
+
+    valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./programa arg1 arg2
+
+*/
 
 int main()
 {

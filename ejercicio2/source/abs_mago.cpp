@@ -152,22 +152,22 @@ void mago::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float
             {
                 if (!arma1)
                 {
-                    arma1 = crear_arma(tipo_arma, dato1, dato2, dato3, daño);
+                    arma1 = this -> crear_arma(tipo_arma, dato1, dato2, dato3, daño);
                 }
                 else
                 {
-                    arma2 = crear_arma(tipo_arma, dato1, dato2, dato3, daño);
+                    arma2 = this -> crear_arma(tipo_arma, dato1, dato2, dato3, daño);
                 }
             }
             else if (pertenece_armas_combate(tipo_arma)) // en caso de que pertenezca a un arma de combate, se usa el 80% del daño 
             {
                 if (!arma1)
                 {
-                    arma1 = crear_arma(tipo_arma, dato1, dato2, dato3, daño*(0.8));
+                    arma1 = this -> crear_arma(tipo_arma, dato1, dato2, dato3, daño*(0.8));
                 }
                 else
                 {
-                    arma2 = crear_arma(tipo_arma, dato1, dato2, dato3, daño*(0.8));
+                    arma2 = this -> crear_arma(tipo_arma, dato1, dato2, dato3, daño*(0.8));
                 }
             }
             else
@@ -183,6 +183,43 @@ void mago::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float
     catch(const std::exception& e)
     {
         std::cerr << e.what() << '\n';
+    }
+}
+
+unique_ptr<arma> mago::crear_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3, double daño)
+{
+    switch (tipo_arma)
+    {
+        case arma_baston:
+            return make_unique<baston>(dato1, dato2, dato3, daño);
+            break;
+        case arma_libro_de_hechizos:
+            return make_unique<libro_de_hechizos>(dato1, dato2, dato3, daño);
+            break;
+        case arma_pocion:
+            return make_unique<pocion>(dato1, dato2, dato3, daño);
+            break;
+        case arma_amuleto:
+            return make_unique<amuleto>(dato1, dato2, dato3, daño);
+            break;
+        case arma_hacha_simple:
+            return make_unique<hacha_simple>(dato1, dato2, dato3, daño);
+            break;
+        case arma_hacha_doble:
+            return make_unique<hacha_doble>(dato1, dato2, dato3, daño);
+            break;
+        case arma_espada:
+            return make_unique<espada>(dato1, dato2, dato3, daño);
+            break;
+        case arma_garrote:
+            return make_unique<garrote>(dato1, dato2, dato3, daño);
+            break;
+        case arma_lanza:
+            return make_unique<lanza>(dato1, dato2, dato3, daño);
+            break;
+        default:
+            return nullptr;
+            break;
     }
 }
 
