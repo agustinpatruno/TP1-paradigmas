@@ -16,7 +16,7 @@ class items_magicos: public arma
         float nivel_magico; // 1 <= nivel_magico <= 10
 
         float resistencia_magia_oscura;  // 1 <= ressitencia_magia_oscura <= 10
-
+    
     public:
 
         items_magicos(armas_totales tip_arma, float level_magico, float resistencia, double daño);

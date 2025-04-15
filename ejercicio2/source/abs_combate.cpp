@@ -20,10 +20,6 @@ armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float pr
         }
         else
         {
-            cout << " tipo arma " << tip_arma << endl;
-            cout << "durabilidad " << durabilidad << endl;
-            cout << "precision " << precision << endl;
-            cout << "daño " << daño<< endl;
             throw logic_error("error en la creacion de un arma de combate, verifique que los parametros ingresados sean correctos");
         }
     }

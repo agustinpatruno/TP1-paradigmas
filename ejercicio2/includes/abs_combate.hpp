@@ -9,11 +9,11 @@ class armas_combate : public arma
 
         int cant_usos; // cantidad de usos del arma
 
-        armas_totales tipo_arma;
+        armas_totales tipo_arma; // tipo de arma de combate
 
-        float durabilidad_polvo;
+        float durabilidad_polvo; // nivel de durabilidad al polvo
 
-        float precision_disparo;
+        float precision_disparo; // nivel de precision de disparo
 
     public:
 
