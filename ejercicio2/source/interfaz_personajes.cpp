@@ -1,10 +1,10 @@
 #include "../includes/interfaz_personajes.hpp"
 
-/* valores de los daños extra de las habilidades especiales magicas y las de combate([1:5] = daño magicas, [6:10] = daño de combate) */
+/* valores de los daños extra de las habilidades especiales magicas y las de combate([0:4] = daño magicas, [5:9] = daño de combate) */
 
 vector<double> daño_hab_magicos_combate = {5.4, 3.7, 8.2, 6.6, 5, 3.7, 5.3, 7, 4.2, 9};
 
-/* cant de usos de las habilidades especiales magicas y de combate ([1:5] = usos magicas, [6:10] = usos de combate)*/
+/* cant de usos de las habilidades especiales magicas y de combate ([0:4] = usos magicas, [5:9] = usos de combate)*/
 
 vector<int> usos_hab_magicas_combate = {3,2,4,1,5,5,3,2,4,3};
 

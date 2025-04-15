@@ -1,6 +1,5 @@
 #include "ejercicio4.hpp"
 
-
 void opciones_personajes()
 {
     cout << "magos:" << endl;
@@ -47,7 +46,7 @@ void opciones_habilidades_especiales()
     cout << "9) Ruptura_elemental" << endl;
 }
 
-int devolver_intervalo(int valor, int min, int max)
+float devolver_intervalo(float valor, float min, float max)
 {
     if ( max < min)
     {
@@ -55,7 +54,7 @@ int devolver_intervalo(int valor, int min, int max)
         return 0;
     }
 
-    int n = valor;
+    float n = valor;
 
     while ( n < min ||  max < n)
     {
@@ -87,7 +86,7 @@ shared_ptr<personaje> crear_personaje_armado()
     cout << "ingrese el tipo de arma que se desea utilizar:" << endl;
     opciones_armas();
     cin >> tip_arma;
-    tip_arma = devolver_intervalo(tip_arma, 1 , 9);
+    tip_arma = devolver_intervalo(tip_arma, 1, 9);
     
     //////////////////// ingreso del tipo de habilidad especial ////////////////////////
 
@@ -110,7 +109,6 @@ shared_ptr<personaje> crear_personaje_armado()
 
     if (numero_personaje <= 4)
     {
-        
         int magia;
 
         // ingreso del poder de magia del mago //
@@ -148,7 +146,6 @@ shared_ptr<personaje> crear_personaje_armado()
     }
     else
     {
-        
         float fuerza;
 
         // ingreso de la fuerza del guerrero //
@@ -277,7 +274,7 @@ void interfaz_pelea()
             if (sub_eleccion == 1)
             {
                 daño_causado = personaje_propio ->daño(true);
-                if (daño_causado != 0)
+                if (daño_causado != 0.0)
                 {
                     cout << "personaje 1 realiza un ataque normal, haciendo: " << daño_causado << " de daño" << endl;
                     personaje_aleatorio ->modificar_hp(daño_causado);
@@ -290,7 +287,7 @@ void interfaz_pelea()
             else
             {
                 daño_causado = personaje_propio ->daño(false);
-                if (daño_causado != 0)
+                if (daño_causado != 0.0)
                 {
                     cout << " personaje 1 realiza un ataque especial, haciendo " << daño_causado << " de daño" << endl;
                     personaje_aleatorio ->modificar_hp(daño_causado);
@@ -315,7 +312,7 @@ void interfaz_pelea()
             if (sub_eleccion == 1)
             {
                 daño_causado = personaje_propio ->daño(true);
-                if (daño_causado != 0)
+                if (daño_causado != 0.0)
                 {
                     cout << "personaje 2 realiza un ataque normal, haciendo: " << daño_causado << " de daño" << endl;
                     personaje_propio ->modificar_hp(daño_causado);
@@ -328,7 +325,7 @@ void interfaz_pelea()
             else
             {
                 daño_causado = personaje_propio ->daño(false);
-                if (daño_causado != 0)
+                if (daño_causado != 0.0)
                 {
                     cout << "personaje 2 realiza un ataque especial, haciendo " << daño_causado << " de daño" << endl;
                     personaje_propio ->modificar_hp(daño_causado);
@@ -356,12 +353,76 @@ void interfaz_pelea()
 
 /*
     comando para compilar:
-        g++ -std=c++17 -Wall -I../ejercicio2/include -o programa ../ejercicio2/source/*.cpp ../ejercicio3/ejercicio3.cpp ejercicio4.cpp
-
-        g++ -std=c++17 -Wall -I../ejercicio2/include -o programa ../ejercicio2/source/abs_combate.cpp \ ../ejercicio2/source/abs_guerrero.cpp \ ../ejercicio2/source/abs_items.cpp \ ../ejercicio2/source/abs_mago.cpp \ ../ejercicio2/source/interfaz_personajes.cpp \ ../ejercicio2/source/interfaz_armas.cpp \ ../ejercicio3/ejercicio3.cpp \ ejercicio4.cpp
+      
+        g++ -std=c++17 -I../ejercicio2/include ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ../ejercicio3/ejercicio3.cpp ejercicio4.cpp -o programa
 
     comando para ejecutar:
         ./programa
+
+    warnings:
+        ejercicio4.cpp:82:43: warning: conversion from ‘int’ to ‘float’ may change value [-Wconversion]
+   82 |     numero_personaje = devolver_intervalo(numero_personaje, 1, 9);
+      |                                           ^~~~~~~~~~~~~~~~
+ejercicio4.cpp:82:42: warning: conversion from ‘float’ to ‘int’ may change value [-Wfloat-conversion]
+   82 |     numero_personaje = devolver_intervalo(numero_personaje, 1, 9);
+      |                        ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+ejercicio4.cpp:89:35: warning: conversion from ‘int’ to ‘float’ may change value [-Wconversion]
+   89 |     tip_arma = devolver_intervalo(tip_arma, 1, 9);
+      |                                   ^~~~~~~~
+ejercicio4.cpp:89:34: warning: conversion from ‘float’ to ‘int’ may change value [-Wfloat-conversion]
+   89 |     tip_arma = devolver_intervalo(tip_arma, 1, 9);
+      |                ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+ejercicio4.cpp:96:45: warning: conversion from ‘int’ to ‘float’ may change value [-Wconversion]
+   96 |     habilidad_especial = devolver_intervalo(habilidad_especial, 0, 9);
+      |                                             ^~~~~~~~~~~~~~~~~~
+ejercicio4.cpp:96:44: warning: conversion from ‘float’ to ‘int’ may change value [-Wfloat-conversion]
+   96 |     habilidad_especial = devolver_intervalo(habilidad_especial, 0, 9);
+      |                          ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~
+ejercicio4.cpp:119:36: warning: conversion from ‘int’ to ‘float’ may change value [-Wconversion]
+  119 |         magia = devolver_intervalo(magia, 0, 10);
+      |                                    ^~~~~
+ejercicio4.cpp:119:35: warning: conversion from ‘float’ to ‘int’ may change value [-Wfloat-conversion]
+  119 |         magia = devolver_intervalo(magia, 0, 10);
+      |                 ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~
+ejercicio4.cpp:144:31: warning: declaration of ‘nuevo_personaje’ shadows a previous local [-Wshadow]
+  144 |         shared_ptr<personaje> nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, 5, 5, tipo_arma, 5, 5, 5);
+      |                               ^~~~~~~~~~~~~~~
+ejercicio4.cpp:100:27: note: shadowed declaration is here
+  100 |     shared_ptr<personaje> nuevo_personaje;
+      |                           ^~~~~~~~~~~~~~~
+ejercicio4.cpp:178:31: warning: declaration of ‘nuevo_personaje’ shadows a previous local [-Wshadow]
+  178 |         shared_ptr<personaje> nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, 5, 5, tipo_arma, 5, 5, 5);
+      |                               ^~~~~~~~~~~~~~~
+ejercicio4.cpp:100:27: note: shadowed declaration is here
+  100 |     shared_ptr<personaje> nuevo_personaje;
+      |                           ^~~~~~~~~~~~~~~
+ejercicio4.cpp: In function ‘void interfaz_pelea()’:
+ejercicio4.cpp:260:39: warning: conversion from ‘int’ to ‘float’ may change value [-Wconversion]
+  260 |         eleccion = devolver_intervalo(eleccion, 1, 3);
+      |                                       ^~~~~~~~
+ejercicio4.cpp:260:38: warning: conversion from ‘float’ to ‘int’ may change value [-Wfloat-conversion]
+  260 |         eleccion = devolver_intervalo(eleccion, 1, 3);
+      |                    ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~
+ejercicio4.cpp:272:47: warning: conversion from ‘int’ to ‘float’ may change value [-Wconversion]
+  272 |             sub_eleccion = devolver_intervalo(sub_eleccion,1,2);
+      |                                               ^~~~~~~~~~~~
+ejercicio4.cpp:272:46: warning: conversion from ‘float’ to ‘int’ may change value [-Wfloat-conversion]
+  272 |             sub_eleccion = devolver_intervalo(sub_eleccion,1,2);
+      |                            ~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~
+ejercicio4.cpp:277:34: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  277 |                 if (daño_causado != 0.0)
+      |                     ~~~~~~~~~~~~~^~~~~~
+ejercicio4.cpp:290:34: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  290 |                 if (daño_causado != 0.0)
+      |                     ~~~~~~~~~~~~~^~~~~~
+ejercicio4.cpp:315:34: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  315 |                 if (daño_causado != 0.0)
+      |                     ~~~~~~~~~~~~~^~~~~~
+ejercicio4.cpp:328:34: warning: comparing floating-point with ‘==’ or ‘!=’ is unsafe [-Wfloat-equal]
+  328 |                 if (daño_causado != 0.0)
+      |                     ~~~~~~~~~~~~~^~~~~~
+
+
 */
 
 int main()

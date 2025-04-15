@@ -23,20 +23,20 @@ extern vector<double> daño_hab_magicos_combate;
 
 extern vector<int> usos_hab_magicas_combate;
 
-/*funcion que retorna un string del valor en base al enum tipos_magos que se le pase por parametro*/
-
+/*retorna un string del valor en base al enum tipos_magos que se le pase por parametro*/
 string getTipoMago(tipos_magos tipo);
 
-/*funcion que retorna un string del valor en base al enum tipos_guerreros que se le pase por parametro*/
-
+/*retorna un string del valor en base al enum tipos_guerreros que se le pase por parametro*/
 string getTipoGuerrero(tipos_guerreros tipo);
 
-/*funcion que retorna un string del valor en base al enum hab_especiales_magicas que se le pase por parametro*/
-
+/*retorna un string del valor en base al enum hab_especiales_magicas que se le pase por parametro, caso de no ser ninguna, 
+retorna habildad desconocida*/
 string getHabilidad(hab_totales habilidad);
 
+/*retorna true si la habilidad pertenece a las habilidades magicas, caso contrario, retorna false*/
 bool pertenece_hab_magicas(hab_totales habilidad);
 
+/*retorna un puntero unique_ptr a un arma  en base a los parametros del tipo de arma, dato1, dato2, dato3 y el daño*/
 unique_ptr<arma> crear_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3, double daño);
 
 ///////////////////////////////////// interfaz de pesonaje /////////////////////////////////////
@@ -84,7 +84,7 @@ class personaje
         virtual double daño(bool normal) = 0;
         /*
             retorna el ataque del arma, en caso de que normal = true, en caso de que se false, retorna el daño
-            mas el daño de la habilidad
+            mas el daño de la habilidad. esto ocurre siempre y cuando tenga golpes disponibles en el arma o en la habilidad especial
         */
 
         virtual ~personaje() = default;

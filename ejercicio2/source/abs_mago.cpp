@@ -48,6 +48,33 @@ void mago::mostrar_info_personaje() const
     cout << "poder de magia: " << poder_magia << endl;
 }
 
+void mago::info_arma() const
+{
+    if (arma1)
+    {
+        arma1 ->Get_infoarma_general();
+    }
+    if ( arma2)
+    {
+        arma2 ->Get_infoarma_general();
+    }
+}
+
+int mago::contar_armas() const
+{
+    int c = 0;
+
+    if (arma1)
+    {
+        c+=1;
+    }
+    if (arma2)
+    {
+        c+=1;
+    }
+    return c;
+}
+
 void mago::mostrar_hp() const
 {
     cout << "Hp del mago: " << hp << endl;
@@ -56,6 +83,33 @@ void mago::mostrar_hp() const
 double mago::retornar_hp() const
 {
     return hp;
+}
+
+void mago::modificar_hp(double daño)
+{
+    try
+    {
+        if (daño > 0)
+        {
+            if (hp > daño)
+            {
+                hp -= daño;
+            }
+            else
+            {
+                hp = 0;
+                throw logic_error("el mago se quedo sin vida");
+            }
+        }
+        else
+        {
+            throw logic_error("error, daño negativo, ingrese un daño positivo");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
 }
 
 double mago::daño(bool normal)
@@ -83,33 +137,6 @@ double mago::daño(bool normal)
             cout << "te has quedado sin golpes especailes" << endl;
             return 0;
         }
-    }
-}
-
-void mago::modificar_hp(double daño)
-{
-    try
-    {
-        if (daño > 0)
-        {
-            if (hp > daño)
-            {
-                hp -= daño;
-            }
-            else
-            {
-                hp = 0;
-                throw logic_error("el mago se quedo sin vida");
-            }
-        }
-        else
-        {
-            throw logic_error("error, daño negativo, ingrese un daño positivo");
-        }
-    }
-    catch(const std::exception& e)
-    {
-        std::cerr << e.what() << '\n';
     }
 }
 
@@ -157,33 +184,6 @@ void mago::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float
     {
         std::cerr << e.what() << '\n';
     }
-}
-
-void mago::info_arma() const
-{
-    if (arma1)
-    {
-        arma1 ->Get_infoarma_general();
-    }
-    if ( arma2)
-    {
-        arma2 ->Get_infoarma_general();
-    }
-}
-
-int mago::contar_armas() const
-{
-    int c = 0;
-
-    if (arma1)
-    {
-        c+=1;
-    }
-    if (arma2)
-    {
-        c+=1;
-    }
-    return c;
 }
 
 mago::~mago(){}

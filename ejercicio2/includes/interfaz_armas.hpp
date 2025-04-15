@@ -38,19 +38,13 @@ bool corroborar_intervalo(float min, float valor, float max);
 
 class arma
 {
-    protected:
-
-        double Daño;
-
-        int cant_usos;
-
     public:
 
         virtual void Get_infoarma_general() const = 0; // muestro el tipo de arma, la cantidad de usos disponibles y el daño
         
-        virtual double retornar_daño() const = 0;
+        virtual double retornar_daño() const = 0; // retorna el atributo Daño
 
-        virtual bool restar_usos() = 0;
+        virtual bool restar_usos() = 0; // resta en una unidad el atributo can_usos
 
-        virtual ~arma() = default;
+        virtual ~arma() = default; // destructor de la clase interfaz arma 
 };

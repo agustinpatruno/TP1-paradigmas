@@ -1,11 +1,15 @@
 #pragma once
 #include "interfaz_armas.hpp"
 
-/////////////////////clase abstracta items magicos ///////////////////////////////////
+//////////////////////////////////////////////clase abstracta items magicos /////////////////////////////////////////////////////////
 
 class items_magicos: public arma
 {
     protected:
+
+        double Daño; // daño del arma
+
+        int cant_usos; // cantidad de usos del arma
 
         armas_totales tipo_arma; // tipo de arma magica
 
@@ -16,17 +20,15 @@ class items_magicos: public arma
     public:
 
         items_magicos(armas_totales tip_arma, float level_magico, float resistencia, double daño);
+        /*
+            constructor de la clase abstracta item magicos. inicializa el atributo tipo_arma, nivel_magico, y el daño del arma.
+            caso de que alguno de estos parametros no esten dentro del rango, arroja un throw y se captura con un cathc, advirtiendo
+            que algun parametro esta mal ingresado.
+        */
 
         void Get_infoarma_general() const override;
         /*
-            imprime por consola la cantidad de usos y el daño. (metodo derivado de la clase interfaz)
-        */
-
-        double retornar_daño() const override;
-
-        bool restar_usos();
-        /*
-            funcion que resta los usos del arma cada vez que se ataca. dependiendo se 
+            imprime por consola la cantidad de usos y el daño. (metodo derivado de la clase interfaz arma)
         */
 
         void Get_info_magia() const;
@@ -40,8 +42,21 @@ class items_magicos: public arma
         */
 
         virtual void Get_caracteristica_arma_magica() const = 0;
+        /*
+            imprime por consola el dato especifico del arma en cuestion
+        */
 
-        virtual ~items_magicos() = 0;
+        double retornar_daño() const override;
+        /*
+            retorna el daño del arma. (metodo derivado de la clase interfaz arma)
+        */
+
+        bool restar_usos();
+        /*
+           resta en una unidad a cant_usos, retorna true si antes de la resta es mayor a cero, caso contrario retorna false.
+        */
+
+        virtual ~items_magicos() = 0; // destructor de la clase items_magicos
 };
 
 //////////////// clases derivadas de items magicos //////////////////
@@ -55,6 +70,10 @@ class baston : public items_magicos
     public:
 
         baston(float level_magico, float resistencia, float largo_baston, double daño);
+        /*
+            constructor de la clase baston, inializa el atributo largo_baston y los atributos de la clase abstracta llamando al constructor
+            con el tipo de arma(arma_baston), el level_magico, la resistencia y el daño
+        */
 
         void Get_caracteristica_arma_magica() const override;
         /*
@@ -72,8 +91,9 @@ class libro_de_hechizos : public items_magicos
 
         libro_de_hechizos(float level_magico, float resistencia, float prestigio, double daño);
         /*
-            constructor de la clase libro_de_hechizos. se inicializa con el tipo de arma, el nivel magico, la resistencia a la magia
-            oscura, el prestigio del libro y el daño que puede causar
+            constructor de la clase libro_de_hechizos, inializa el atributo prestigio_libro y los atributos de la clase abstracta 
+            llamando al constructor con el tipo de arma(arma_libro_de_hechizos), el level_magico, la resistencia 
+            y el daño
         */
 
         void Get_caracteristica_arma_magica() const override;
@@ -92,8 +112,8 @@ class pocion : public items_magicos
 
         pocion(float level_magico, float resistencia, float durabilidad_pocion, double daño);
         /*
-            constructor de la clase pocion. se inicializa con el tipo de arma, el nivel magico, la resistencia a la magia
-            oscura, la durabilidad de una pocion y el daño que puede causar
+            constructor de la clase pocion, inializa el atributo durabilidad_pocion y los atributos de la clase abstracta llamando al 
+            constructor con el tipo de arma(arma_pocion), el level_magico, la resistencia y el daño
         */
 
         void Get_caracteristica_arma_magica() const override;
@@ -112,8 +132,8 @@ class amuleto : public items_magicos
 
         amuleto(float level_magico, float resistencia, float capacidad_suerte, double daño);
         /*
-            constructor de la clase pocion. se inicializa con el tipo de arma, el nivel magico, la resistencia a la magia
-            oscura, el nivel de suerte y el daño que puede causar
+            constructor de la clase amuleto, inializa el atributo suerte y los atributos de la clase abstracta llamando al constructor
+            con el tipo de arma(arma_amuleto), el level_magico, la resistencia y el daño
         */
 
         void Get_caracteristica_arma_magica() const override;

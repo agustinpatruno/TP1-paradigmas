@@ -29,12 +29,21 @@ armas_combate::armas_combate(armas_totales tip_arma, float durabilidad, float pr
     }
 }
 
-
 void armas_combate::Get_infoarma_general() const
 {
     Get_arma_combate();
     cout << " daño del arma de combate: " << Daño << endl;
     cout << " cantidad de usos del arma de combate: " << cant_usos << endl;
+}
+
+void armas_combate::Get_info_combate() const
+{
+    cout << "durabilidad al polvo del arma: "<< durabilidad_polvo << endl;
+}
+
+void armas_combate::Get_arma_combate() const
+{
+    cout << "tipo de arma de combate: " << obtenerNombreArma(tipo_arma) << endl;
 }
 
 double armas_combate::retornar_daño() const
@@ -54,17 +63,6 @@ bool armas_combate::restar_usos()
         cout << "te has quedado sin golpes disponibles, verifique si quedan golpes especiales" << endl;
         return false;
     }
-
-}
-
-void armas_combate::Get_info_combate() const
-{
-    cout << "durabilidad al polvo del arma: "<< durabilidad_polvo << endl;
-}
-
-void armas_combate::Get_arma_combate() const
-{
-    cout << "tipo de arma de combate: " << obtenerNombreArma(tipo_arma) << endl;
 }
 
 armas_combate::~armas_combate(){}
@@ -145,7 +143,7 @@ lanza::lanza(float durabilidad, float precision, float alcanze, double daño)
 {
     try
     {
-        if (!corroborar_intervalo(0, alcanze, 20) )
+        if (!corroborar_intervalo(static_cast<float>(0), alcanze,static_cast<float>(20)))
         {
             throw logic_error("error en la creacion de una lanza, ingrese una distancia de alcanze[0,20] dentro del rango");
         }
@@ -164,11 +162,11 @@ void lanza::Get_caracteristica_arma() const
 // implementacion de metodos de la clase garrote //
 
 garrote::garrote(float durabilidad, float precision, float peso, double daño)
-: armas_combate(arma_garrote, durabilidad, precision, daño), peso__garrote(peso)
+: armas_combate(arma_garrote, durabilidad, precision, daño), peso_garrote(peso)
 {
     try
     {
-        if (!corroborar_intervalo(0, peso, 50))
+        if (!corroborar_intervalo(static_cast<float>(0), peso,static_cast<float>(50)))
         {
             throw logic_error("error en la creacion de un garrote, ingrese un peso del garrote[0,50] dentro del rango");
         }
@@ -181,5 +179,5 @@ garrote::garrote(float durabilidad, float precision, float peso, double daño)
 
 void garrote::Get_caracteristica_arma() const
 {
-    cout << "peso del garrote: " << peso__garrote << endl;
+    cout << "peso del garrote: " << peso_garrote << endl;
 }

@@ -58,6 +58,33 @@ double guerrero::retornar_hp() const
     return hp;
 }
 
+void guerrero::modificar_hp(double daño)
+{
+    try
+    {
+        if (daño > 0)
+        {
+            if (hp > daño)
+            {
+                hp -= daño;
+            }
+            else
+            {
+                hp = 0;
+                throw logic_error("el guerrero se quedo sin vida");
+            }
+        }
+        else
+        {
+            throw logic_error("error, daño negativo, ingrese un daño positivo");
+        }
+    }
+    catch(const std::exception& e)
+    {
+        std::cerr << e.what() << '\n';
+    }
+}
+
 double guerrero::daño(bool normal)
 {
     if (normal)
@@ -86,31 +113,31 @@ double guerrero::daño(bool normal)
     }
 }
 
-void guerrero::modificar_hp(double daño)
+void guerrero::info_arma() const
 {
-    try
+    if (arma1)
     {
-        if (daño > 0)
-        {
-            if (hp > daño)
-            {
-                hp -= daño;
-            }
-            else
-            {
-                hp = 0;
-                throw logic_error("el guerrero se quedo sin vida");
-            }
-        }
-        else
-        {
-            throw logic_error("error, daño negativo, ingrese un daño positivo");
-        }
+        arma1 -> Get_infoarma_general();
     }
-    catch(const std::exception& e)
+    if (arma2)
     {
-        std::cerr << e.what() << '\n';
+        arma2 -> Get_infoarma_general();
     }
+}
+
+int guerrero::contar_armas() const
+{
+    int c = 0;
+
+    if (arma1)
+    {
+        c+=1;
+    }
+    if (arma2)
+    {
+        c+=1;
+    }
+    return c;
 }
 
 void guerrero::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3)
@@ -159,36 +186,9 @@ void guerrero::agregar_arma(armas_totales tipo_arma, float dato1, float dato2, f
     }
 }
 
-void guerrero::info_arma() const
-{
-    if (arma1)
-    {
-        arma1 -> Get_infoarma_general();
-    }
-    if (arma2)
-    {
-        arma2 -> Get_infoarma_general();
-    }
-}
-
-int guerrero::contar_armas() const
-{
-    int c = 0;
-
-    if (arma1)
-    {
-        c+=1;
-    }
-    if (arma2)
-    {
-        c+=1;
-    }
-    return c;
-}
-
 guerrero::~guerrero(){}
 
-// implementacion de la clase derivada barbaro //
+//////////////////// implementacion de la clase derivada barbaro /////////////////7//////
 
 barbaro::barbaro(hab_totales habilidad, float fuerza, int max_armas, float salvaje) : guerrero( a_barbaro, fuerza, habilidad, 100, max_armas), espiritu_salvaje(salvaje)
 {

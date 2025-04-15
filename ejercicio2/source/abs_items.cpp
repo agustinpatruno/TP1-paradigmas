@@ -29,26 +29,6 @@ items_magicos::items_magicos(armas_totales tip_arma, float level_magico, float r
     }
 }
 
-double items_magicos::retornar_daño() const 
-{
-    return Daño;
-}
-
-bool items_magicos::restar_usos()
-{
-   
-    if (cant_usos > 0)
-    {
-        cant_usos-=1;
-        return true;
-    }
-    else
-    {
-       cout << "te has quedado sin golpes disponibles, verifique si quedan golpes especiales" << endl;
-       return false;
-    }
-}
-
 void items_magicos::Get_infoarma_general() const
 {
     Get_item_magico();
@@ -67,9 +47,28 @@ void items_magicos::Get_item_magico() const
     cout << "tipo de item magico: " << obtenerNombreArma(tipo_arma) << endl;
 }
 
+double items_magicos::retornar_daño() const 
+{
+    return Daño;
+}
+
+bool items_magicos::restar_usos()
+{
+    if (cant_usos > 0)
+    {
+        cant_usos-=1;
+        return true;
+    }
+    else
+    {
+       cout << "te has quedado sin golpes disponibles, verifique si quedan golpes especiales" << endl;
+       return false;
+    }
+}
+
 items_magicos::~items_magicos(){}
 
-// implementacion de metodos de la clase derivada baston //
+///////////////// implementacion de metodos de la clase derivada baston //////////////////////
 
 baston::baston(float level_magico, float resistencia, float long_baston, double daño)
 : items_magicos(arma_baston, level_magico, resistencia, daño), largo_baston(long_baston)

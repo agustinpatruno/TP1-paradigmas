@@ -17,25 +17,35 @@ PersonajeFactory::PersonajeFactory()
 
 shared_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, float dato1, float dato2, float dato3)
 {
-    unique_ptr<arma> nueva_arma;
-
-    if (tipo_arma < 0 || tipo_arma >= daño_magicos_combate.size()) 
+    try
     {
-        throw logic_error("El tipo de arma está fuera del rango permitido.");
-    }
+        unique_ptr<arma> nueva_arma;
 
-    double daño = daño_magicos_combate[static_cast<size_t>(tipo_arma)];
+        if (tipo_arma < 0 || tipo_arma >= daño_magicos_combate.size()) 
+        {
+            throw logic_error("error, El tipo de arma está fuera del rango permitido.");
+            return nullptr;
+        }
     
-   nueva_arma = crear_arma(tipo_arma, dato1, dato2, dato3, daño);
-
-   if (!nueva_arma)
+        double daño = daño_magicos_combate[static_cast<size_t>(tipo_arma)];
+        
+       nueva_arma = crear_arma(tipo_arma, dato1, dato2, dato3, daño);
+    
+       if (!nueva_arma)
+        {
+            throw logic_error("error, hubo un error en la cracion de la nueva arma, verifique los parametros ingresados");
+            return nullptr;
+        }
+        
+       shared_ptr<arma> arma_shared = move(nueva_arma);
+    
+       return arma_shared;
+    }
+    catch(const std::exception& e)
     {
-        return nullptr;
+        std::cerr << e.what() << '\n';
     }
-    
-   shared_ptr<arma> arma_shared = move(nueva_arma);
-
-   return arma_shared;
+    return nullptr;
 }
 
 shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal)
@@ -107,17 +117,24 @@ shared_ptr<personaje> PersonajeFactory::crear_personaje_factory(personajes_total
 
 shared_ptr<personaje> PersonajeFactory::crear_personaje_armado_factory(personajes_totales perso,hab_totales hab_especial, int dato1, float dato_personal, armas_totales tip_arma, float dato2, float dato3, float dato4)
 {
-    shared_ptr<personaje> nuevo_personaje = this -> crear_personaje_factory(perso, hab_especial, dato1, dato_personal);
+    try
+    {
+        shared_ptr<personaje> nuevo_personaje = this -> crear_personaje_factory(perso, hab_especial, dato1, dato_personal);
 
-    if (nuevo_personaje)
-    {
-        nuevo_personaje -> agregar_arma(tip_arma, dato2, dato3, dato4);
+        if (nuevo_personaje)
+        {
+            nuevo_personaje -> agregar_arma(tip_arma, dato2, dato3, dato4);
+        }
+        else
+        {
+           throw logic_error("error en la cracion del personaje, verifique los parametros ingresados");
+            return nullptr;
+        }
+        return nuevo_personaje;
     }
-    else
+    catch(const std::exception& e)
     {
-        cout << "error en la creacion del arma" << endl;
-        return nullptr;
+        std::cerr << e.what() << '\n';
     }
-    return nuevo_personaje;
+    return nullptr;
 }
-

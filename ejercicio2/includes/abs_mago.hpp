@@ -30,10 +30,36 @@ class mago : public personaje
         mago(tipos_magos tip_mago, hab_totales hab_especial, int magia, double vida, int max_armas);
  
         void mostrar_info_personaje() const override;
+        /*
+            muestra por consola el tipo de personaje mago, la habilidad especial, el daño de la habilidad especial, la cantidad de usos 
+            y el poder de magia.
+        */
+
+        void info_arma() const override;
+        /*
+            imprime por consola la informacion de cada arma si es que tiene las 2
+        */
+
+        int contar_armas() const override;
+        /*
+            cretorna la cantidad de armas existentes. 
+        */
 
         void mostrar_hp() const override;
+        /*
+            muestra por consola el hp del personaje mago
+        */
 
         double retornar_hp() const override;
+        /*
+            retorna el hp del personaje mago
+        */
+
+        void modificar_hp(double daño);
+        /*
+            modifica el hp del personaje guerrero, restandole el daño. caso de quedar sin vida, arroja un throw y lo captura con un catch 
+            para avisar que se quedo sin vida
+        */
 
         double daño(bool normal) override;
         /*
@@ -41,17 +67,18 @@ class mago : public personaje
             mas el daño de la habilidad
         */
 
-        void modificar_hp(double daño);
-
         void agregar_arma(armas_totales tipo_arma, float dato1, float dato2, float dato3);
-
-        void info_arma() const override;
-
-        int contar_armas() const override;
+            /*
+            agrega un arma al mago en caso de que haya lugar disponible, pasando los parametros del tipo de arma, y datos extra com
+            dato1, dato2 y dato3
+        */
 
         virtual void mostrar_caracteristica_mago() const = 0;
+        /*
+            imprime por consola el atributo especifico de cada mago
+        */
 
-        virtual ~mago() = 0;
+        virtual ~mago() = 0; // destrcutor de la clase mago
 };
 
 // clases derivadas de la clase mago //
@@ -65,6 +92,11 @@ class  hechicero : public mago
     public:
 
         hechicero(hab_totales hab_especial, int magia, int max_armas, float hab_fuente);
+        /*
+            constructor de la clase hechicero, inicializa el atributo habilidad fuente y los atributos de la clase personaje con el nivel de
+            magia, la cantidd maxima de arma, la habilidad y el tipo de mago(a_hechicero). caso de que alguno de estos parametros esten fuera 
+            del rango, arroja un throw y lo captura con catch para mostrar que hubo un problema con los parametros
+        */
     
         void mostrar_caracteristica_mago() const override;
         /*
@@ -81,6 +113,11 @@ class  conjurador : public mago
     public:
 
         conjurador(hab_totales hab_especial, int magia, int max_armas, float conocimiento);
+        /*
+            constructor de la clase conjurador, inicializa el atributo conocimieneto ancestral y los atributos de la clase personaje con 
+            el nivel de magia, la cantidd maxima de arma, la habilidad y el tipo de mago(a_conjurador). caso de que alguno de estos 
+            parametros esten fuera del rango, arroja un throw y lo captura con catch para mostrar que hubo un problema con los parametros
+        */
 
         void  mostrar_caracteristica_mago() const override;
         /*
@@ -97,6 +134,11 @@ class brujo : public mago
     public:
     
         brujo(hab_totales hab_especial, int magia, int max_armas, float manipulacion);
+        /*
+            constructor de la clase brujo, inicializa el atributo manipulacion de la naturaleza y los atributos de la clase personaje con 
+            el nivel de magia, la cantidd maxima de arma, la habilidad y el tipo de mago(a_brujo). caso de que alguno de estos 
+            parametros esten fuera del rango, arroja un throw y lo captura con catch para mostrar que hubo un problema con los parametros
+        */
     
         void mostrar_caracteristica_mago() const override;
         /*
@@ -113,6 +155,11 @@ class nigromante : public mago
     public:
 
         nigromante(hab_totales hab_especial, int magia, int max_armas, float mani_almas);
+        /*
+            constructor de la clase nigromante, inicializa el atributo manipulacion de almas y los atributos de la clase personaje con 
+            el nivel de magia, la cantidd maxima de arma, la habilidad y el tipo de mago(a_nigromante). caso de que alguno de estos 
+            parametros esten fuera del rango, arroja un throw y lo captura con catch para mostrar que hubo un problema con los parametros
+        */
 
         void mostrar_caracteristica_mago() const override;
         /*

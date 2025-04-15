@@ -187,7 +187,7 @@ void crear_elementos()
 /*
     comando para compilar manualmente: 
 
-        g++ -std=c++17 -Wall -I../ejercicio2/include -o programa \ ../ejercicio2/source/abs_combate.cpp \ ../ejercicio2/source/abs_guerrero.cpp \ ../ejercicio2/source/abs_items.cpp \ ../ejercicio2/source/abs_mago.cpp \ ../ejercicio2/source/interfaz_personajes.cpp \ ../ejercicio2/source/interfaz_armas.cpp \ ../ejercicio3/ejercicio3.cpp \ main3.cpp
+        g++ -std=c++17 -Wall -I../ejercicio2/include -o programa  ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ejercicio3.cpp main3.cpp
 
     comando para compilar con makefile:
 
