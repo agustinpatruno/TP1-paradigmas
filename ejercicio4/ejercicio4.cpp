@@ -345,23 +345,28 @@ void interfaz_pelea()
 }
 
 /*
-    comando para compilar:
+    -   comando para compilar:
       
         g++ -std=c++17 -I../ejercicio2/include ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ../ejercicio3/ejercicio3.cpp ejercicio4.cpp -o programa
 
-    comando para ejecutar:
+    -   comando para ejecutar:
+        
         ./programa
     
-    comanfo para compilar con flags:
+    -   comanfo para compilar con flags:
 
-                g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -g -O2 -I../ejercicio2/include \
+        g++ -std=c++17 -Wall -Wextra -Wpedantic -Werror -g -O2 -I../ejercicio2/include \
         ../ejercicio2/source/abs_combate.cpp ../ejercicio2/source/abs_guerrero.cpp ../ejercicio2/source/abs_items.cpp ../ejercicio2/source/abs_mago.cpp \
         ../ejercicio2/source/interfaz_personajes.cpp ../ejercicio2/source/interfaz_armas.cpp ../ejercicio3/ejercicio3.cpp ejercicio4.cpp \
         -o programa
 
-    comando para ejcutar con valgrind: 
+    -   comando para ejcutar con valgrind: 
 
         valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./programa
+
+    recomendacion personal: 
+        ampliar la pantalla de la terminal debido a que la informacion de cada personaje ocupa espacio, po lo tanto no se podra ver
+        bien los ataques que se realizen. (es mas, en cada ataque, por lo general se muestra arriba de la iniformacion del personaje 1)
 
 */
 
