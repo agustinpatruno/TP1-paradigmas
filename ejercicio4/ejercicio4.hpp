@@ -3,10 +3,19 @@
 using namespace std;
 
 void opciones_personajes();
+/*
+    imprime por consola los diferentes personajes de tipo guerrero y tipo mago
+*/
 
 void opciones_armas();
+/*
+    imprime por consola las diferentes armas de tipo items_magicos y tipo arma_combate
+*/
 
 void opciones_habilidades_especiales();
+/*
+    imprime por consola las diferentes habilidades magicas de y de combate
+*/
 
 float devolver_intervalo(float valor, float min, float max);
 /*

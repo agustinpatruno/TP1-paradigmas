@@ -49,8 +49,8 @@ void crear_personajes_aleatorios()
         if (cant_armas != 0)
         {
             int random_arma = generarAleatorio(0,8);
-            // datos adicionales del arma1
             
+            // datos adicionales del arma1
             int da1 = generarAleatorio(1,5);
             int da2 = generarAleatorio(1,5);
             int da3 = generarAleatorio(1,5);
