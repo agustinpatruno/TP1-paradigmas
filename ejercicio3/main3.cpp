@@ -158,17 +158,17 @@ void crear_personajes_aleatorios()
 
 void crear_elementos()
 {
-    unique_ptr<PersonajeFactory> perso_factory = make_unique<PersonajeFactory>();
 
-    cout << "---------informacion del arma: " << endl;
+    cout << "---------informacion del arma------------------ " << endl;
 
-    unique_ptr<arma> arma = perso_factory ->crear_arma_factory(arma_baston, 5, 4, 3);
+    unique_ptr<arma> arma = PersonajeFactory::crear_arma_factory(arma_baston, 5, 4, 3);
 
     arma ->Get_infoarma_general();
+    cout << "daño:" << arma ->retornar_daño();
 
     cout << "---------informacion del personaje-------------- " << endl;
 
-    unique_ptr<personaje> crear_personaje = perso_factory ->crear_personaje_factory(hechicero3, Explosion_arcana,7, 8);
+    unique_ptr<personaje> crear_personaje = PersonajeFactory::crear_personaje_factory(hechicero3, Explosion_arcana,7, 8);
     
     crear_personaje ->mostrar_info_personaje();
     crear_personaje ->mostrar_hp();
@@ -177,7 +177,7 @@ void crear_elementos()
 
     cout << "---------informacion del personaje armado-------------" << endl;
 
-    unique_ptr<personaje> crear_personaje_armado= perso_factory ->crear_personaje_armado_factory(hechicero3, Explosion_arcana,7, 8, arma_baston, 5, 4, 3);
+    unique_ptr<personaje> crear_personaje_armado= PersonajeFactory::crear_personaje_armado_factory(hechicero3, Explosion_arcana,7, 8, arma_baston, 5, 4, 3);
 
     crear_personaje_armado -> mostrar_info_personaje();
     crear_personaje_armado -> info_arma();

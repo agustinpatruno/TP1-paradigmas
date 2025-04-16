@@ -10,11 +10,6 @@ int generarAleatorio(int minimo, int maximo)
     return minimo + (rand() % (maximo - minimo + 1));
 }
 
-PersonajeFactory::PersonajeFactory()
-{
-    cout << " se creo el objeto factory" << endl;
-}
-
 unique_ptr<arma> PersonajeFactory::crear_arma_factory(armas_totales tipo_arma, float dato1, float dato2, float dato3)
 {
     try
@@ -149,7 +144,7 @@ unique_ptr<personaje> PersonajeFactory::crear_personaje_armado_factory(personaje
 {
     try
     {
-        unique_ptr<personaje> nuevo_personaje = this -> crear_personaje_factory(perso, hab_especial, dato1, dato_personal);
+        unique_ptr<personaje> nuevo_personaje = crear_personaje_factory(perso, hab_especial, dato1, dato_personal);
 
         if (nuevo_personaje)
         {
