@@ -66,7 +66,6 @@ float devolver_intervalo(float valor, float min, float max)
 
 unique_ptr<personaje> crear_personaje_armado()
 {
-    unique_ptr<PersonajeFactory> perso_fact = make_unique<PersonajeFactory>();
 
     int numero_personaje;
 
@@ -141,7 +140,7 @@ unique_ptr<personaje> crear_personaje_armado()
 
        dato_perso = devolver_intervalo(dato_perso, 1, 10);
 
-        nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, magia, dato_perso, tipo_arma, 5, 5, 5);
+        nuevo_personaje = PersonajeFactory::crear_personaje_armado_factory(tipo_perso, hab_perso, magia, dato_perso, tipo_arma, 5, 5, 5);
         
     }
     else
@@ -174,7 +173,7 @@ unique_ptr<personaje> crear_personaje_armado()
 
        dato_perso = devolver_intervalo(dato_perso, 1, 10);
        
-        nuevo_personaje = perso_fact ->crear_personaje_armado_factory(tipo_perso, hab_perso, fuerza, dato_perso, tipo_arma, 5, 5, 5);
+        nuevo_personaje = PersonajeFactory::crear_personaje_armado_factory(tipo_perso, hab_perso, fuerza, dato_perso, tipo_arma, 5, 5, 5);
     }
 
     return nuevo_personaje;
@@ -205,15 +204,12 @@ unique_ptr<personaje> generar_personaje_aleatorio()
 
     armas_totales tip_arma = armas_totales(ale_arma);
 
-    unique_ptr<PersonajeFactory> factory = make_unique<PersonajeFactory>();
-
-    unique_ptr<personaje> personaje_aleatorio = factory ->crear_personaje_armado_factory(tip_personaje, hab_especial, dato1, static_cast<float>(dato2),tip_arma, static_cast<float>(3), static_cast<float>(3), static_cast<float>(3));
+    unique_ptr<personaje> personaje_aleatorio = PersonajeFactory::crear_personaje_armado_factory(tip_personaje, hab_especial, dato1, static_cast<float>(dato2),tip_arma, static_cast<float>(3), static_cast<float>(3), static_cast<float>(3));
 
     // retorno el personaje //
 
     return personaje_aleatorio;
 }
-
 
 void opciones_golpes()
 {
@@ -225,16 +221,12 @@ void opciones_golpes()
 
 void interfaz_pelea()
 {
-    unique_ptr<PersonajeFactory> perso_factory = make_unique<PersonajeFactory>();
 
     unique_ptr<personaje> personaje_propio= crear_personaje_armado();
 
-    //unique_ptr<personaje> personaje_propio= perso_factory ->crear_personaje_armado_factory(hechicero3, Explosion_arcana,7, static_cast<float>(8), arma_baston,static_cast<float>(5), static_cast<float>(4), static_cast<float>(3));
+    unique_ptr<personaje> personaje_aleatorio = generar_personaje_aleatorio();
 
-    shared_ptr<personaje> personaje_aleatorio = generar_personaje_aleatorio();
-
-
-    while (personaje_propio ->retornar_hp() > 0 && personaje_propio ->retornar_hp() > 0)
+    while (true)
     {
         cout << "---------------------------------------------" << endl;
 
@@ -339,13 +331,12 @@ void interfaz_pelea()
                 }
             }
         }
-        
         if (personaje_propio ->retornar_hp() <= 0)
         {
             cout << "ganador personaje aleatorio 2, perdedor personaje 1" << endl;
             return;
         }
-        if (personaje_aleatorio ->retornar_hp() <= 0)
+        else if (personaje_aleatorio ->retornar_hp() <= 0)   
         {
             cout << "ganador personaje 1, perdedor personaje aleatorio 2" << endl;
             return;
